@@ -31,11 +31,9 @@ function BurgerIngredientCard({ image, price, name }) {
 }
 
 BurgerIngredientCard.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-    image: PropTypes.string,
-    price: PropTypes.number,
-    name: PropTypes.string,
-  }))
+  image: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired
 };
 
 export default BurgerIngredientCard;

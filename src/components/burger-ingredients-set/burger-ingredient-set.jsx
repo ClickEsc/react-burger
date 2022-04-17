@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BurgerIngredientCard from '../burger-ingredient-card/burger-ingredient-card';
+import { ingredientPropTypes } from '../../utils/constants';
 import styles from './burger-ingredients-set.module.css';
 
 function BurgerIngredientsSet({ title, list }) {
@@ -22,9 +23,9 @@ function BurgerIngredientsSet({ title, list }) {
   );
 }
 
-BurgerIngredientsSet.propTypes = PropTypes.shape({
-  title: PropTypes.string,
-  list: PropTypes.array
-})
+BurgerIngredientsSet.propTypes = {
+  title: PropTypes.string.isRequired,
+  list: PropTypes.arrayOf(ingredientPropTypes).isRequired
+}
 
 export default BurgerIngredientsSet;

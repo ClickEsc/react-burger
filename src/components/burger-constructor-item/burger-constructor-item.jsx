@@ -37,13 +37,11 @@ function BurgerConstructorItem({ image, price, name, contentStyle, locked }) {
 }
 
 BurgerConstructorItem.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-    image: PropTypes.string,
-    price: PropTypes.number,
-    name: PropTypes.string,
-    contentStyle: PropTypes.string,
-    locked: PropTypes.boolean,
-  }))
+  image: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  contentStyle: PropTypes.string.isRequired,
+  locked: PropTypes.bool.isRequired
 };
 
 export default BurgerConstructorItem;

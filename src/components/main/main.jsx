@@ -5,7 +5,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { testOrder, ingredientPropTypes } from '../../utils/constants';
 import styles from './main.module.css';
 
-function Main({data}) {
+function Main({ data }) {
   return (
     <main className={styles.main}>
       <BurgerIngredients data={data} />
@@ -15,7 +15,7 @@ function Main({data}) {
 }
 
 Main.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropTypes)
+  data: PropTypes.arrayOf(ingredientPropTypes).isRequired
 };
 
 export default Main;

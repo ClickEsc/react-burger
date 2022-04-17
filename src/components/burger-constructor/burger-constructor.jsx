@@ -17,9 +17,26 @@ function BurgerConstructor({ data }) {
   const renderItem = (arr, contentStyle, locked) => {
     return arr.map((item, index) => {
       const { _id, image, price, name } = item;
+
+      const setName = (contentStyle) => {
+        switch (contentStyle) {
+          case 'topContent': {
+            return `${name} (верх)`
+          }
+          case 'bottomContent': {
+            return `${name} (низ)`
+          }
+          default: {
+            return name
+          }
+        }
+      }
+
+      const specialName = setName(contentStyle);
+
       return (
         <li key={`${_id + index}`} className={styles.listItem}>
-          <BurgerConstructorItem image={image} price={price} name={name} contentStyle={contentStyle} locked={locked}/>
+          <BurgerConstructorItem image={image} price={price} name={specialName} contentStyle={contentStyle} locked={locked}/>
         </li>
       )
     })

@@ -6,6 +6,7 @@
 
 .list {
   box-sizing: border-box;
+  margin: 0;
   padding: 0;
   width: 100%;
   list-style: none;
@@ -15,7 +16,7 @@
 
 .innerList {
   composes: list;
-  max-height: calc(100vh - 548px);
+  max-height: calc(100vh - 520px);
   overflow-y: scroll;
 }
 

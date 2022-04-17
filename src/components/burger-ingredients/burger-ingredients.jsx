@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BurgerIngredientsSet from '../burger-ingredients-set/burger-ingredient-set';
-import BurgerIngredientCard from '../burger-ingredient-card/burger-ingredient-card';
 import { ingredientPropTypes } from '../../utils/constants';
 import styles from './burger-ingredients.module.css';
 
@@ -9,14 +8,7 @@ function BurgerIngredients({ data }) {
   const bunsList = data.filter(item => item.type === 'bun');
   const sauceList = data.filter(item => item.type === 'sauce');
   const mainList = data.filter(item => item.type === 'main');
-  const renderedBunsList = bunsList.map(item => {
-    const { _id, image, price, name } = item;
-    return (
-      <li key={_id}>
-        <BurgerIngredientCard image={image} price={price} name={name} />
-      </li>
-    )
-  })
+
   return (
     <section className={styles.section}>
       <div>

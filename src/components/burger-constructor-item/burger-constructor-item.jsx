@@ -41,6 +41,7 @@ BurgerConstructorItem.propTypes = {
     image: PropTypes.string,
     price: PropTypes.number,
     name: PropTypes.string,
+    contentStyle: PropTypes.string,
     locked: PropTypes.boolean,
   }))
 };

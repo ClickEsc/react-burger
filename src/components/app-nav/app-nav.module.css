@@ -34,6 +34,10 @@
   gap: 8px;
 }
 
+.btn:hover {
+  cursor: pointer;
+}
+
 .title {
   margin-left: 8px;
   color: #F2F2F3;

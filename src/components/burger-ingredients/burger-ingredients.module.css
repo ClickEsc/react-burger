@@ -1,5 +1,6 @@
 .section {
   box-sizing: border-box;
+  padding-top: 40px;
   width: 600px;
 }
 
@@ -30,6 +31,10 @@
   align-items: center;
 }
 
+.listItem:hover {
+  cursor: pointer;
+}
+
 .active {
   color: #F2F2F3;
   border-bottom: 2px solid #4C4CFF;
@@ -43,7 +48,6 @@
 .sets::-webkit-scrollbar {
   margin-block-end: 50px;
   width: 8px;
-  max-height: 70vh;
 }
 
 .sets::-webkit-scrollbar-track {
@@ -52,7 +56,6 @@
 }
 
 .sets::-webkit-scrollbar-thumb {
-  height: 492px;
   background-color: #8585AD;
 }
 

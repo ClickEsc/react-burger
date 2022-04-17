@@ -15,6 +15,10 @@
   right: 0;
 }
 
+.counter:hover {
+  cursor: pointer;
+}
+
 .image {
   margin: 0 16px 4px;
   width: 240px;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
-import PanelText from './panel-text/panel-text';
+import PanelText from '../panel-text/panel-text';
 import { 
   API_URL_GET_INGREDIENTS,
   ERROR_FETCH_GET_INGREDIENTS,

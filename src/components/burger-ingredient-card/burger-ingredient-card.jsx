@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { 
   Counter,
@@ -24,6 +24,32 @@ function BurgerIngredientCard({
     setIsModalOpen(!isModalOpen);
   }
 
+  useEffect(() => {
+    function handleEscapeKey(e) {
+      if (e.code === 'Escape') {
+        setIsModalOpen(false);
+      }
+    }
+  
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+    }
+  }, []);
+
+  useEffect(() => {
+    function handleOverlayClick(e) {
+      if (isModalOpen && e.target !== e.currentTarget) {
+        setIsModalOpen(false);
+      }
+    }
+
+    document.addEventListener('click', handleOverlayClick);
+    return () => {
+      document.removeEventListener('click', handleOverlayClick);
+    }
+  }, [isModalOpen]);
+
   return (
     <>
       <div className={styles.card} onClick={toggleModal}>
@@ -46,14 +72,14 @@ function BurgerIngredientCard({
         </div>
       </div>
       <Modal title="Детали ингредиента" isOpen={isModalOpen} onClose={toggleModal}>
-      <IngredientDetails 
-        image={image}
-        title={name}
-        calories={calories}
-        proteins={proteins}
-        fat={fat}
-        carbohydrates={carbohydrates}
-      />
+        <IngredientDetails 
+          image={image}
+          title={name}
+          calories={calories}
+          proteins={proteins}
+          fat={fat}
+          carbohydrates={carbohydrates}
+        />
     </Modal>
   </>
   );

@@ -7,7 +7,11 @@
   --color-secondary: #8585ad;
   --color-error: #e52b1a;
   --color-success: #00cccc;
+  --color-active: #4C4CFF;
   --color-inactive: #3a3a55;
+  --color-bg: #1C1C21;
+  --color-basic: #F2F2F3;
+  --color-complementary: #2F2F37;
 }
 
 body {

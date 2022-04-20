@@ -22,9 +22,9 @@
 .listItem {
   box-sizing: border-box;
   min-height: 56px;
-  color: #8585AD;
+  color: var(--color-secondary);
   text-align: center;
-  border-bottom: .5px solid #2F2F37;
+  border-bottom: .5px solid var(--color-complementary);
   flex-basis: 33.3%;
   display: flex;
   justify-content: center;
@@ -36,8 +36,8 @@
 }
 
 .active {
-  color: #F2F2F3;
-  border-bottom: 2px solid #4C4CFF;
+  color: var(--color-basic);
+  border-bottom: 2px solid var(--color-active);
 }
 
 .sets {
@@ -52,10 +52,10 @@
 
 .sets::-webkit-scrollbar-track {
   margin-block-end: 50px;
-  background-color: #2F2F37;
+  background-color: var(--color-complementary);
 }
 
 .sets::-webkit-scrollbar-thumb {
-  background-color: #8585AD;
+  background-color: var(--color-secondary);
 }
 

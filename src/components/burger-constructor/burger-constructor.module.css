@@ -26,11 +26,11 @@
 }
 
 .innerList::-webkit-scrollbar-track {
-  background-color: #2F2F37;
+  background-color: var(--color-scrollbar-track);
 }
 
 .innerList::-webkit-scrollbar-thumb {
-  background-color: #8585AD;
+  background-color: var(--color-secondary);
 }
 
 .listItem {
@@ -62,7 +62,7 @@
 
 .buttonPlaceOrder {
   padding: 20px 40px;
-  color: #F2F2F3;
+  color: var(--color-basic);
   background: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
   border: none;
   border-radius: 64px;

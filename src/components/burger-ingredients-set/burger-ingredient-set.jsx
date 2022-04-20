@@ -6,10 +6,18 @@ import styles from './burger-ingredients-set.module.css';
 
 function BurgerIngredientsSet({ title, list }) {
   const renderedList = list.map(item => {
-    const { _id, image, price, name } = item;
+    const { _id, image, price, name, calories, proteins, fat, carbohydrates } = item;
     return (
       <li key={_id}>
-        <BurgerIngredientCard image={image} price={price} name={name} />
+        <BurgerIngredientCard 
+          image={image} 
+          price={price} 
+          name={name}
+          calories={calories}
+          proteins={proteins}
+          fat={fat}
+          carbohydrates={carbohydrates}
+        />
       </li>
     )
   })

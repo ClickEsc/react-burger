@@ -1,0 +1,33 @@
+.modal {
+  padding: 40px 40px 60px;
+  min-width: 720px;
+  min-height: 550px;
+  background-color: var(--color-bg);
+  position: absolute;
+  top: calc((100vh - 550px) / 2);
+  left: calc((100vw - 430px) / 2);
+  max-width: 430px;
+  height: auto;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  margin-bottom: 16px;
+  display: flex;
+  position: relative;
+}
+
+.title {
+  margin: 0;
+  max-width: 90%;
+}
+
+.btnClose {
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  top: 7px;
+  right: 0;
+}

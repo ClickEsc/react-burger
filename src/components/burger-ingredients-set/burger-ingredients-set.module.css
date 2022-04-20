@@ -1,0 +1,11 @@
+.title {
+  margin-bottom: 24px;
+}
+
+.list {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 24px;
+}

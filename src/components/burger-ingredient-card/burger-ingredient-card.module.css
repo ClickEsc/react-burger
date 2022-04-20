@@ -1,0 +1,46 @@
+.card {
+  padding-bottom: 30px;
+  width: 280px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.counter {
+  position: relative;
+  top: 0;
+  right: 0;
+}
+
+.counter:hover {
+  cursor: pointer;
+}
+
+.image {
+  margin: 0 16px 4px;
+  width: 240px;
+  height: 120px;
+}
+
+.price {
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.currency {
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  margin: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}

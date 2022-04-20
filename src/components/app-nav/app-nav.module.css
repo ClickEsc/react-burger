@@ -1,0 +1,50 @@
+.nav {
+  margin: 0 auto;
+  padding: 16px 0;
+  width: 100%;
+  max-width: 1280px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-basis: 33.3%;
+}
+
+.wrapperLogo {
+  composes: wrapper;
+  justify-content: center;
+}
+
+.wrapperEnd {
+  composes: wrapper;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.title {
+  margin-left: 8px;
+  color: #F2F2F3;
+  display: flex;
+  align-items: center;
+}
+
+.secondary {
+  color: #8585AD;
+}

@@ -1,5 +1,11 @@
 import PropTypes from 'prop-types';
 
+export const API_URL_GET_INGREDIENTS = 'https://norma.nomoreparties.space/api/ingredients';
+
+export const ERROR_FETCH_GET_INGREDIENTS = 'Ошибка при запросе списка ингредиентов';
+export const IS_LOADING_TEXT = 'Загрузка...';
+export const HAS_ERROR_TEXT = 'Произошла ошибка';
+
 export const testOrder = [
   {
     "_id": "60666c42cc7b410027a1a9b1",

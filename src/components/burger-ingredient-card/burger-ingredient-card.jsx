@@ -15,7 +15,7 @@ function BurgerIngredientCard({
     calories,
     proteins,
     fat,
-    carbohydrates,
+    carbohydrates
   }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -88,7 +88,11 @@ function BurgerIngredientCard({
 BurgerIngredientCard.propTypes = {
   image: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  calories: PropTypes.number.isRequired,
+  proteins: PropTypes.number.isRequired,
+  fat: PropTypes.number.isRequired,
+  carbohydrates: PropTypes.number.isRequired
 };
 
 export default BurgerIngredientCard;

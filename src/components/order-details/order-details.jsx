@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { 
   CheckMarkIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -24,5 +25,9 @@ function OrderDetails({ orderId }) {
     </div>
   )
 }
+
+OrderDetails.propTypes = {
+  orderId: PropTypes.number.isRequired
+};
 
 export default OrderDetails;

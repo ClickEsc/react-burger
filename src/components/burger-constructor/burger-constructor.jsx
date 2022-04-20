@@ -100,7 +100,7 @@ function BurgerConstructor({ data }) {
       </div>
       <Modal isOpen={isModalOpen} onClose={toggleModal}>
         <OrderDetails 
-          orderId="034536"
+          orderId={Number("034536")}
         />
       </Modal>
     </section>

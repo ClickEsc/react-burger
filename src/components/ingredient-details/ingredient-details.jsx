@@ -1,13 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './ingredient-details.module.css';
 
-function IngredientDetails({ image, title, description, calories, proteins, fat, carbohydrates }) {
+function IngredientDetails({ image, title, calories, proteins, fat, carbohydrates }) {
   return (
     <div className={styles.details}>
       <div className={styles.main}>
         <img className={styles.img} src={image} alt={`Изображение `} />
         <h3 className="text text_type_main-medium">{title}</h3>
-        <p>{description}</p>
       </div>
       <div className={styles.nutrients}>
         <div className={styles.block}>
@@ -30,5 +30,14 @@ function IngredientDetails({ image, title, description, calories, proteins, fat,
     </div>
   )
 }
+
+IngredientDetails.propTypes = {
+  image: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  calories: PropTypes.number.isRequired,
+  proteins: PropTypes.number.isRequired,
+  fat: PropTypes.number.isRequired,
+  carbohydrates: PropTypes.number.isRequired
+};
 
 export default IngredientDetails;

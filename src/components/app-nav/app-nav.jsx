@@ -2,7 +2,7 @@ import React from 'react';
 import { 
   Logo, 
   BurgerIcon, 
-  CheckMarkIcon, 
+  ListIcon, 
   ProfileIcon 
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-nav.module.css';
@@ -18,7 +18,7 @@ function AppNav() {
             <p className="text text_type_main-default">Конструктор</p>
           </div>
           <div className={styles.btn}>
-            <CheckMarkIcon type="secondary" />
+            <ListIcon type="secondary" />
             <p className={`text text_type_main-default ${styles.secondary}`}>Лента заказов</p>
           </div>
         </div>

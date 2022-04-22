@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const API_URL_GET_INGREDIENTS = 'https://norma.nomoreparties.space/api/ingredients';
+export const API_BASE_URL = 'https://norma.nomoreparties.space/api';
 
 export const ERROR_FETCH_GET_INGREDIENTS = 'Ошибка при запросе списка ингредиентов';
 export const IS_LOADING_TEXT = 'Загрузка...';

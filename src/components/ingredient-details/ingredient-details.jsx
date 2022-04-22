@@ -6,7 +6,7 @@ function IngredientDetails({ image, title, calories, proteins, fat, carbohydrate
   return (
     <div className={styles.details}>
       <div className={styles.main}>
-        <img className={styles.img} src={image} alt={`Изображение `} />
+        <img className={styles.img} src={image} alt={`${title}`} />
         <h3 className="text text_type_main-medium">{title}</h3>
       </div>
       <div className={styles.nutrients}>

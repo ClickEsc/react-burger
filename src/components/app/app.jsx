@@ -3,7 +3,7 @@ import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import PanelText from '../panel-text/panel-text';
 import { 
-  API_URL_GET_INGREDIENTS,
+  API_BASE_URL,
   ERROR_FETCH_GET_INGREDIENTS,
   IS_LOADING_TEXT,
   HAS_ERROR_TEXT
@@ -19,20 +19,24 @@ function App() {
   const { ingredientsData, isLoading, hasError } = state;
   const isDataValid = !isLoading && !hasError && ingredientsData.length;
 
-  const getIngredientsData = async () => {
-    setState({ ...state, isLoading: true });
-    fetch(API_URL_GET_INGREDIENTS)
-      .then(res => res.json())
-      .then((res) => {
-          setState({ ...state, ingredientsData: res.data, isLoading: false });
-      })
-      .catch((err) => {
-        console.log(`${ERROR_FETCH_GET_INGREDIENTS}: ${err}`);
-        setState({ ...state, hasError: true });
-      })
-  }
-
   useEffect(() => {
+    const getIngredientsData = async () => {
+      setState({ ...state, isLoading: true });
+      fetch(`${API_BASE_URL}/ingredients`)
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          throw new Error(`${ERROR_FETCH_GET_INGREDIENTS}`);
+        })
+        .then((res) => {
+            setState({ ...state, ingredientsData: res.data, isLoading: false });
+        })
+        .catch((err) => {
+          console.log(`${ERROR_FETCH_GET_INGREDIENTS}: ${err}`);
+          setState({ ...state, hasError: true });
+        })
+    }
     getIngredientsData();
   }, [])
 

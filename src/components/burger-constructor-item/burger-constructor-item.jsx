@@ -18,7 +18,7 @@ function BurgerConstructorItem({ image, price, name, contentStyle, locked }) {
         </button>
 
         <div className={styles[contentStyle]}>
-          <img className={styles.image} src={image} alt="Изображение ингредиента" />
+          <img className={styles.image} src={image} alt={`${name}`} />
           <h4 className={`text text_type_main-default ${styles.title}`}>{name}</h4>
           <p className={`text text_type_digits-default ${styles.price}`}>
             {price}

@@ -19,9 +19,4 @@ PanelText.propTypes = {
   isError: PropTypes.bool.isRequired,
 };
 
-PanelText.defaultProps = {
-  text: '',
-  isError: false,
-};
-
 export default PanelText;

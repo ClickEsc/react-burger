@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { 
+import {
+  Button, 
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
@@ -51,32 +52,6 @@ function BurgerConstructor({ data }) {
     })
   }
 
-  useEffect(() => {
-    function handleEscapeKey(e) {
-      if (e.code === 'Escape') {
-        setIsModalOpen(false);
-      }
-    }
-  
-    document.addEventListener('keydown', handleEscapeKey);
-    return () => {
-      document.removeEventListener('keydown', handleEscapeKey);
-    }
-  }, []);
-
-  useEffect(() => {
-    function handleOverlayClick(e) {
-      if (isModalOpen && e.target !== e.currentTarget) {
-        setIsModalOpen(false);
-      }
-    }
-
-    document.addEventListener('click', handleOverlayClick);
-    return () => {
-      document.removeEventListener('click', handleOverlayClick);
-    }
-  }, [isModalOpen]);
-
   return (
     <section className={styles.section}>
       <ul className={styles.list}>
@@ -96,13 +71,21 @@ function BurgerConstructor({ data }) {
             <CurrencyIcon type="primary" />
           </span>
         </p>
-        <button className={styles.buttonPlaceOrder} onClick={toggleModal}>Оформить заказ</button>
+        <Button
+          type="primary"
+          size="large"
+          onClick={toggleModal}
+        >
+          Оформить заказ
+        </Button>
       </div>
-      <Modal isOpen={isModalOpen} onClose={toggleModal}>
-        <OrderDetails 
-          orderId={Number("034536")}
-        />
-      </Modal>
+      {isModalOpen &&
+        <Modal onClose={toggleModal}>
+          <OrderDetails 
+            orderId={Number("034536")}
+          />
+        </Modal>
+      }
     </section>
   );
 }

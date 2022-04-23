@@ -20,7 +20,7 @@ function Modal({ title, onClose, children }) {
     return () => {
       document.removeEventListener('keydown', handleEscapeKey);
     }
-  }, []);
+  }, [onClose]);
 
   return createPortal(
     <div className={styles.modalContainer}>

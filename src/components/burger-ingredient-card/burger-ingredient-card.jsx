@@ -24,19 +24,6 @@ function BurgerIngredientCard({
     setIsModalOpen(!isModalOpen);
   }
 
-  useEffect(() => {
-    function handleOverlayClick(e) {
-      if (isModalOpen && e.target !== e.currentTarget) {
-        setIsModalOpen(false);
-      }
-    }
-
-    document.addEventListener('click', handleOverlayClick);
-    return () => {
-      document.removeEventListener('click', handleOverlayClick);
-    }
-  }, [isModalOpen]);
-
   return (
     <>
       <div className={styles.card} onClick={toggleModal}>

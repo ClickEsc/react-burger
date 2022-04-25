@@ -21,7 +21,6 @@ function BurgerIngredients({ data }) {
           </ul>
         </nav>
 
-        
         <div className={styles.sets}>
           <BurgerIngredientsSet title="Булки" list={bunsList} />
           <BurgerIngredientsSet title="Соусы" list={sauceList} />

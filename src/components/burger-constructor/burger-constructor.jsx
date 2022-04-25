@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { 
+import {
+  Button, 
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 import { ingredientPropTypes } from '../../utils/constants';
 import styles from './burger-constructor.module.css';
 
+
 function BurgerConstructor({ data }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const bunOrder = data.filter(item => item.type === 'bun');
   const innerOrder = data.filter(item => item.type !== 'bun');
   const topLayer = bunOrder.filter((item, index) => index % 2 !== 0);
   const bottomLayer = bunOrder.filter((item, index) => index % 2 === 0);
   const totalPrice = data.reduce((acc, item) => acc + item.price, 0);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  }
 
   const renderItem = (arr, contentStyle, locked) => {
     return arr.map((item, index) => {
@@ -61,8 +71,21 @@ function BurgerConstructor({ data }) {
             <CurrencyIcon type="primary" />
           </span>
         </p>
-        <button className={styles.buttonPlaceOrder}>Оформить заказ</button>
+        <Button
+          type="primary"
+          size="large"
+          onClick={toggleModal}
+        >
+          Оформить заказ
+        </Button>
       </div>
+      {isModalOpen &&
+        <Modal onClose={toggleModal}>
+          <OrderDetails 
+            orderId={Number("034536")}
+          />
+        </Modal>
+      }
     </section>
   );
 }

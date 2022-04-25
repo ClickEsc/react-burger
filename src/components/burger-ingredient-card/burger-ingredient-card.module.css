@@ -3,6 +3,17 @@
   width: 280px;
 }
 
+.card:hover {
+  opacity: .9;
+  cursor: pointer;
+  transform: perspective(1px) scaleX(1.01);
+  transition: all .5s linear;
+  filter: blur(0.0);
+  -webkit-filter: blur(0.0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;

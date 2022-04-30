@@ -1,13 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import BurgerIngredientsSet from '../burger-ingredients-set/burger-ingredient-set';
-import { ingredientPropTypes } from '../../utils/constants';
+import { BurgerContext } from '../../contexts/burgerContext';
 import styles from './burger-ingredients.module.css';
 
-function BurgerIngredients({ data }) {
-  const bunsList = data.filter(item => item.type === 'bun');
-  const sauceList = data.filter(item => item.type === 'sauce');
-  const mainList = data.filter(item => item.type === 'main');
+function BurgerIngredients() {
+  const burgerContext = useContext(BurgerContext);
+  const bunsList = burgerContext.filter(item => item.type === 'bun');
+  const sauceList = burgerContext.filter(item => item.type === 'sauce');
+  const mainList = burgerContext.filter(item => item.type === 'main');
 
   return (
     <section className={styles.section}>
@@ -31,9 +31,5 @@ function BurgerIngredients({ data }) {
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropTypes).isRequired
-};
 
 export default BurgerIngredients;

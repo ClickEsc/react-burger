@@ -127,7 +127,7 @@ function BurgerConstructor() {
           Оформить заказ
         </Button>
       </div>
-      {isModalOpen &&
+      {isModalOpen && order.orderNumber &&
         <Modal onClose={toggleModal}>
           <OrderDetails
             orderId={order.orderNumber}

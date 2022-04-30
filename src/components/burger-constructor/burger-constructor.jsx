@@ -1,10 +1,11 @@
 import React, { useContext, useState, useMemo, useReducer, useEffect } from 'react';
 import {
-  Button, 
+  Button,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerContext } from '../../contexts/burgerContext';
-import { INVALID_ACTION_TYPE } from '../../utils/constants';
+import { getOrderNumber } from '../../api/api';
+import { ERROR_FETCH_GET_ORDER_ID, INVALID_ACTION_TYPE } from '../../utils/constants';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
@@ -13,19 +14,26 @@ import styles from './burger-constructor.module.css';
 function BurgerConstructor() {
   const burgerContext = useContext(BurgerContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [order, setOrder] = useState({});
 
   const bunOrder = useMemo(
-    () => 
-    [burgerContext.find(item => item.type === 'bun')],
+    () =>
+      [burgerContext.find(item => item.type === 'bun')],
     [burgerContext]
   );
 
   const innerOrder = useMemo(
-    () => 
-    burgerContext.filter(item => item.type !== 'bun'),
+    () =>
+      burgerContext.filter(item => item.type !== 'bun'),
     [burgerContext]
   );
-  
+
+  const orderItemsIds = useMemo(
+    () =>
+      [...bunOrder, ...innerOrder].map(item => item._id),
+    [burgerContext]
+  );
+
   const totalPriceInitialState = 0;
 
   function reducer(state, action) {
@@ -67,10 +75,17 @@ function BurgerConstructor() {
 
       return (
         <li key={`${_id + index}`} className={styles.listItem}>
-          <BurgerConstructorItem image={image} price={price} name={specialName} contentStyle={contentStyle} locked={locked}/>
+          <BurgerConstructorItem image={image} price={price} name={specialName} contentStyle={contentStyle} locked={locked} />
         </li>
       )
     })
+  }
+
+  const handlePlaceOrder = () => {
+    getOrderNumber(orderItemsIds)
+      .then(res => setOrder({ ...order, orderNumber: res.order.number }))
+      .catch(err => console.log(`${ERROR_FETCH_GET_ORDER_ID}: ${err}`))
+    toggleModal();
   }
 
   useEffect(() => {
@@ -107,15 +122,15 @@ function BurgerConstructor() {
         <Button
           type="primary"
           size="large"
-          onClick={toggleModal}
+          onClick={handlePlaceOrder}
         >
           Оформить заказ
         </Button>
       </div>
       {isModalOpen &&
         <Modal onClose={toggleModal}>
-          <OrderDetails 
-            orderId={Number("034536")}
+          <OrderDetails
+            orderId={order.orderNumber}
           />
         </Modal>
       }

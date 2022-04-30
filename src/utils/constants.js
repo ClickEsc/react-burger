@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 
-export const API_BASE_URL = 'https://norma.nomoreparties.space/api';
-
+export const ERROR_RES_STATUS = 'При обработке запроса произошла ошибка'
 export const ERROR_FETCH_GET_INGREDIENTS = 'Ошибка при запросе списка ингредиентов';
+export const ERROR_FETCH_GET_ORDER_ID = 'Ошибка при запросе номера заказа';
+
 export const IS_LOADING_TEXT = 'Загрузка...';
 export const HAS_ERROR_TEXT = 'Произошла ошибка';
+
 export const INVALID_ACTION_TYPE = 'Функция вызывается с неверным свойством type в action';
 
 export const ingredientPropTypes = PropTypes.shape({

@@ -1,15 +1,15 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import PanelText from '../panel-text/panel-text';
 import { BurgerContext } from '../../contexts/burgerContext';
 import { 
-  API_BASE_URL,
   ERROR_FETCH_GET_INGREDIENTS,
   IS_LOADING_TEXT,
   HAS_ERROR_TEXT
 } from '../../utils/constants';
 import styles from './app.module.css';
+import { getIngredients } from '../../api/api';
 
 function App() {
   const [state, setState] = useState({
@@ -21,16 +21,11 @@ function App() {
   const isDataValid = !isLoading && !hasError && ingredientsData.length;
 
   useEffect(() => {
-    const getIngredientsData = async () => {
+    const getIngredientsData = () => {
       setState({ ...state, isLoading: true });
-      fetch(`${API_BASE_URL}/ingredients`)
+      getIngredients()
         .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-          throw new Error(`${ERROR_FETCH_GET_INGREDIENTS}`);
-        })
-        .then((res) => {
+            console.log(res)
             setState({ ...state, ingredientsData: res.data, isLoading: false });
         })
         .catch((err) => {

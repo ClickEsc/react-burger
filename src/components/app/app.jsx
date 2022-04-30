@@ -25,7 +25,6 @@ function App() {
       setState({ ...state, isLoading: true });
       getIngredients()
         .then((res) => {
-            console.log(res)
             setState({ ...state, ingredientsData: res.data, isLoading: false });
         })
         .catch((err) => {

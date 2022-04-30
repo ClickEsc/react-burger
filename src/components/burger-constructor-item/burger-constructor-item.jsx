@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { 
+import {
   DragIcon,
   CurrencyIcon,
   LockIcon,
@@ -18,20 +18,24 @@ function BurgerConstructorItem({ image, price, name, contentStyle, locked }) {
         </button>
 
         <div className={styles[contentStyle]}>
-          <img className={styles.image} src={image} alt={`${name}`} />
-          <h4 className={`text text_type_main-default ${styles.title}`}>{name}</h4>
-          <p className={`text text_type_digits-default ${styles.price}`}>
-            {price}
-            <span className={styles.currency}><CurrencyIcon type="primary" /></span>
-          </p>
-          {  locked ?
-              <button className={styles.button}><LockIcon type="secondary" /></button>
-            :
-              <button className={styles.button}><DeleteIcon type="primary" /></button>
-          }
+          <div className={styles.container}>
+            <img className={styles.image} src={image} alt={`${name}`} />
+            <h4 className={`text text_type_main-default ${styles.title}`}>{name}</h4>
           </div>
-
+          <div className={styles.container}>
+            <p className={`text text_type_digits-default ${styles.price}`}>
+              {price}
+              <span className={styles.currency}><CurrencyIcon type="primary" /></span>
+            </p>
+            {locked ?
+              <button className={styles.button}><LockIcon type="secondary" /></button>
+              :
+              <button className={styles.button}><DeleteIcon type="primary" /></button>
+            }
+          </div>
         </div>
+
+      </div>
     </div>
   );
 }

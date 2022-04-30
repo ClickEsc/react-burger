@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import PanelText from '../panel-text/panel-text';
+import { BurgerContext } from '../../contexts/burgerContext';
 import { 
   API_BASE_URL,
   ERROR_FETCH_GET_INGREDIENTS,
@@ -42,10 +43,12 @@ function App() {
 
   return (
     <div className={styles.app}>
-      <AppHeader />
-      {isLoading && <PanelText text={IS_LOADING_TEXT} isError={hasError} />} 
-      {hasError && <PanelText text={HAS_ERROR_TEXT} isError={hasError} />}
-      {isDataValid ? <Main data={ingredientsData} /> : <></>}
+      <BurgerContext.Provider value={state.ingredientsData}>
+        <AppHeader />
+        {isLoading && <PanelText text={IS_LOADING_TEXT} isError={hasError} />} 
+        {hasError && <PanelText text={HAS_ERROR_TEXT} isError={hasError} />}
+        {isDataValid ? <Main /> : <></>}
+      </BurgerContext.Provider>
     </div>
   );
 }

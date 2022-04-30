@@ -9,6 +9,12 @@
   align-items: center;
 }
 
+.container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 .content {
   padding: 16px 24px;
   width: 100%;

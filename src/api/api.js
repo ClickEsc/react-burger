@@ -6,13 +6,13 @@ const checkRes = (res) => {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(new Error(`${ERROR_RES_STATUS}: ${res.error}`));
+  return Promise.reject(new Error(`${ERROR_RES_STATUS} ${res.status}`));
 }
 
 // Получить список ингредиентов
 export const getIngredients = async () => {
   return fetch(`${API_BASE_URL}/ingredients`)
-    .then(res => checkRes(res))
+    .then(checkRes)
 }
 
 // Получить номер заказа
@@ -27,5 +27,5 @@ export const getOrderNumber = async (ingredientsIdsArr) => {
       "ingredients": ingredientsIdsArr
     })
   })
-    .then(res => checkRes(res))
+    .then(checkRes)
 }

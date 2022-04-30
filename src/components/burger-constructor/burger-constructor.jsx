@@ -5,7 +5,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerContext } from '../../contexts/burgerContext';
 import { getOrderNumber } from '../../api/api';
-import { ERROR_FETCH_GET_ORDER_ID, INVALID_ACTION_TYPE } from '../../utils/constants';
+import { ERROR_FETCH_GET_ORDER_NUMBER, INVALID_ACTION_TYPE } from '../../utils/constants';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
@@ -84,7 +84,7 @@ function BurgerConstructor() {
   const handlePlaceOrder = () => {
     getOrderNumber(orderItemsIds)
       .then(res => setOrder({ ...order, orderNumber: res.order.number }))
-      .catch(err => console.log(`${ERROR_FETCH_GET_ORDER_ID}: ${err}`))
+      .catch(err => console.log(`${ERROR_FETCH_GET_ORDER_NUMBER}: ${err}`))
     toggleModal();
   }
 

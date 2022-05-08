@@ -7,7 +7,7 @@ function Main() {
   return (
     <main className={styles.main}>
       <BurgerIngredients />
-      <BurgerConstructor />
+      {/* <BurgerConstructor /> */}
     </main>
   );
 }

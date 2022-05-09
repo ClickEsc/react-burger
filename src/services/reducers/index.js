@@ -2,7 +2,8 @@ import { combineReducers } from 'redux';
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
-  GET_INGREDIENTS_FAILED
+  GET_INGREDIENTS_FAILED,
+  TAB_SWITCH
 } from '../actions/index';
 
 const initialState = {
@@ -11,7 +12,8 @@ const initialState = {
   ingredientsFailed: false,
   ingredientsConstructorList: [],
   currentIngredient: {},
-  currentOrder: {}
+  currentOrder: {},
+  currentTab: 'bun'
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -35,6 +37,12 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         ingredientsFailed: true,
         itemsRequest: false
+      };
+    }
+    case TAB_SWITCH: {
+      return {
+        ...state,
+        currentTab: action.tabType
       };
     }
     default: {

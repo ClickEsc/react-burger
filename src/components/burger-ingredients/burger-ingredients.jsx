@@ -1,9 +1,12 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { TAB_SWITCH } from '../../services/actions';
 import BurgerIngredientsSet from '../burger-ingredients-set/burger-ingredient-set';
+import Tabs from '../tabs/tabs';
 import styles from './burger-ingredients.module.css';
 
 function BurgerIngredients() {
+  const dispatch = useDispatch();
   const { ingredientsList } = useSelector(store => store.app);
 
   const content = useMemo(
@@ -25,17 +28,24 @@ function BurgerIngredients() {
     [ingredientsList]
   );
 
+  const handleScroll = (e) => {
+    const currentTabItems = [...e.target.querySelectorAll('h3')].filter(item => item.getBoundingClientRect().top <= e.target.getBoundingClientRect().top);
+    const currentTabType = currentTabItems[currentTabItems.length - 1].innerText;
+
+    const tabValuesObj = {
+      "Булки": "bun",
+      "Соусы": "sauce",
+      "Начинки": "main"
+    }
+
+    dispatch({ type: TAB_SWITCH, tabType: tabValuesObj[currentTabType] })
+  }
+
   return (
-    <section className={styles.section}>
+    <section className={styles.section} onScroll={handleScroll} >
       <div>
         <h3 className={`text text_type_main-large ${styles.title}`}>Соберите бургер</h3>
-        <nav className={styles.nav}>
-          <ul className={styles.list}>
-            <li className={`text text_type_main-default ${styles.active} ${styles.listItem}`}>Булки</li>
-            <li className={`text text_type_main-default ${styles.listItem}`}>Соусы</li>
-            <li className={`text text_type_main-default ${styles.listItem}`}>Начинки</li>
-          </ul>
-        </nav>
+        <Tabs />
         {content}
       </div>
     </section>

@@ -1,0 +1,26 @@
+.nav {
+  margin-bottom: 40px;
+}
+
+.list {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.listItem {
+  box-sizing: border-box;
+  min-height: 56px;
+  color: var(--color-secondary);
+  text-align: center;
+  border-bottom: .5px solid var(--color-complementary);
+  flex-basis: 33.3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.listItem:hover {
+  cursor: pointer;
+}

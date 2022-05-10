@@ -25,15 +25,11 @@ function BurgerIngredients() {
   const content = useMemo(
     () => {
       if (ingredientsList.length) {
-        const bunsList = ingredientsList.filter(item => item.type === 'bun');
-        const sauceList = ingredientsList.filter(item => item.type === 'sauce');
-        const mainList = ingredientsList.filter(item => item.type === 'main');
-
         return ( 
           <div className={styles.sets} onScroll={handleScroll}>
-            <BurgerIngredientsSet title="Булки" list={bunsList} />
-            <BurgerIngredientsSet title="Соусы" list={sauceList} />
-            <BurgerIngredientsSet title="Начинки" list={mainList} />
+            <BurgerIngredientsSet title="Булки" type="bun" />
+            <BurgerIngredientsSet title="Соусы" type="sauce" />
+            <BurgerIngredientsSet title="Начинки" type="main" />
           </div>
         );
       }

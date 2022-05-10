@@ -5,7 +5,6 @@ import {
   GET_INGREDIENTS_FAILED,
   INCREASE_ITEM,
   DECREASE_ITEM,
-  DELETE_ITEM,
   TAB_SWITCH
 } from '../actions/index';
 
@@ -13,7 +12,6 @@ const initialState = {
   ingredientsList: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
-  constructorIngredientsList: [],
   currentIngredient: {},
   currentOrder: {
     totalPrice: 0
@@ -35,7 +33,6 @@ export const ingredientsReducer = (state = initialState, action) => {
         ingredientsRequest: false,
         ingredientsFailed: false,
         ingredientsList: action.ingredientsList,
-        constructorIngredientsList: action.constructorIngredientsList
       };
     }
     case GET_INGREDIENTS_FAILED: {
@@ -48,10 +45,10 @@ export const ingredientsReducer = (state = initialState, action) => {
     case INCREASE_ITEM: {
       return {
         ...state,
-        constructorIngredientsList: [...state.constructorIngredientsList].map(item => {
+        ingredientsList: [...state.ingredientsList].map(item => {
           if (item._id === action._id) {
             if (item.type === 'bun') {
-              state.constructorIngredientsList.filter(item => item.type === 'bun').map(item => item.__v = 0);
+              state.ingredientsList.filter(item => item.type === 'bun').map(item => item.__v = 0);
             }
             return { ...item, __v: ++item.__v }
           } else {
@@ -63,15 +60,9 @@ export const ingredientsReducer = (state = initialState, action) => {
     case DECREASE_ITEM: {
       return {
         ...state,
-        constructorIngredientsList: [...state.constructorIngredientsList].map(item =>
+        ingredientsList: [...state.ingredientsList].map(item =>
           item._id === action._id ? { ...item, __v: --item.__v } : item
         )
-      };
-    }
-    case DELETE_ITEM: {
-      return {
-        ...state,
-        constructorIngredientsList: [...state.constructorIngredientsList].filter(item => item._id !== action._id)
       };
     }
     case TAB_SWITCH: {

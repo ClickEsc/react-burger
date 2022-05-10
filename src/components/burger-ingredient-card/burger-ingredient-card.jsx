@@ -9,6 +9,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import styles from './burger-ingredient-card.module.css';
 
 function BurgerIngredientCard({
+  count,
   image,
   price,
   name,
@@ -28,9 +29,7 @@ function BurgerIngredientCard({
     <>
       <div className={styles.card} onClick={toggleModal}>
         <div className={styles.counter}>
-          {(name === "Краторная булка N-200i" || name === "Соус традиционный галактический") &&
-            <Counter count={1} size="default" />
-          }
+            {count > 0 ? <Counter count={count} size="default" /> : <></>}
         </div>
 
         <div className={styles.wrapper}>
@@ -62,6 +61,7 @@ function BurgerIngredientCard({
 }
 
 BurgerIngredientCard.propTypes = {
+  count: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,

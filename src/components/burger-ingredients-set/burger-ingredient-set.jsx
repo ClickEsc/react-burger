@@ -1,18 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { shallowEqual, useSelector } from 'react-redux';
 import BurgerIngredientCard from '../burger-ingredient-card/burger-ingredient-card';
-import { ingredientPropTypes } from '../../utils/constants';
 import styles from './burger-ingredients-set.module.css';
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 
-function BurgerIngredientsSet({ title, list }) {
+function BurgerIngredientsSet({ title, type }) {
+  const { ingredientsList } = useSelector(store => store.app, shallowEqual);
 
-  const renderedList = list.map(item => {
-    const { _id, image, price, name, calories, proteins, fat, carbohydrates } = item;
+  const renderedList = ingredientsList.filter(el => el.type === type).map(item => {
+    const { _id, __v, image, price, name, calories, proteins, fat, carbohydrates } = item;
 
     return (
       <DraggableIngredient key={_id} ingredientData={item} >
-        <BurgerIngredientCard 
+        <BurgerIngredientCard
+          count={__v}
           image={image} 
           price={price} 
           name={name}
@@ -24,6 +26,7 @@ function BurgerIngredientsSet({ title, list }) {
       </DraggableIngredient>
     )
   })
+
   return (
     <>
       <h3 className={`text text_type_main-medium ${styles.title}`}>{title}</h3>
@@ -36,7 +39,7 @@ function BurgerIngredientsSet({ title, list }) {
 
 BurgerIngredientsSet.propTypes = {
   title: PropTypes.string.isRequired,
-  list: PropTypes.arrayOf(ingredientPropTypes).isRequired
+  type: PropTypes.string.isRequired
 }
 
 export default BurgerIngredientsSet;

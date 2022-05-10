@@ -16,15 +16,14 @@ import styles from './burger-constructor.module.css';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
-  const { ingredientsList, constructorIngredientsList } = useSelector(store => store.app);
+  const { ingredientsList } = useSelector(store => store.app);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [order, setOrder] = useState({});
   const totalPrice = useSelector(store =>
-    store.app.constructorIngredientsList.reduce((acc, item) => acc + (item.type === 'bun' ? item.price * 2 : item.price) * item.__v, 0)
+    store.app.ingredientsList.reduce((acc, item) => acc + (item.type === 'bun' ? item.price * 2 : item.price) * item.__v, 0)
   );
 
-  console.log('ingredientsList', ingredientsList)
-  console.log('constructorIngredientsList', constructorIngredientsList)
+  console.log('ingredientsList', ingredientsList);
 
   const [, dropTargetRef] = useDrop({
     accept: "ingredient",
@@ -41,20 +40,20 @@ function BurgerConstructor() {
 
   const bunOrder = useMemo(
     () =>
-    constructorIngredientsList.length && [constructorIngredientsList.find(item => item.__v > 0 && item.type === 'bun')],
-    [constructorIngredientsList]
+    ingredientsList.length && [ingredientsList.find(item => item.__v > 0 && item.type === 'bun')],
+    [ingredientsList]
   );
 
   const innerOrder = useMemo(
     () =>
-    constructorIngredientsList.length && constructorIngredientsList.filter(item => item.__v > 0 && item.type !== 'bun'),
-    [constructorIngredientsList]
+    ingredientsList.length && ingredientsList.filter(item => item.__v > 0 && item.type !== 'bun'),
+    [ingredientsList]
   );
 
   const orderItemsIds = useMemo(
     () =>
-      constructorIngredientsList.length && [bunOrder.length && bunOrder, innerOrder.length && innerOrder].map(item => item.__v > 0 && item._id),
-    [constructorIngredientsList]
+      ingredientsList.length && [bunOrder.length && bunOrder, innerOrder.length && innerOrder].map(item => item.__v > 0 && item._id),
+    [ingredientsList]
   );
 
   const toggleModal = () => {
@@ -94,7 +93,7 @@ function BurgerConstructor() {
 
   const content = useMemo(
     () => {
-      if (constructorIngredientsList.length) {
+      if (ingredientsList.length) {
         return (
           <ul ref={dropTargetRef} className={styles.list}>
             {bunOrder.length ? renderItem(bunOrder, 'topContent', true) : <></>}
@@ -105,12 +104,12 @@ function BurgerConstructor() {
                   : <p className={styles.innerEmpty}>Перенесите сюда желаемый ингредиент</p>}
               </ul>
             </li>
-            {ingredientsList.length ? renderItem(bunOrder, 'bottomContent', true) : <></>}
+            {bunOrder.length ? renderItem(bunOrder, 'bottomContent', true) : <></>}
           </ul>
         )
       }
     },
-    [constructorIngredientsList]
+    [ingredientsList]
   );
 
   const handlePlaceOrder = () => {
@@ -121,12 +120,9 @@ function BurgerConstructor() {
   }
 
   useEffect(() => {
-    if (ingredientsList.length) {
       const initialIngredients = ingredientsList.filter(item => item._id === "60d3b41abdacab0026a733c6" || item._id === "60d3b41abdacab0026a733ce");
-      console.log(initialIngredients)
       return initialIngredients.forEach(item => dispatch({ type: INCREASE_ITEM, _id: item._id }));
-    }
-  }, [ingredientsList, dispatch])
+  }, [dispatch])
 
   return (
     <section className={styles.section}>

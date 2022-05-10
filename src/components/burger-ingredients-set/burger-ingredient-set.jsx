@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import BurgerIngredientCard from '../burger-ingredient-card/burger-ingredient-card';
 import { ingredientPropTypes } from '../../utils/constants';
 import styles from './burger-ingredients-set.module.css';
+import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 
 function BurgerIngredientsSet({ title, list }) {
+
   const renderedList = list.map(item => {
     const { _id, image, price, name, calories, proteins, fat, carbohydrates } = item;
+
     return (
-      <li key={_id}>
+      <DraggableIngredient key={_id} ingredientData={item} >
         <BurgerIngredientCard 
           image={image} 
           price={price} 
@@ -18,7 +21,7 @@ function BurgerIngredientsSet({ title, list }) {
           fat={fat}
           carbohydrates={carbohydrates}
         />
-      </li>
+      </DraggableIngredient>
     )
   })
   return (

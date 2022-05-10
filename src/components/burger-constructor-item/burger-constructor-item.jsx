@@ -1,14 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   DragIcon,
   CurrencyIcon,
   LockIcon,
   DeleteIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { DELETE_ITEM } from '../../services/actions';
 import styles from './burger-constructor-item.module.css';
 
-function BurgerConstructorItem({ image, price, name, contentStyle, locked }) {
+function BurgerConstructorItem({ _id, image, price, name, contentStyle, locked }) {
+  const dispatch = useDispatch();
+  const { constructorIngredientsList } = useSelector(store => store.app);
+
+  const onDeleteBtnClick = () => {
+    dispatch({ type: DELETE_ITEM, _id })
+  }
+
   return (
     <div className={styles.item}>
       <div className={styles.wrapper}>
@@ -30,7 +39,7 @@ function BurgerConstructorItem({ image, price, name, contentStyle, locked }) {
             {locked ?
               <button className={styles.button}><LockIcon type="secondary" /></button>
               :
-              <button className={styles.button}><DeleteIcon type="primary" /></button>
+              <button className={styles.button}><DeleteIcon type="primary" onClick={onDeleteBtnClick} /></button>
             }
           </div>
         </div>

@@ -9,25 +9,6 @@ function BurgerIngredients() {
   const dispatch = useDispatch();
   const { ingredientsList } = useSelector(store => store.app);
 
-  const content = useMemo(
-    () => {
-      if (ingredientsList.length) {
-        const bunsList = ingredientsList.filter(item => item.type === 'bun');
-        const sauceList = ingredientsList.filter(item => item.type === 'sauce');
-        const mainList = ingredientsList.filter(item => item.type === 'main');
-
-        return ( 
-          <div className={styles.sets}>
-            <BurgerIngredientsSet title="Булки" list={bunsList} />
-            <BurgerIngredientsSet title="Соусы" list={sauceList} />
-            <BurgerIngredientsSet title="Начинки" list={mainList} />
-          </div>
-        );
-      }
-    },
-    [ingredientsList]
-  );
-
   const handleScroll = (e) => {
     const currentTabItems = [...e.target.querySelectorAll('h3')].filter(item => item.getBoundingClientRect().top <= e.target.getBoundingClientRect().top);
     const currentTabType = currentTabItems[currentTabItems.length - 1].innerText;
@@ -41,8 +22,27 @@ function BurgerIngredients() {
     dispatch({ type: TAB_SWITCH, tabType: tabValuesObj[currentTabType] })
   }
 
+  const content = useMemo(
+    () => {
+      if (ingredientsList.length) {
+        const bunsList = ingredientsList.filter(item => item.type === 'bun');
+        const sauceList = ingredientsList.filter(item => item.type === 'sauce');
+        const mainList = ingredientsList.filter(item => item.type === 'main');
+
+        return ( 
+          <div className={styles.sets} onScroll={handleScroll}>
+            <BurgerIngredientsSet title="Булки" list={bunsList} />
+            <BurgerIngredientsSet title="Соусы" list={sauceList} />
+            <BurgerIngredientsSet title="Начинки" list={mainList} />
+          </div>
+        );
+      }
+    },
+    [ingredientsList]
+  );
+
   return (
-    <section className={styles.section} onScroll={handleScroll} >
+    <section className={styles.section}>
       <div>
         <h3 className={`text text_type_main-large ${styles.title}`}>Соберите бургер</h3>
         <Tabs />

@@ -1,59 +1,64 @@
-import React, { useState, useMemo, useReducer, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import {
   Button,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { INCREASE_ITEM } from '../../services/actions';
+import { getConstructorIngredients, INCREASE_ITEM, REORGANIZE_ITEMS } from '../../services/actions';
 import { getOrderNumber } from '../../api/api';
-import { ERROR_FETCH_GET_ORDER_NUMBER, INVALID_ACTION_TYPE } from '../../utils/constants';
+import { ERROR_FETCH_GET_ORDER_NUMBER } from '../../utils/constants';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 import styles from './burger-constructor.module.css';
-
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
   const { ingredientsList } = useSelector(store => store.app);
+  const { burger } = useSelector(store => store.app.currentOrder);
+  const [dragId, setDragId] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [order, setOrder] = useState({});
   const totalPrice = useSelector(store =>
-    store.app.ingredientsList.reduce((acc, item) => acc + (item.type === 'bun' ? item.price * 2 : item.price) * item.__v, 0)
+    store.app.currentOrder.burger.reduce((acc, item) => {
+      return acc + (item.type === 'bun' ? item.price * 2 : item.price) * item.__v
+    }, 0)
   );
 
-  console.log('ingredientsList', ingredientsList);
+  console.log('burger', burger);
 
   const [, dropTargetRef] = useDrop({
     accept: "ingredient",
     collect: monitor => ({
       isHover: monitor.isOver(),
     }),
-    drop(item) {
+    drop({ id }) {
       dispatch({
         type: INCREASE_ITEM,
-        _id: item.id
+        id
       });
     },
   });
 
+
   const bunOrder = useMemo(
     () =>
-    ingredientsList.length && [ingredientsList.find(item => item.__v > 0 && item.type === 'bun')],
-    [ingredientsList]
+    burger.length && [burger.find(item => item.__v > 0 && item.type === 'bun')],
+    [burger]
   );
 
   const innerOrder = useMemo(
     () =>
-    ingredientsList.length && ingredientsList.filter(item => item.__v > 0 && item.type !== 'bun'),
-    [ingredientsList]
+    burger.length && burger.filter(item => item.__v > 0 && item.type !== 'bun'),
+    [burger]
   );
 
   const orderItemsIds = useMemo(
     () =>
-      ingredientsList.length && [bunOrder.length && bunOrder, innerOrder.length && innerOrder].map(item => item.__v > 0 && item._id),
-    [ingredientsList]
+      burger.length && [bunOrder.length && bunOrder, innerOrder.length && innerOrder].map(item => item.__v > 0 && item._id),
+    [burger]
   );
 
   const toggleModal = () => {
@@ -83,9 +88,23 @@ function BurgerConstructor() {
         const specialName = setName(contentStyle);
 
         return (
-          <li key={`${_id + index}`} className={styles.listItem}>
-            <BurgerConstructorItem item={item} _id={_id} image={image} price={price} name={specialName} contentStyle={contentStyle} locked={locked} />
-          </li>
+          <>
+            {contentStyle === "content" 
+              ?  
+                <DraggableIngredient
+                  key={`${_id + index}`}
+                  dragRefType="constructorIngredient"
+                  ingredientData={item}
+                  className={styles.listItem}
+                >
+                  <BurgerConstructorItem item={item} _id={_id} image={image} price={price} name={specialName} contentStyle={contentStyle} locked={locked} />
+                </DraggableIngredient>
+              :
+                <li key={`${_id + index}`} className={styles.listItem}>
+                  <BurgerConstructorItem item={item} _id={_id} image={image} price={price} name={specialName} contentStyle={contentStyle} locked={locked} />
+                </li>
+            }
+          </>
         )
       }
     })
@@ -93,14 +112,14 @@ function BurgerConstructor() {
 
   const content = useMemo(
     () => {
-      if (ingredientsList.length) {
+      if (burger.length) {
         return (
           <ul ref={dropTargetRef} className={styles.list}>
             {bunOrder.length ? renderItem(bunOrder, 'topContent', true) : <></>}
             <li className={styles.listItem}>
               <ul className={`${styles.innerList} ${!innerOrder.length ? styles.innerListEmpty : ''}`}>
                 {innerOrder.length
-                  ? renderItem(innerOrder, 'content', false)
+                  ? renderItem(innerOrder.sort((a, b) => a.order - b.order), 'content', false)
                   : <p className={styles.innerEmpty}>Перенесите сюда желаемый ингредиент</p>}
               </ul>
             </li>
@@ -109,7 +128,7 @@ function BurgerConstructor() {
         )
       }
     },
-    [ingredientsList]
+    [burger]
   );
 
   const handlePlaceOrder = () => {
@@ -120,9 +139,11 @@ function BurgerConstructor() {
   }
 
   useEffect(() => {
-      const initialIngredients = ingredientsList.filter(item => item._id === "60d3b41abdacab0026a733c6" || item._id === "60d3b41abdacab0026a733ce");
-      return initialIngredients.forEach(item => dispatch({ type: INCREASE_ITEM, _id: item._id }));
-  }, [dispatch])
+    if (burger.length) {
+      const initialIngredients = burger.filter(item => item._id === "60d3b41abdacab0026a733c6" || item._id === "60d3b41abdacab0026a733ce");
+      initialIngredients.forEach(item => dispatch({ type: INCREASE_ITEM, id: item._id }))
+    }
+  }, [dispatch]);
 
   return (
     <section className={styles.section}>

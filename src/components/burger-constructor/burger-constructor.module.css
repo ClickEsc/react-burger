@@ -23,6 +23,7 @@
   min-height: 80px;
   /* min-height: 350px; */
   max-height: calc(100vh - 520px);
+  gap: 16px;
   overflow-y: scroll;
 }
 

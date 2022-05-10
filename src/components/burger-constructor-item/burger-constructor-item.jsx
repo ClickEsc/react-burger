@@ -14,7 +14,7 @@ function BurgerConstructorItem({ _id, image, price, name, contentStyle, locked }
   const dispatch = useDispatch();
 
   const onDeleteBtnClick = () => {
-    dispatch({ type: DECREASE_ITEM, _id })
+    dispatch({ type: DECREASE_ITEM, id: _id })
   }
 
   return (

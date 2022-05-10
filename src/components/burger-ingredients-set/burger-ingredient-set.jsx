@@ -12,7 +12,7 @@ function BurgerIngredientsSet({ title, type }) {
     const { _id, __v, image, price, name, calories, proteins, fat, carbohydrates } = item;
 
     return (
-      <DraggableIngredient key={_id} ingredientData={item} >
+      <DraggableIngredient key={_id} dragRefType="ingredient" ingredientData={item} >
         <BurgerIngredientCard
           count={__v}
           image={image} 

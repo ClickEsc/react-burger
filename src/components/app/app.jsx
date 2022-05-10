@@ -7,32 +7,52 @@ import {
   IS_LOADING_TEXT,
   HAS_ERROR_TEXT
 } from '../../utils/constants';
-import { getBurgerIngredients } from '../../services/actions';
+import { getBurgerIngredients, getConstructorIngredients } from '../../services/actions';
 import styles from './app.module.css';
 
 function App() {
   const dispatch = useDispatch();
-  const { ingredientsList, ingredientsRequest, ingredientsFailed } = useSelector(store => store.app);
+  const {
+    ingredientsList,
+    ingredientsRequest,
+    ingredientsFailed,
+    constructorIngredientsRequest,
+    constructorIngredientsFailed,
+  } = useSelector(store => store.app);
+  const { burger } = useSelector(store => store.app.currentOrder);
 
   const content = useMemo(
     () => {
-      if (ingredientsRequest && !ingredientsFailed) {
-        return <PanelText text={IS_LOADING_TEXT} isError={ingredientsFailed} />
+      if ((ingredientsRequest || constructorIngredientsRequest) && !ingredientsFailed && !constructorIngredientsFailed) {
+        return <PanelText text={IS_LOADING_TEXT} isError={ingredientsFailed || constructorIngredientsFailed} />
       }
-      if (ingredientsFailed) {
-        return <PanelText text={HAS_ERROR_TEXT} isError={ingredientsFailed} />
+      if (ingredientsFailed || constructorIngredientsFailed) {
+        return <PanelText text={HAS_ERROR_TEXT} isError={ingredientsFailed || constructorIngredientsFailed} />
       }
-      if (!ingredientsRequest && !ingredientsFailed && ingredientsList.length) {
+      if (!ingredientsRequest && !ingredientsFailed && ingredientsList.length &&
+        !constructorIngredientsRequest && !constructorIngredientsFailed && burger.length) {
         return <Main />
-      } else {
+      }
+       else {
         return <></>
       }
     },
-    [ingredientsRequest, ingredientsFailed, ingredientsList]
+    [
+      ingredientsRequest,
+      ingredientsFailed,
+      ingredientsList,
+      constructorIngredientsRequest,
+      constructorIngredientsFailed,
+      burger
+    ]
   );
 
   useEffect(() => {
-    dispatch(getBurgerIngredients());
+    dispatch(getBurgerIngredients())
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getConstructorIngredients());
   }, [dispatch]);
 
   return (

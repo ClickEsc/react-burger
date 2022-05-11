@@ -1,4 +1,3 @@
-import uuid from 'react-uuid';
 import { getIngredients, getOrderNumber } from "../../api/api";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
@@ -17,6 +16,7 @@ export const GET_ORDER_NUMBER_SUCCESS = 'GET_ORDER_NUMBER_SUCCESS';
 export const GET_ORDER_NUMBER_FAILED = 'GET_ORDER_NUMBER_FAILED';
 
 export const REORGANIZE_ITEMS = 'REORGANIZE_ITEMS';
+export const GENERATE_UNIQUE_KEY = 'GENERATE_UNIQUE_KEY';
 
 export const TAB_SWITCH = 'TAB_SWITCH';
 

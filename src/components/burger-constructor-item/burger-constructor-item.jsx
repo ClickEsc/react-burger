@@ -18,7 +18,7 @@ function BurgerConstructorItem({ _id, uuid, image, price, name, contentStyle, lo
   }
 
   return (
-    <div key={uuid} className={styles.item}>
+    <div className={styles.item}>
       <div className={styles.wrapper}>
 
         <button className={styles.buttonDrag}>

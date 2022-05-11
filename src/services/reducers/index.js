@@ -1,4 +1,3 @@
-import uuid from 'react-uuid';
 import { combineReducers } from 'redux';
 import {
   GET_INGREDIENTS_REQUEST,
@@ -11,6 +10,7 @@ import {
   DECREASE_ITEM,
   GET_ORDER_NUMBER_SUCCESS,
   REORGANIZE_ITEMS,
+  GENERATE_UNIQUE_KEY,
   TAB_SWITCH
 } from '../actions/index';
 
@@ -24,6 +24,7 @@ const initialState = {
     totalPrice: 0,
     orderId: 0
   },
+  uniqueKeys: [],
   currentTab: 'bun'
 };
 
@@ -44,7 +45,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         currentOrder: {
           ...state.currentOrder,
           burger: action.burger.map(item => {
-            return { ...item, key: uuid() }
+            return item
           })
         }
       };
@@ -71,7 +72,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         }
       });
 
-      tempArr.push({ ...newItem, key: uuid() })
+      tempArr.push(newItem)
 
       return {
         ...state,
@@ -80,7 +81,7 @@ export const ingredientsReducer = (state = initialState, action) => {
             if (item.type === 'bun') {
               state.ingredientsList.filter(item => item.type === 'bun').map(item => item.__v = 0);
             }
-            return { ...item, __v: ++item.__v, key: uuid() }
+            return { ...item, __v: ++item.__v }
           } else {
             return item
           }
@@ -89,7 +90,7 @@ export const ingredientsReducer = (state = initialState, action) => {
           ...state.currentOrder,
           burger: tempArr.map((item, index) => {
             const objClone = { ...item };
-            const objNew = Object.assign(objClone, { order: index, uuid: uuid(), __v: 1 });
+            const objNew = Object.assign(objClone, { __v: 1 });
             return objNew
           })
         }
@@ -129,6 +130,12 @@ export const ingredientsReducer = (state = initialState, action) => {
           burger: [...bun, ...action.newBurgerState]
         }
       }
+    }
+    case GENERATE_UNIQUE_KEY: {
+      return {
+        ...state,
+        uniqueKeys: [...state.uniqueKeys, action.uuid]
+      };
     }
     case TAB_SWITCH: {
       return {

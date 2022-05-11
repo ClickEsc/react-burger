@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
 import styles from './draggable-constructor-ingredient.module.css';
 
-function DraggableConstructorIngredient({ item, index, dragRefType, children, ingredientData, moveIngredient }) {
+function DraggableConstructorIngredient({ index, dragRefType, children, ingredientData, moveIngredient }) {
   const ref = useRef();
 
   const [{ isDrag }, dragRef] = useDrag({
@@ -29,8 +29,8 @@ function DraggableConstructorIngredient({ item, index, dragRefType, children, in
       const clientOffset = monitor.getClientOffset()
       const hoverClientY = clientOffset.y - hoverBoundingRect.top
 
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return
+      if (dragIndex < hoverIndex || hoverClientY < hoverMiddleY) return
+      if (dragIndex > hoverIndex || hoverClientY > hoverMiddleY) return
 
       moveIngredient(dragIndex, hoverIndex)
       item.index = hoverIndex

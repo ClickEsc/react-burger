@@ -1,12 +1,12 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import uuid from 'react-uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import {
   Button,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { INCREASE_ITEM, REORGANIZE_ITEMS, getCurrentOrderNumber } from '../../services/actions';
+import { INCREASE_ITEM, REORGANIZE_ITEMS, GENERATE_UNIQUE_KEY, getCurrentOrderNumber } from '../../services/actions';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
@@ -15,6 +15,7 @@ import styles from './burger-constructor.module.css';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
+  const { uniqueKeys } = useSelector(store => store.app);
   const { burger, orderId } = useSelector(store => store.app.currentOrder);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const totalPrice = useSelector(store =>
@@ -29,6 +30,10 @@ function BurgerConstructor() {
       isHover: monitor.isOver(),
     }),
     drop(item) {
+      dispatch({
+        type: GENERATE_UNIQUE_KEY,
+        uuid: uuidv4()
+      });
       dispatch({
         type: INCREASE_ITEM,
         item
@@ -87,13 +92,14 @@ function BurgerConstructor() {
         }
 
         const specialName = setName(contentStyle);
+        console.log(uniqueKeys)
 
         return (
           <>
             {contentStyle === "content" 
               ?  
                 <DraggableConstructorIngredient
-                  key={uuid + item + contentStyle}
+                  key={uniqueKeys[index]}
                   uuid={uuid}
                   index={index}
                   dragRefType="constructorIngredient"
@@ -115,7 +121,7 @@ function BurgerConstructor() {
                 </DraggableConstructorIngredient>
               :
                 <li
-                  key={uuid + item + contentStyle}
+                  key={uniqueKeys[index]}
                   className={styles.listItem}>
                   <BurgerConstructorItem
                     item={item}
@@ -140,7 +146,7 @@ function BurgerConstructor() {
         return (
           <ul ref={dropTargetRef} className={styles.list}>
             {bunOrder.length ? renderItem(bunOrder, 'topContent', true) : <></>}
-            <li key={uuid()} className={styles.listItem}>
+            <li key={uuidv4()} className={styles.listItem}>
               <ul className={`${styles.innerList} ${!innerOrder.length ? styles.innerListEmpty : ''}`}>
                 {burger.length && innerOrder.length
                   ? renderItem(innerOrder, 'content', false)

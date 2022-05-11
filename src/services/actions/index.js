@@ -31,9 +31,7 @@ export function getBurgerIngredients() {
           dispatch({
             type: GET_INGREDIENTS_SUCCESS,
             ingredientsList: res.data,
-            burger: res.data.map(item => {
-              return {...item, key: uuid()}
-            })
+            burger: []
           });
         } else {
           dispatch({

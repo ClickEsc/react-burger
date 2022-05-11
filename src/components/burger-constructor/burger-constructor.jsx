@@ -15,6 +15,7 @@ import styles from './burger-constructor.module.css';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
+  const { ingredientsList } = useSelector(store => store.app);
   const { burger, orderId } = useSelector(store => store.app.currentOrder);
   const [dragId, setDragId] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,7 +36,7 @@ function BurgerConstructor() {
       // console.log(item, monitor)
       dispatch({
         type: INCREASE_ITEM,
-        id: item.id
+        item
       });
     },
   });
@@ -120,7 +121,7 @@ function BurgerConstructor() {
   const renderItem = (arr, contentStyle, locked) => {
     return arr.map((item, index) => {
       if (item) {
-        const { _id, __v, image, price, name } = item;
+        const { _id, uuid, image, price, name } = item;
 
         const setName = (contentStyle) => {
           switch (contentStyle) {
@@ -143,17 +144,17 @@ function BurgerConstructor() {
             {contentStyle === "content" 
               ?  
                 <DraggableIngredient
-                  key={uuid() + item + contentStyle}
+                  key={uuid + item + contentStyle}
                   dragRefType="constructorIngredient"
                   ingredientData={item}
                   className={styles.listItem}
                   // handleDrag={handleDrag}
                 >
-                  <BurgerConstructorItem item={item} _id={_id} image={image} price={price} name={specialName} contentStyle={contentStyle} locked={locked} />
+                  <BurgerConstructorItem item={item} uuid={uuid} _id={_id} image={image} price={price} name={specialName} contentStyle={contentStyle} locked={locked} />
                 </DraggableIngredient>
               :
-                <li key={uuid() + item + contentStyle} className={styles.listItem}>
-                  <BurgerConstructorItem item={item} _id={_id} image={image} price={price} name={specialName} contentStyle={contentStyle} locked={locked} />
+                <li key={uuid + item + contentStyle} className={styles.listItem}>
+                  <BurgerConstructorItem item={item} uuid={uuid} _id={_id} image={image} price={price} name={specialName} contentStyle={contentStyle} locked={locked} />
                 </li>
             }
           </>
@@ -164,13 +165,13 @@ function BurgerConstructor() {
 
   const content = useMemo(
     () => {
-      if (burger.length) {
+      // if (burger.length) {
         return (
           <ul ref={dropTargetRef} className={styles.list}>
             {bunOrder.length ? renderItem(bunOrder, 'topContent', true) : <></>}
             <li key={uuid()} className={styles.listItem}>
               <ul ref={constructorDropTargetRef} className={`${styles.innerList} ${!innerOrder.length ? styles.innerListEmpty : ''}`}>
-                {innerOrder.length
+                {burger.length && innerOrder.length
                   ? renderItem(innerOrder, 'content', false)
                   : <p key="text" className={styles.innerEmpty}>Перенесите сюда желаемый ингредиент</p>}
               </ul>
@@ -178,7 +179,7 @@ function BurgerConstructor() {
             {bunOrder.length ? renderItem(bunOrder, 'bottomContent', true) : <></>}
           </ul>
         )
-      }
+      // }
     },
     [burger]
   );

@@ -10,11 +10,11 @@ import {
 import { DECREASE_ITEM } from '../../services/actions';
 import styles from './burger-constructor-item.module.css';
 
-function BurgerConstructorItem({ _id, image, price, name, contentStyle, locked }) {
+function BurgerConstructorItem({ _id, uuid, image, price, name, contentStyle, locked }) {
   const dispatch = useDispatch();
 
   const onDeleteBtnClick = () => {
-    dispatch({ type: DECREASE_ITEM, id: _id })
+    dispatch({ type: DECREASE_ITEM, id: _id, uuid })
   }
 
   return (

@@ -1,13 +1,13 @@
 import React from 'react';
-import { useDrag } from 'react-dnd';
+import { useDrag, useDrop } from 'react-dnd';
+import { useDispatch } from 'react-redux';
 import styles from './draggable-ingredient.module.css';
 
-function DraggableIngredient({ dragRefType, children, ingredientData, handleDrag }) {
+function DraggableIngredient({ item, dragRefType, children, ingredientData }) {
+  const dispatch = useDispatch();
   const [{ isDrag }, dragRef] = useDrag({
       type: dragRefType,
-      item: {
-        id: ingredientData._id
-      },
+      item: ingredientData,
       collect: monitor => ({
         isDrag: monitor.isDragging()
       })

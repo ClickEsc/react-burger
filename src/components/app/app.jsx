@@ -15,22 +15,18 @@ function App() {
   const {
     ingredientsList,
     ingredientsRequest,
-    ingredientsFailed,
-    constructorIngredientsRequest,
-    constructorIngredientsFailed,
+    ingredientsFailed
   } = useSelector(store => store.app);
-  const { burger } = useSelector(store => store.app.currentOrder);
 
   const content = useMemo(
     () => {
-      if ((ingredientsRequest || constructorIngredientsRequest) && !ingredientsFailed && !constructorIngredientsFailed) {
-        return <PanelText text={IS_LOADING_TEXT} isError={ingredientsFailed || constructorIngredientsFailed} />
+      if (ingredientsRequest&& !ingredientsFailed) {
+        return <PanelText text={IS_LOADING_TEXT} isError={ingredientsFailed} />
       }
-      if (ingredientsFailed || constructorIngredientsFailed) {
-        return <PanelText text={HAS_ERROR_TEXT} isError={ingredientsFailed || constructorIngredientsFailed} />
+      if (ingredientsFailed) {
+        return <PanelText text={HAS_ERROR_TEXT} isError={ingredientsFailed} />
       }
-      if (!ingredientsRequest && !ingredientsFailed && ingredientsList.length &&
-        !constructorIngredientsRequest && !constructorIngredientsFailed && burger.length) {
+      if (!ingredientsRequest && !ingredientsFailed && ingredientsList.length) {
         return <Main />
       }
        else {
@@ -40,10 +36,7 @@ function App() {
     [
       ingredientsRequest,
       ingredientsFailed,
-      ingredientsList,
-      constructorIngredientsRequest,
-      constructorIngredientsFailed,
-      burger
+      ingredientsList
     ]
   );
 

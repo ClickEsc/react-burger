@@ -1,10 +1,8 @@
 import React from 'react';
-import { useDrag, useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
+import { useDrag } from 'react-dnd';
 import styles from './draggable-ingredient.module.css';
 
-function DraggableIngredient({ item, dragRefType, children, ingredientData }) {
-  const dispatch = useDispatch();
+function DraggableIngredient({ dragRefType, children, ingredientData }) {
   const [{ isDrag }, dragRef] = useDrag({
       type: dragRefType,
       item: ingredientData,
@@ -16,7 +14,6 @@ function DraggableIngredient({ item, dragRefType, children, ingredientData }) {
   return (
     <li
       ref={dragRef}
-      // handleDrag={handleDrag}
       className={isDrag ? styles.dragged : ''}
     >
       {children}

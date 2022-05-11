@@ -120,12 +120,13 @@ export const ingredientsReducer = (state = initialState, action) => {
         }
       }
     }
-    case REORGANIZE_ITEMS: {
+    case REORGANIZE_ITEMS: { 
+      const bun = [...state.currentOrder.burger].filter(item => item.type === 'bun');
       return {
         ...state,
         currentOrder: {
           ...state.currentOrder,
-          burger: action.newBurgerState
+          burger: [...bun, ...action.newBurgerState]
         }
       }
     }

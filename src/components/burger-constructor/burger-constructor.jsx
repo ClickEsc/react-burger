@@ -10,14 +10,12 @@ import { INCREASE_ITEM, REORGANIZE_ITEMS, getCurrentOrderNumber } from '../../se
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
+import DraggableConstructorIngredient from '../draggable-constructor-ingredient/draggable-constructor-ingredient';
 import styles from './burger-constructor.module.css';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
-  const { ingredientsList } = useSelector(store => store.app);
   const { burger, orderId } = useSelector(store => store.app.currentOrder);
-  const [dragId, setDragId] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const totalPrice = useSelector(store =>
     store.app.currentOrder.burger.reduce((acc, item) => {
@@ -25,15 +23,12 @@ function BurgerConstructor() {
     }, 0)
   );
 
-  // console.log('burger', burger);
-
   const [, dropTargetRef] = useDrop({
     accept: "ingredient",
     collect: monitor => ({
       isHover: monitor.isOver(),
     }),
-    drop(item, monitor) {
-      // console.log(item, monitor)
+    drop(item) {
       dispatch({
         type: INCREASE_ITEM,
         item
@@ -42,59 +37,13 @@ function BurgerConstructor() {
   });
 
   const moveIngredient = (dragIndex, hoverIndex) => {
-		const dragIngredient = burger[dragIndex];
-
-		const newBurgerState = {
-				$splice: [
-					[dragIndex, 1],
-					[hoverIndex, 0, dragIngredient]
-				]
-		}
+    innerOrder.splice(hoverIndex, 0, innerOrder.splice(dragIndex, 1)[0])
 
     dispatch({
       type: REORGANIZE_ITEMS,
-      newBurgerState
+      newBurgerState: innerOrder
     })
 	}
-
-  const [, constructorDropTargetRef] = useDrop({
-    accept: "constructorIngredient",
-    collect: monitor => ({
-      isHover: monitor.isOver(),
-    }),
-    // drop(item, monitor) {
-    //   console.log(item, monitor.targetId)
-    //   moveIngredient(item.id, monitor.targetId)
-    // }
-  });
-
-  // const handleDrag = (ev) => {
-  //   console.log(ev)
-  //   setDragId(ev.currentTarget.id);
-  // };
-
-  // const handleDrop = (ev) => {
-  //   console.log(ev)
-  //   const dragBox = burger.find(item => item._id === dragId);
-  //   const dropBox = burger.find(item => item._id === ev.id);
-
-  //   const dragBoxOrder = dragBox.order;
-  //   const dropBoxOrder = dropBox.order;
-
-  //   const newBoxState = burger.map(item => {
-  //     if (item._id === dragId) {
-  //       item.order = dropBoxOrder;
-  //     }
-  //     if (item._id === ev.currentTarget.id) {
-  //       item.order = dragBoxOrder;
-  //     }
-  //     return item;
-  //   });
-
-  //   // setBoxes(newBoxState);
-  //   console.log(newBoxState)
-  // };
-
 
   const bunOrder = useMemo(
     () =>
@@ -143,18 +92,40 @@ function BurgerConstructor() {
           <>
             {contentStyle === "content" 
               ?  
-                <DraggableIngredient
+                <DraggableConstructorIngredient
                   key={uuid + item + contentStyle}
+                  uuid={uuid}
+                  index={index}
                   dragRefType="constructorIngredient"
                   ingredientData={item}
                   className={styles.listItem}
-                  // handleDrag={handleDrag}
+                  moveIngredient={moveIngredient}
                 >
-                  <BurgerConstructorItem item={item} uuid={uuid} _id={_id} image={image} price={price} name={specialName} contentStyle={contentStyle} locked={locked} />
-                </DraggableIngredient>
+                  <BurgerConstructorItem
+                    item={item}
+                    uuid={uuid}
+                    index={index}
+                    _id={_id}
+                    image={image}
+                    price={price}
+                    name={specialName}
+                    contentStyle={contentStyle}
+                    locked={locked}
+                  />
+                </DraggableConstructorIngredient>
               :
-                <li key={uuid + item + contentStyle} className={styles.listItem}>
-                  <BurgerConstructorItem item={item} uuid={uuid} _id={_id} image={image} price={price} name={specialName} contentStyle={contentStyle} locked={locked} />
+                <li
+                  key={uuid + item + contentStyle}
+                  className={styles.listItem}>
+                  <BurgerConstructorItem
+                    item={item}
+                    uuid={uuid}
+                    _id={_id}
+                    image={image}
+                    price={price}
+                    name={specialName}
+                    contentStyle={contentStyle}
+                    locked={locked} />
                 </li>
             }
           </>
@@ -170,7 +141,7 @@ function BurgerConstructor() {
           <ul ref={dropTargetRef} className={styles.list}>
             {bunOrder.length ? renderItem(bunOrder, 'topContent', true) : <></>}
             <li key={uuid()} className={styles.listItem}>
-              <ul ref={constructorDropTargetRef} className={`${styles.innerList} ${!innerOrder.length ? styles.innerListEmpty : ''}`}>
+              <ul className={`${styles.innerList} ${!innerOrder.length ? styles.innerListEmpty : ''}`}>
                 {burger.length && innerOrder.length
                   ? renderItem(innerOrder, 'content', false)
                   : <p key="text" className={styles.innerEmpty}>Перенесите сюда желаемый ингредиент</p>}

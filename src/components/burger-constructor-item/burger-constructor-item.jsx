@@ -10,7 +10,7 @@ import {
 import { DECREASE_ITEM } from '../../services/actions';
 import styles from './burger-constructor-item.module.css';
 
-function BurgerConstructorItem({ _id, uuid, image, price, name, contentStyle, locked }) {
+function BurgerConstructorItem({ _id, uuid, image, price, name, contentStyle, locked, moveIngredient }) {
   const dispatch = useDispatch();
 
   const onDeleteBtnClick = () => {
@@ -18,7 +18,7 @@ function BurgerConstructorItem({ _id, uuid, image, price, name, contentStyle, lo
   }
 
   return (
-    <div className={styles.item}>
+    <div key={uuid} className={styles.item}>
       <div className={styles.wrapper}>
 
         <button className={styles.buttonDrag}>

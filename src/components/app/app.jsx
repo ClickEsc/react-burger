@@ -51,10 +51,6 @@ function App() {
     dispatch(getBurgerIngredients())
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(getConstructorIngredients());
-  }, [dispatch]);
-
   return (
     <div className={styles.app}>
         <AppHeader />

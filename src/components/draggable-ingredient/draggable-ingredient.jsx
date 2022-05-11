@@ -2,17 +2,23 @@ import React from 'react';
 import { useDrag } from 'react-dnd';
 import styles from './draggable-ingredient.module.css';
 
-function DraggableIngredient({ children, ingredientData }) {
+function DraggableIngredient({ dragRefType, children, ingredientData, handleDrag }) {
   const [{ isDrag }, dragRef] = useDrag({
-      type: "ingredient",
-      item: { id: ingredientData._id },
+      type: dragRefType,
+      item: {
+        id: ingredientData._id
+      },
       collect: monitor => ({
         isDrag: monitor.isDragging()
       })
   });
 
   return (
-    <li ref={dragRef} className={isDrag ? styles.dragged : ''}>
+    <li
+      ref={dragRef}
+      // handleDrag={handleDrag}
+      className={isDrag ? styles.dragged : ''}
+    >
       {children}
     </li>
   );

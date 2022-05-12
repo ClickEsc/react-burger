@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { v4 as uuidv4 } from 'uuid';
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -10,7 +11,6 @@ import {
   DECREASE_ITEM,
   GET_ORDER_NUMBER_SUCCESS,
   REORGANIZE_ITEMS,
-  GENERATE_UNIQUE_KEY,
   TAB_SWITCH
 } from '../actions/index';
 
@@ -24,7 +24,6 @@ const initialState = {
     totalPrice: 0,
     orderId: 0
   },
-  uniqueKeys: [],
   currentTab: 'bun'
 };
 
@@ -90,7 +89,7 @@ export const ingredientsReducer = (state = initialState, action) => {
           ...state.currentOrder,
           burger: tempArr.map((item, index) => {
             const objClone = { ...item };
-            const objNew = Object.assign(objClone, { __v: 1 });
+            const objNew = Object.assign(objClone, { __v: 1, uuid: uuidv4() });
             return objNew
           })
         }
@@ -130,12 +129,6 @@ export const ingredientsReducer = (state = initialState, action) => {
           burger: [...bun, ...action.newBurgerState]
         }
       }
-    }
-    case GENERATE_UNIQUE_KEY: {
-      return {
-        ...state,
-        uniqueKeys: [...state.uniqueKeys, action.uuid]
-      };
     }
     case TAB_SWITCH: {
       return {

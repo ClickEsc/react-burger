@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import styles from './tab.module.css';
 import { TAB_SWITCH } from '../../services/actions';
@@ -14,4 +15,10 @@ export const Tab = ({ text, tabType, active }) => {
       {text}
     </div>
   );
+};
+
+Tab.propTypes = {
+  text: PropTypes.string.isRequired,
+  tabType: PropTypes.string.isRequired,
+  active: PropTypes.bool.isRequired
 };

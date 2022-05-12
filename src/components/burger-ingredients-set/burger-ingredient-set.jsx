@@ -1,6 +1,6 @@
 import React from 'react';
-import uuid from 'react-uuid';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 import { shallowEqual, useSelector } from 'react-redux';
 import BurgerIngredientCard from '../burger-ingredient-card/burger-ingredient-card';
 import styles from './burger-ingredients-set.module.css';
@@ -10,19 +10,10 @@ function BurgerIngredientsSet({ title, type }) {
   const { ingredientsList } = useSelector(store => store.app, shallowEqual);
 
   const renderedList = ingredientsList.filter(el => el.type === type).map(item => {
-    const { _id, __v, image, price, name, calories, proteins, fat, carbohydrates } = item;
-
     return (
-      <DraggableIngredient key={uuid()} dragRefType="ingredient" ingredientData={item} >
+      <DraggableIngredient key={uuidv4()} dragRefType="ingredient" ingredientData={item} >
         <BurgerIngredientCard
-          count={__v}
-          image={image} 
-          price={price} 
-          name={name}
-          calories={calories}
-          proteins={proteins}
-          fat={fat}
-          carbohydrates={carbohydrates}
+          item={item}
         />
       </DraggableIngredient>
     )

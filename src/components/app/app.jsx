@@ -7,7 +7,7 @@ import {
   IS_LOADING_TEXT,
   HAS_ERROR_TEXT
 } from '../../utils/constants';
-import { getBurgerIngredients, getConstructorIngredients } from '../../services/actions';
+import { getBurgerIngredients } from '../../services/actions';
 import styles from './app.module.css';
 
 function App() {

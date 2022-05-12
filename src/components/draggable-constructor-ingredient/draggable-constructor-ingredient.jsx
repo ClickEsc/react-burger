@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
 import styles from './draggable-constructor-ingredient.module.css';
+import { ingredientPropTypes } from '../../utils/types';
 
 function DraggableConstructorIngredient({ index, dragRefType, children, ingredientData, moveIngredient }) {
   const ref = useRef();
@@ -47,6 +48,14 @@ function DraggableConstructorIngredient({ index, dragRefType, children, ingredie
       {children}
     </li>
   );
+};
+
+DraggableConstructorIngredient.propTypes = {
+  index: PropTypes.number.isRequired,
+  dragRefType: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
+  ingredientData: ingredientPropTypes.isRequired,
+  moveIngredient: PropTypes.func.isRequired
 };
 
 export default DraggableConstructorIngredient;

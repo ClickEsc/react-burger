@@ -102,12 +102,6 @@ function BurgerConstructor() {
                 >
                   <BurgerConstructorItem
                     item={item}
-                    uuid={uuid}
-                    index={index}
-                    _id={_id}
-                    image={image}
-                    price={price}
-                    name={specialName}
                     contentStyle={contentStyle}
                     locked={locked}
                   />
@@ -117,11 +111,6 @@ function BurgerConstructor() {
                   className={styles.listItem}>
                   <BurgerConstructorItem
                     item={item}
-                    uuid={uuid}
-                    _id={_id}
-                    image={image}
-                    price={price}
-                    name={specialName}
                     contentStyle={contentStyle}
                     locked={locked} />
                 </li>

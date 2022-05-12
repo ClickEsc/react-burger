@@ -9,8 +9,10 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DECREASE_ITEM } from '../../services/actions';
 import styles from './burger-constructor-item.module.css';
+import { ingredientPropTypes } from '../../utils/types';
 
-function BurgerConstructorItem({ _id, uuid, image, price, name, contentStyle, locked, moveIngredient }) {
+function BurgerConstructorItem({ item, contentStyle, locked }) {
+  const { _id, uuid, image, price, name } = item;
   const dispatch = useDispatch();
 
   const onDeleteBtnClick = () => {
@@ -49,10 +51,7 @@ function BurgerConstructorItem({ _id, uuid, image, price, name, contentStyle, lo
 }
 
 BurgerConstructorItem.propTypes = {
-  _id: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
+  item: ingredientPropTypes.isRequired,
   contentStyle: PropTypes.string.isRequired,
   locked: PropTypes.bool.isRequired
 };

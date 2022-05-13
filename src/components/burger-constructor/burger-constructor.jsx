@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { debounce } from "debounce";
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import {
@@ -36,146 +37,156 @@ function BurgerConstructor() {
     },
   });
 
-  const moveIngredient = (dragIndex, hoverIndex) => {
-    innerOrder.splice(hoverIndex, 0, innerOrder.splice(dragIndex, 1)[0])
-
-    dispatch({
-      type: REORGANIZE_ITEMS,
-      newBurgerState: innerOrder
-    })
-	}
-
-  const bunOrder = useMemo(
-    () =>
+const bunOrder = useMemo(
+  () =>
     burger.length && [burger.find(item => item.__v > 0 && item.type === 'bun')],
-    [burger]
-  );
+  [burger]
+);
 
-  const innerOrder = useMemo(
-    () =>
+const innerOrder = useMemo(
+  () =>
     burger.length && burger.filter(item => item.__v > 0 && item.type !== 'bun'),
-    [burger]
-  );
+  [burger]
+);
 
-  const orderItemsIds = useMemo(
-    () =>
-      burger.length && burger.filter(item => item.__v).map(item => item._id),
-    [burger]
-  );
+const orderItemsIds = useMemo(
+  () =>
+    burger.length && burger.filter(item => item.__v).map(item => item._id),
+  [burger]
+);
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  }
+const moveIngredient = (dragIndex, hoverIndex) => {
+  const dragCard = innerOrder[dragIndex];
 
-  const renderItem = (arr, contentStyle, locked) => {
-    return arr.map((item, index) => {
-      if (item) {
-        const { _id, uuid, image, price, name } = item;
+  const newBurgerState = [...innerOrder];
+  newBurgerState.splice(dragIndex, 1);
+  newBurgerState.splice(hoverIndex, 0, dragCard);
 
-        const setName = (contentStyle) => {
-          switch (contentStyle) {
-            case 'topContent': {
-              return `${name} (верх)`
-            }
-            case 'bottomContent': {
-              return `${name} (низ)`
-            }
-            default: {
-              return name
-            }
+  dispatch({
+    type: REORGANIZE_ITEMS,
+    newBurgerState
+  })
+}
+
+const moveItems = useCallback(debounce(moveIngredient, 300), [innerOrder]);
+
+const toggleModal = () => {
+  setIsModalOpen(!isModalOpen);
+}
+
+const renderItem = (arr, contentStyle, locked) => {
+  return arr.map((item, index) => {
+    if (item) {
+      const { uuid, name } = item;
+
+      const setName = (contentStyle) => {
+        switch (contentStyle) {
+          case 'topContent': {
+            return `${name} (верх)`
+          }
+          case 'bottomContent': {
+            return `${name} (низ)`
+          }
+          default: {
+            return name
           }
         }
-
-        const specialName = setName(contentStyle);
-
-        return (
-          <React.Fragment key={uuidv4()}>
-            {contentStyle === "content" 
-              ?  
-                <DraggableConstructorIngredient
-                  uuid={uuid}
-                  index={index}
-                  dragRefType="constructorIngredient"
-                  ingredientData={item}
-                  className={styles.listItem}
-                  moveIngredient={moveIngredient}
-                >
-                  <BurgerConstructorItem
-                    item={item}
-                    contentStyle={contentStyle}
-                    locked={locked}
-                  />
-                </DraggableConstructorIngredient>
-              :
-                <li
-                  className={styles.listItem}>
-                  <BurgerConstructorItem
-                    item={item}
-                    contentStyle={contentStyle}
-                    locked={locked} />
-                </li>
-            }
-          </React.Fragment>
-        )
       }
-    })
-  }
 
-  const content = useMemo(
-    () => {
-      // if (burger.length) {
-        return (
-          <ul ref={dropTargetRef} className={styles.list}>
-            {bunOrder.length ? renderItem(bunOrder, 'topContent', true) : <></>}
-            <li key={uuidv4()} className={styles.listItem}>
-              <ul className={`${styles.innerList} ${!innerOrder.length ? styles.innerListEmpty : ''}`}>
-                {burger.length && innerOrder.length
-                  ? renderItem(innerOrder, 'content', false)
-                  : <p key="text" className={styles.innerEmpty}>Перенесите сюда желаемый ингредиент</p>}
-              </ul>
+      const specialName = setName(contentStyle);
+
+      return (
+        <React.Fragment key={uuid}>
+          {contentStyle === "content"
+            ?
+            <DraggableConstructorIngredient
+              uuid={uuid}
+              index={index}
+              dragRefType="constructorIngredient"
+              ingredientData={item}
+              className={styles.listItem}
+              moveIngredient={moveItems}
+            >
+              <BurgerConstructorItem
+                item={item}
+                name={specialName}
+                contentStyle={contentStyle}
+                locked={locked}
+              />
+            </DraggableConstructorIngredient>
+            :
+            <li
+              className={styles.listItem}>
+              <BurgerConstructorItem
+                item={item}
+                name={specialName}
+                contentStyle={contentStyle}
+                locked={locked} />
             </li>
-            {bunOrder.length ? renderItem(bunOrder, 'bottomContent', true) : <></>}
-          </ul>
-        )
-      // }
-    },
-    [burger]
-  );
+          }
+        </React.Fragment>
+      )
+    }
+  })
+}
 
-  const handlePlaceOrder = useCallback(
-    () => {
+const content = useMemo(
+  () => {
+    // if (burger.length) {
+    return (
+      <ul ref={dropTargetRef} className={styles.list}>
+        {bunOrder.length ? renderItem(bunOrder, 'topContent', true) : <></>}
+        <li key={uuidv4()} className={styles.listItem}>
+          <ul className={`${styles.innerList} ${!innerOrder.length ? styles.innerListEmpty : ''}`}>
+            {burger.length && innerOrder.length
+              ? renderItem(innerOrder.map((item, index) => {
+                return {...item, index: index }
+              }), 'content', false)
+              : <p key="text" className={styles.innerEmpty}>Перенесите сюда желаемый ингредиент</p>}
+          </ul>
+        </li>
+        {bunOrder.length ? renderItem(bunOrder, 'bottomContent', true) : <></>}
+      </ul>
+    )
+    // }
+  },
+  [burger]
+);
+
+const handlePlaceOrder = useCallback(
+  () => {
     dispatch(getCurrentOrderNumber(orderItemsIds))
     toggleModal();
   }, [orderItemsIds, getCurrentOrderNumber, dispatch]);
 
-  return (
-    <section className={styles.section}>
-      {content}
-      <div className={styles.total}>
-        <p className={`text text_type_digits-medium ${styles.price}`}>
-          {totalPrice}
-          <span className={styles.currency}>
-            <CurrencyIcon type="primary" />
-          </span>
-        </p>
-        <Button
-          disabled={!orderItemsIds.length}
-          type="primary"
-          size="large"
-          onClick={handlePlaceOrder}
-        >
-          Оформить заказ
-        </Button>
-      </div>
-      {isModalOpen && orderId &&
-        <Modal onClose={toggleModal}>
-          <OrderDetails
-            orderId={orderId}
-          />
-        </Modal>
-      }
-    </section>
-  );
+return (
+  <section className={styles.section}>
+    {content}
+    <div className={styles.total}>
+      <p className={`text text_type_digits-medium ${styles.price}`}>
+        {totalPrice}
+        <span className={styles.currency}>
+          <CurrencyIcon type="primary" />
+        </span>
+      </p>
+      <Button
+        disabled={!orderItemsIds.length}
+        type="primary"
+        size="large"
+        onClick={handlePlaceOrder}
+      >
+        Оформить заказ
+      </Button>
+    </div>
+    {isModalOpen && orderId &&
+      <Modal onClose={toggleModal}>
+        <OrderDetails
+          orderId={orderId}
+        />
+      </Modal>
+    }
+  </section>
+);
 }
 
 export default BurgerConstructor;

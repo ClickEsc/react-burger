@@ -11,8 +11,8 @@ import { DECREASE_ITEM } from '../../services/actions';
 import styles from './burger-constructor-item.module.css';
 import { ingredientPropTypes } from '../../utils/types';
 
-function BurgerConstructorItem({ item, contentStyle, locked }) {
-  const { _id, uuid, image, price, name } = item;
+function BurgerConstructorItem({ item, name, contentStyle, locked }) {
+  const { _id, uuid, image, price } = item;
   const dispatch = useDispatch();
 
   const onDeleteBtnClick = () => {
@@ -52,6 +52,7 @@ function BurgerConstructorItem({ item, contentStyle, locked }) {
 
 BurgerConstructorItem.propTypes = {
   item: ingredientPropTypes.isRequired,
+  name: PropTypes.string.isRequired,
   contentStyle: PropTypes.string.isRequired,
   locked: PropTypes.bool.isRequired
 };

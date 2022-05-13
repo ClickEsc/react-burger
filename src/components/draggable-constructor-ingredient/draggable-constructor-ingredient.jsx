@@ -8,11 +8,11 @@ function DraggableConstructorIngredient({ index, dragRefType, children, ingredie
   const ref = useRef();
 
   const [{ isDrag }, dragRef] = useDrag({
-      type: dragRefType,
-      item: ingredientData,
-      collect: monitor => ({
-        isDrag: monitor.isDragging()
-      })
+    type: dragRefType,
+    item: ingredientData,
+    collect: monitor => ({
+      isDrag: monitor.isDragging()
+    })
   });
 
   const [, dropRef] = useDrop({
@@ -23,15 +23,8 @@ function DraggableConstructorIngredient({ index, dragRefType, children, ingredie
       }
       const dragIndex = item.index
       const hoverIndex = index
+
       if (dragIndex === hoverIndex) return
-
-      const hoverBoundingRect = ref.current?.getBoundingClientRect()
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-      const clientOffset = monitor.getClientOffset()
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top
-
-      if (dragIndex < hoverIndex || hoverClientY < hoverMiddleY) return
-      if (dragIndex > hoverIndex || hoverClientY > hoverMiddleY) return
 
       moveIngredient(dragIndex, hoverIndex)
       item.index = hoverIndex
@@ -43,6 +36,7 @@ function DraggableConstructorIngredient({ index, dragRefType, children, ingredie
   return (
     <li
       ref={dndRef}
+      draggable
       className={isDrag ? styles.dragged : ''}
     >
       {children}

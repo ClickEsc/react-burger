@@ -7,7 +7,7 @@ import {
   LockIcon,
   DeleteIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DECREASE_ITEM } from '../../services/actions';
+import { decreaseItem } from '../../services/actions';
 import styles from './burger-constructor-item.module.css';
 import { ingredientPropTypes } from '../../utils/types';
 
@@ -16,7 +16,7 @@ function BurgerConstructorItem({ item, name, contentStyle, locked }) {
   const dispatch = useDispatch();
 
   const onDeleteBtnClick = () => {
-    dispatch({ type: DECREASE_ITEM, id: _id, uuid })
+    dispatch(decreaseItem(_id, uuid))
   }
 
   return (

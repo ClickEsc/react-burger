@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { TAB_SWITCH } from '../../services/actions';
 import BurgerIngredientsSet from '../burger-ingredients-set/burger-ingredient-set';
 import Tabs from '../tabs/tabs';
@@ -7,7 +7,7 @@ import styles from './burger-ingredients.module.css';
 
 function BurgerIngredients() {
   const dispatch = useDispatch();
-  const { ingredientsList } = useSelector(store => store.app);
+  const { ingredientsList } = useSelector(store => store.app, shallowEqual);
 
   const handleScroll = (e) => {
     const currentTabItems = [...e.target.querySelectorAll('h3')].filter(item => item.getBoundingClientRect().top <= e.target.getBoundingClientRect().top);

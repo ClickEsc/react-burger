@@ -1,11 +1,11 @@
 
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { Tab } from '../tab/tab';
 import styles from './tabs.module.css';
 
 function Tabs() {
-  const { currentTab } = useSelector(store => store.app);
+  const { currentTab } = useSelector(store => store.app, shallowEqual);
   return (
     <div className={styles.tabs}>
       <ul className={styles.list}>

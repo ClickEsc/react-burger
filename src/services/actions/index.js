@@ -15,12 +15,15 @@ export const GET_ORDER_NUMBER_REQUEST = 'GET_ORDER_NUMBER_REQUEST';
 export const GET_ORDER_NUMBER_SUCCESS = 'GET_ORDER_NUMBER_SUCCESS';
 export const GET_ORDER_NUMBER_FAILED = 'GET_ORDER_NUMBER_FAILED';
 
+export const RESET_ORDER = 'RESET_ORDER';
+
 export const REORGANIZE_ITEMS = 'REORGANIZE_ITEMS';
+export const DEFINE_CURRENT_INGREDIENT = 'DEFINE_CURRENT_INGREDIENT';
 
 export const TAB_SWITCH = 'TAB_SWITCH';
 
 export function getBurgerIngredients() {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST
     });
@@ -46,8 +49,8 @@ export function getBurgerIngredients() {
   };
 }
 
-export function getCurrentOrderNumber(orderItemsIds) {
-  return function(dispatch) {
+export function getCurrentOrderNumber(orderItemsIds, ingredientsList) {
+  return function (dispatch) {
     dispatch({
       type: GET_ORDER_NUMBER_REQUEST
     });
@@ -60,9 +63,16 @@ export function getCurrentOrderNumber(orderItemsIds) {
           });
         } else {
           dispatch({
-            type:GET_ORDER_NUMBER_FAILED
+            type: GET_ORDER_NUMBER_FAILED
           });
         }
+      })
+      .finally(res => {
+        dispatch({
+          type: RESET_ORDER,
+          ingredientsList,
+          burger: []
+        });
       })
       .catch(err => {
         dispatch({
@@ -72,11 +82,38 @@ export function getCurrentOrderNumber(orderItemsIds) {
   };
 }
 
+export function increaseItem(item) {
+  return {
+    type: INCREASE_ITEM,
+    item
+  }
+}
+
+export function decreaseItem(id, uuid) {
+  return {
+    type: DECREASE_ITEM,
+    id,
+    uuid
+  }
+}
+
 export function switchTab(tabType) {
-  return function(dispatch) {
-    dispatch({
-      type: TAB_SWITCH,
-      tabType
-    });
+  return {
+    type: TAB_SWITCH,
+    tabType
+  }
+}
+
+export function reorganizeItems(newBurgerState) {
+  return {
+    type: REORGANIZE_ITEMS,
+    newBurgerState
+  }
+}
+
+export function defineCurrentIngredient(ingredient) {
+  return {
+    type: DEFINE_CURRENT_INGREDIENT,
+    ingredient
   }
 }

@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   Counter,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { defineCurrentIngredient } from '../../services/actions';
+import { ingredientPropTypes } from '../../utils/types';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import styles from './burger-ingredient-card.module.css';
-import { ingredientPropTypes } from '../../utils/types';
 
 function BurgerIngredientCard({ item }) {
-  const { __v: count, image, price, name, calories, proteins, fat, carbohydrates } = item;
+  const dispatch = useDispatch();
+  const { __v: count, image, price, name } = item;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+    dispatch(defineCurrentIngredient(item))
   }
 
   return (
@@ -36,7 +40,13 @@ function BurgerIngredientCard({ item }) {
         </div>
       </div>
       {isModalOpen &&
-        <Modal title="Детали ингредиента" onClose={toggleModal}>
+        <Modal
+          title="Детали ингредиента"
+          onClose={() => {
+              toggleModal();
+              dispatch(defineCurrentIngredient({}));
+            }
+          }>
           <IngredientDetails
             item={item}
           />

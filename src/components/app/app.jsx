@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import PanelText from '../panel-text/panel-text';
@@ -16,7 +16,7 @@ function App() {
     ingredientsList,
     ingredientsRequest,
     ingredientsFailed
-  } = useSelector(store => store.app);
+  } = useSelector(store => store.app, shallowEqual);
 
   const content = useMemo(
     () => {

@@ -10,21 +10,29 @@ import {
   INCREASE_ITEM,
   DECREASE_ITEM,
   GET_ORDER_NUMBER_SUCCESS,
+  DEFINE_CURRENT_INGREDIENT,
   REORGANIZE_ITEMS,
-  TAB_SWITCH
+  RESET_ORDER,
+  TAB_SWITCH,
+  GET_ORDER_NUMBER_FAILED,
+  GET_ORDER_NUMBER_REQUEST,
 } from '../actions/index';
 
 const initialState = {
   ingredientsList: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
-  currentIngredient: {},
+  constructorIngredientsRequest: false,
+  constructorIngredientsFailed: false,
+  currentIngredient: null,
   currentOrder: {
     burger: [],
     totalPrice: 0,
-    orderId: 0
+    orderId: 0,
+    orderNumberFailed: false,
+    orderNumberRequest: false
   },
-  currentTab: 'bun'
+  currentTab: 'bun',
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -54,6 +62,31 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         ingredientsFailed: true,
         ingredientsRequest: false
+      };
+    }
+    case GET_CONSTRUCTOR_INGREDIENTS_REQUEST: {
+      return {
+        ...state,
+        constructorIngredientsRequest: true
+      };
+    }
+    case GET_CONSTRUCTOR_INGREDIENTS_SUCCESS: {
+      return {
+        ...state,
+        constructorIngredientsRequest: false,
+        constructorIngredientsFailed: false,
+        ingredientsList: [...state.ingredientsList].map(item => item.__v = 0),
+        currentOrder: {
+          ...state.currentOrder,
+          burger: action.burger
+        }
+      };
+    }
+    case GET_CONSTRUCTOR_INGREDIENTS_FAILED: {
+      return {
+        ...state,
+        constructorIngredientsFailed: true,
+        constructorIngredientsRequest: false
       };
     }
     case INCREASE_ITEM: {
@@ -111,12 +144,33 @@ export const ingredientsReducer = (state = initialState, action) => {
         }
       }
     }
+    case GET_ORDER_NUMBER_REQUEST: {
+      return {
+        ...state,
+        currentOrder: {
+          ...state.currentOrder,
+          orderNumberRequest: true
+        }
+      }
+    }
     case GET_ORDER_NUMBER_SUCCESS: {
       return {
         ...state,
         currentOrder: {
           ...state.currentOrder,
+          orderNumberRequest: false,
+          orderNumberFailed: false,
           orderId: action.orderId
+        }
+      }
+    }
+    case GET_ORDER_NUMBER_FAILED: {
+      return {
+        ...state,
+        currentOrder: {
+          ...state.currentOrder,
+          orderNumberFailed: true,
+          orderNumberRequest: false
         }
       }
     }
@@ -127,6 +181,24 @@ export const ingredientsReducer = (state = initialState, action) => {
         currentOrder: {
           ...state.currentOrder,
           burger: [...bun, ...action.newBurgerState]
+        }
+      }
+    }
+    case DEFINE_CURRENT_INGREDIENT: {
+      return {
+        ...state,
+        currentIngredient: action.ingredient
+      }
+    }
+    case RESET_ORDER: {
+      return {
+        ...state,
+        ingredientsList: [...state.ingredientsList].map(item => {
+          return { ...item, __v: 0 }
+        }),
+        currentOrder: {
+          ...state.currentOrder,
+          burger: []
         }
       }
     }

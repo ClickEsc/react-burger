@@ -1,11 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { 
+import { shallowEqual, useSelector } from 'react-redux';
+import {
   CheckMarkIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './order-details.module.css';
 
-function OrderDetails({ orderId }) {
+function OrderDetails() {
+  const { orderId } = useSelector(store => store.app.currentOrder, shallowEqual);
   return (
     <div className={styles.details}>
       <div>
@@ -25,9 +26,5 @@ function OrderDetails({ orderId }) {
     </div>
   )
 }
-
-OrderDetails.propTypes = {
-  orderId: PropTypes.number.isRequired
-};
 
 export default OrderDetails;

@@ -30,14 +30,13 @@ function BurgerConstructor() {
     }, 0)
   );
 
-  const uuid = uuidv4();
-
   const [, dropTargetRef] = useDrop({
     accept: "ingredient",
     collect: monitor => ({
       isHover: monitor.isOver(),
     }),
     drop(item) {
+      const uuid = uuidv4();
       dispatch(increaseItem(item, uuid))
     },
   });

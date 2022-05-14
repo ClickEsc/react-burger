@@ -82,10 +82,11 @@ export function getCurrentOrderNumber(orderItemsIds, ingredientsList) {
   };
 }
 
-export function increaseItem(item) {
+export function increaseItem(item, uuid) {
   return {
     type: INCREASE_ITEM,
-    item
+    item,
+    uuid
   }
 }
 

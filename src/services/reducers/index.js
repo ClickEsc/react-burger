@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { v4 as uuidv4 } from 'uuid';
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -104,7 +103,10 @@ export const ingredientsReducer = (state = initialState, action) => {
         }
       });
 
-      tempArr.push(newItem)
+      const objClone = { ...newItem };
+      const objNew = Object.assign(objClone, { __v: 1, uuid: action.uuid });
+
+      tempArr.push(objNew)
 
       return {
         ...state,
@@ -120,11 +122,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         }),
         currentOrder: {
           ...state.currentOrder,
-          burger: tempArr.map((item, index) => {
-            const objClone = { ...item };
-            const objNew = Object.assign(objClone, { __v: 1, uuid: uuidv4() });
-            return objNew
-          })
+          burger: tempArr
         }
       };
     }

@@ -1,8 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { shallowEqual, useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
 
-function IngredientDetails({ image, title, calories, proteins, fat, carbohydrates }) {
+function IngredientDetails() {
+  const { currentIngredient } = useSelector(state => state.app, shallowEqual);
+  const { image, title, calories, proteins, fat, carbohydrates } = currentIngredient;
   return (
     <div className={styles.details}>
       <div className={styles.main}>
@@ -30,14 +32,5 @@ function IngredientDetails({ image, title, calories, proteins, fat, carbohydrate
     </div>
   )
 }
-
-IngredientDetails.propTypes = {
-  image: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  calories: PropTypes.number.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired
-};
 
 export default IngredientDetails;

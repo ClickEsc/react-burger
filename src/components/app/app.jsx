@@ -1,48 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import PanelText from '../panel-text/panel-text';
-import { BurgerContext } from '../../contexts/burgerContext';
 import { 
-  ERROR_FETCH_GET_INGREDIENTS,
   IS_LOADING_TEXT,
   HAS_ERROR_TEXT
 } from '../../utils/constants';
+import { getBurgerIngredients } from '../../services/actions';
 import styles from './app.module.css';
-import { getIngredients } from '../../api/api';
 
 function App() {
-  const [state, setState] = useState({
-    ingredientsData: [],
-    isLoading: false,
-    hasError: false
-  });
-  const { ingredientsData, isLoading, hasError } = state;
-  const isDataValid = !isLoading && !hasError && ingredientsData.length;
+  const dispatch = useDispatch();
+  const {
+    ingredientsList,
+    ingredientsRequest,
+    ingredientsFailed
+  } = useSelector(store => store.app, shallowEqual);
+
+  const content = useMemo(
+    () => {
+      if (ingredientsRequest&& !ingredientsFailed) {
+        return <PanelText text={IS_LOADING_TEXT} isError={ingredientsFailed} />
+      }
+      if (ingredientsFailed) {
+        return <PanelText text={HAS_ERROR_TEXT} isError={ingredientsFailed} />
+      }
+      if (!ingredientsRequest && !ingredientsFailed && ingredientsList.length) {
+        return <Main />
+      }
+       else {
+        return <></>
+      }
+    },
+    [
+      ingredientsRequest,
+      ingredientsFailed,
+      ingredientsList
+    ]
+  );
 
   useEffect(() => {
-    const getIngredientsData = () => {
-      setState({ ...state, isLoading: true });
-      getIngredients()
-        .then((res) => {
-            setState({ ...state, ingredientsData: res.data, isLoading: false });
-        })
-        .catch((err) => {
-          console.log(`${ERROR_FETCH_GET_INGREDIENTS}: ${err}`);
-          setState({ ...state, hasError: true });
-        })
-    }
-    getIngredientsData();
-  }, [])
+    dispatch(getBurgerIngredients())
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>
-      <BurgerContext.Provider value={state.ingredientsData}>
         <AppHeader />
-        {isLoading && <PanelText text={IS_LOADING_TEXT} isError={hasError} />} 
-        {hasError && <PanelText text={HAS_ERROR_TEXT} isError={hasError} />}
-        {isDataValid ? <Main /> : <></>}
-      </BurgerContext.Provider>
+        {content}
     </div>
   );
 }

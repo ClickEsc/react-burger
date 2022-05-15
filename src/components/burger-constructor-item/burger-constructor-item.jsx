@@ -1,14 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import {
   DragIcon,
   CurrencyIcon,
   LockIcon,
   DeleteIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { decreaseItem } from '../../services/actions';
 import styles from './burger-constructor-item.module.css';
+import { ingredientPropTypes } from '../../utils/types';
 
-function BurgerConstructorItem({ image, price, name, contentStyle, locked }) {
+function BurgerConstructorItem({ item, name, contentStyle, locked }) {
+  const { _id, uuid, image, price } = item;
+  const dispatch = useDispatch();
+
+  const onDeleteBtnClick = () => {
+    dispatch(decreaseItem(_id, uuid))
+  }
+
   return (
     <div className={styles.item}>
       <div className={styles.wrapper}>
@@ -30,7 +40,7 @@ function BurgerConstructorItem({ image, price, name, contentStyle, locked }) {
             {locked ?
               <button className={styles.button}><LockIcon type="secondary" /></button>
               :
-              <button className={styles.button}><DeleteIcon type="primary" /></button>
+              <button className={styles.button}><DeleteIcon type="primary" onClick={onDeleteBtnClick} /></button>
             }
           </div>
         </div>
@@ -41,8 +51,7 @@ function BurgerConstructorItem({ image, price, name, contentStyle, locked }) {
 }
 
 BurgerConstructorItem.propTypes = {
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  item: ingredientPropTypes.isRequired,
   name: PropTypes.string.isRequired,
   contentStyle: PropTypes.string.isRequired,
   locked: PropTypes.bool.isRequired

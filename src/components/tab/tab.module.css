@@ -1,0 +1,16 @@
+.tab {
+  box-sizing: border-box;
+  min-height: 56px;
+  width: 100%;
+  color: var(--color-secondary);
+  text-align: center;
+  border-bottom: .5px solid var(--color-complementary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.active {
+  color: var(--color-basic);
+  border-bottom: 2px solid var(--color-active);
+}

@@ -1,36 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   Counter,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { defineCurrentIngredient } from '../../services/actions';
+import { ingredientPropTypes } from '../../utils/types';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import styles from './burger-ingredient-card.module.css';
 
-function BurgerIngredientCard({
-  image,
-  price,
-  name,
-  calories,
-  proteins,
-  fat,
-  carbohydrates
-}) {
-
+function BurgerIngredientCard({ item }) {
+  const dispatch = useDispatch();
+  const { __v: count, image, price, name } = item;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+    dispatch(defineCurrentIngredient(item))
   }
 
   return (
     <>
       <div className={styles.card} onClick={toggleModal}>
         <div className={styles.counter}>
-          {(name === "Краторная булка N-200i" || name === "Соус традиционный галактический") &&
-            <Counter count={1} size="default" />
-          }
+            {count > 0 ? <Counter count={count} size="default" /> : <></>}
         </div>
 
         <div className={styles.wrapper}>
@@ -46,14 +40,15 @@ function BurgerIngredientCard({
         </div>
       </div>
       {isModalOpen &&
-        <Modal title="Детали ингредиента" onClose={toggleModal}>
+        <Modal
+          title="Детали ингредиента"
+          onClose={() => {
+              toggleModal();
+              dispatch(defineCurrentIngredient({}));
+            }
+          }>
           <IngredientDetails
-            image={image}
-            title={name}
-            calories={calories}
-            proteins={proteins}
-            fat={fat}
-            carbohydrates={carbohydrates}
+            item={item}
           />
         </Modal>
       }
@@ -62,13 +57,7 @@ function BurgerIngredientCard({
 }
 
 BurgerIngredientCard.propTypes = {
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  calories: PropTypes.number.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired
+  item: ingredientPropTypes.isRequired
 };
 
 export default BurgerIngredientCard;

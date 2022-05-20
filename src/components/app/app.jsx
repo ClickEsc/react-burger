@@ -1,4 +1,5 @@
 import React, { useMemo, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
@@ -9,6 +10,7 @@ import {
 } from '../../utils/constants';
 import { getBurgerIngredients } from '../../services/actions';
 import styles from './app.module.css';
+import { IngredientDetailedPage } from '../../pages';
 
 function App() {
   const dispatch = useDispatch();
@@ -47,7 +49,16 @@ function App() {
   return (
     <div className={styles.app}>
         <AppHeader />
-        {content}
+          <Router>
+            <Switch>
+            <Route exact path="/">
+              {content}
+            </Route>
+            <Route path="/ingredients/:ingredientId">
+              <IngredientDetailedPage />
+            </Route>
+          </Switch>
+        </Router>
     </div>
   );
 }

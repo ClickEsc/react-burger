@@ -9,13 +9,11 @@ const checkRes = (res) => {
   return Promise.reject(new Error(`${ERROR_RES_STATUS} ${res.status}`));
 }
 
-// Получить список ингредиентов
 export const getIngredients = async () => {
   return fetch(`${API_BASE_URL}/ingredients`)
     .then(checkRes)
 }
 
-// Получить номер заказа
 export const getOrderNumber = async (ingredientsIdsArr) => {
   return fetch(`${API_BASE_URL}/orders`, {
     headers: {

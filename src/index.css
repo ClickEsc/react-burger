@@ -30,6 +30,15 @@ code {
     monospace;
 }
 
+.input {
+  margin-bottom: 24px !important;
+  width: 480px !important;
+}
+
+.button_button_type_secondary {
+  padding: 0;
+}
+
 button:hover {
   cursor: pointer;
 }

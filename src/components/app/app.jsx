@@ -4,13 +4,20 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import PanelText from '../panel-text/panel-text';
-import { 
+import {
+  LoginPage,
+  SignupPage,
+  ForgotPasswordPage,
+  ResetPasswordPage,
+  IngredientDetailedPage
+} from '../../pages';
+import {
   IS_LOADING_TEXT,
   HAS_ERROR_TEXT
 } from '../../utils/constants';
 import { getBurgerIngredients } from '../../services/actions';
 import styles from './app.module.css';
-import { IngredientDetailedPage } from '../../pages';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -22,7 +29,7 @@ function App() {
 
   const content = useMemo(
     () => {
-      if (ingredientsRequest&& !ingredientsFailed) {
+      if (ingredientsRequest && !ingredientsFailed) {
         return <PanelText text={IS_LOADING_TEXT} isError={ingredientsFailed} />
       }
       if (ingredientsFailed) {
@@ -31,7 +38,7 @@ function App() {
       if (!ingredientsRequest && !ingredientsFailed && ingredientsList.length) {
         return <Main />
       }
-       else {
+      else {
         return <></>
       }
     },
@@ -48,17 +55,29 @@ function App() {
 
   return (
     <div className={styles.app}>
-        <AppHeader />
-          <Router>
-            <Switch>
-            <Route exact path="/">
-              {content}
-            </Route>
-            <Route path="/ingredients/:ingredientId">
-              <IngredientDetailedPage />
-            </Route>
-          </Switch>
-        </Router>
+      <AppHeader />
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            {content}
+          </Route>
+          <Route path="/ingredients/:ingredientId">
+            <IngredientDetailedPage />
+          </Route>
+          <Route exact path="/register">
+            <SignupPage />
+          </Route>
+          <Route exact path="/login">
+            <LoginPage />
+          </Route>
+          <Route exact path="/forgot-password">
+            <ForgotPasswordPage />
+          </Route>
+          <Route exact path="/reset-password">
+            <ResetPasswordPage />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

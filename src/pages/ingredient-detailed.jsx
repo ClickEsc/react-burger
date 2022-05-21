@@ -3,7 +3,7 @@ import { useDispatch, shallowEqual, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import IngredientDetails from '../components/ingredient-details/ingredient-details';
 import { defineCurrentIngredient } from '../services/actions';
-import styles from './ingredient-detailed.module.css';
+import styles from './page.module.css';
 
 export function IngredientDetailedPage() {
   const dispatch = useDispatch();
@@ -28,15 +28,13 @@ export function IngredientDetailedPage() {
   );
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        {currentIngredient
-          ? <>
-            <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>
-            <IngredientDetails />
-          </>
-          : null}
-      </div>
+    <div className={styles.container}>
+      {currentIngredient
+        ? <>
+          <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>
+          <IngredientDetails />
+        </>
+        : null}
     </div>
   );
 }

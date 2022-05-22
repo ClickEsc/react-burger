@@ -1,9 +1,10 @@
 import React from 'react';
-import { 
-  Logo, 
-  BurgerIcon, 
-  ListIcon, 
-  ProfileIcon 
+import { Link } from 'react-router-dom';
+import {
+  Logo,
+  BurgerIcon,
+  ListIcon,
+  ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-nav.module.css';
 
@@ -13,14 +14,14 @@ function AppNav() {
       <div className={styles.container}>
 
         <div className={styles.wrapper}>
-          <div className={styles.btn}>
+          <Link to="/" className={styles.link}>
             <BurgerIcon type="primary" />
-            <p className="text text_type_main-default">Конструктор</p>
-          </div>
-          <div className={styles.btn}>
+            <p className={`text text_type_main-default ${styles.primary}`}>Конструктор</p>
+          </Link>
+          <Link to="/profile/orders" className={styles.link}>
             <ListIcon type="secondary" />
             <p className={`text text_type_main-default ${styles.secondary}`}>Лента заказов</p>
-          </div>
+          </Link>
         </div>
 
         <div className={styles.wrapperLogo}>
@@ -28,10 +29,10 @@ function AppNav() {
         </div>
 
         <div className={styles.wrapperEnd}>
-          <div className={styles.btn}>
-          <ProfileIcon type="secondary" />
-          <p className={`text text_type_main-default ${styles.secondary}`}>Личный кабинет</p>
-          </div>
+          <Link to="/profile" className={styles.link}>
+            <ProfileIcon type="secondary" />
+            <p className={`text text_type_main-default ${styles.secondary}`}>Личный кабинет</p>
+          </Link>
         </div>
 
       </div>

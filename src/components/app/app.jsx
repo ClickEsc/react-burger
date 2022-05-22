@@ -9,7 +9,8 @@ import {
   SignupPage,
   ForgotPasswordPage,
   ResetPasswordPage,
-  IngredientDetailedPage
+  IngredientDetailedPage,
+  ProfilePage
 } from '../../pages';
 import {
   IS_LOADING_TEXT,
@@ -55,8 +56,8 @@ function App() {
 
   return (
     <div className={styles.app}>
-      <AppHeader />
       <Router>
+        <AppHeader />
         <Switch>
           <Route exact path="/">
             {content}
@@ -66,6 +67,9 @@ function App() {
           </Route>
           <Route exact path="/register">
             <SignupPage />
+          </Route>
+          <Route exact path="/profile">
+            <ProfilePage />
           </Route>
           <Route exact path="/login">
             <LoginPage />

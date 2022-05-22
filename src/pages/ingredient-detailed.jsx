@@ -28,7 +28,7 @@ export function IngredientDetailedPage() {
   );
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${styles.containerDiff}`}>
       {currentIngredient
         ? <>
           <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>

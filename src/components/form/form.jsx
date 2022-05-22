@@ -8,16 +8,16 @@ export default function Form({ formName, title, inputs, btnTitle, extra }) {
   return (
     <form className={styles.form} name={formName}>
       <div className={styles.wrapper}>
-        <h2 className={`${styles.title} text text_type_main-medium`}>{title}</h2>
+        {title && <h2 className={`${styles.title} text text_type_main-medium`}>{title}</h2>}
         {inputs}
-        <Button
+        {btnTitle && <Button
           // disabled={}
           type="primary"
           size="large"
           // onClick={}
         >
           {btnTitle}
-        </Button>
+        </Button>}
         <div className={styles.extra}>
           {extra}
         </div>

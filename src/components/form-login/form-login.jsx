@@ -15,7 +15,7 @@ export default function FormLogin({ onBtnClick }) {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleIconCLick = () => {
+  const handleIconClick = () => {
     setIsValueVisible(!isValueVisible);
   }
 
@@ -40,7 +40,7 @@ export default function FormLogin({ onBtnClick }) {
             type={isValueVisible ? "text" : "password"}
             placeholder="Пароль"
             icon="ShowIcon"
-            onIconClick={handleIconCLick}
+            onIconClick={handleIconClick}
             onChange={onChange}
           />
         </>

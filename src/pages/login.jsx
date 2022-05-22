@@ -9,7 +9,7 @@ export function LoginPage() {
   const dispatch = useDispatch();
   const { user } = useSelector(store => store.auth, shallowEqual);
 
-  let handleLogin = useCallback(
+  const handleLogin = useCallback(
     (e, form) => {
       e.preventDefault();
       dispatch(login(form));
@@ -17,7 +17,7 @@ export function LoginPage() {
     [login, dispatch]
   );
 
-  if (user) {
+  if (user.isAuthorized) {
     return (
       <Redirect
         to={{

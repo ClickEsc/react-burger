@@ -15,7 +15,7 @@ export default function FormSignup({ onBtnClick }) {
 
   const [isValueVisible, setIsValueVisible] = useState(false);
 
-  const handleIconCLick = () => {
+  const handleIconClick = () => {
     setIsValueVisible(!isValueVisible);
   }
 
@@ -46,7 +46,7 @@ export default function FormSignup({ onBtnClick }) {
             type={isValueVisible ? "text" : "password"}
             placeholder="Пароль"
             icon="ShowIcon"
-            onIconClick={handleIconCLick}
+            onIconClick={handleIconClick}
             onChange={onChange}
           />
         </>

@@ -4,7 +4,13 @@ import {
   SIGNUP_FAILED,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
-  LOGIN_FAILED
+  LOGIN_FAILED,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAILED,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILED
 } from '../actions/auth';
 
 const initialState = {
@@ -12,7 +18,17 @@ const initialState = {
   signupFailed: false,
   loginRequest: false,
   loginFailed: false,
-  user: null
+  forgotPasswordRequest: false,
+  forgotPasswordFailed: false,
+  isResetPasswordEmailSent: false,
+  resetPasswordRequest: false,
+  resetPasswordFailed: false,
+  user: {
+    isAuthorized: false,
+    name: '',
+    email: '',
+    password: ''
+  }
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -28,7 +44,12 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         signupRequest: false,
         signupFailed: false,
-        user: action.user
+        user: {
+          ...state.user,
+          isAuthorized: false,
+          name: action.user.name,
+          email: action.user.email
+        }
       };
     }
     case SIGNUP_FAILED: {
@@ -49,7 +70,13 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         loginRequest: false,
         loginFailed: false,
-        user: action.user
+        user: {
+          ...state.user,
+          isAuthorized: true,
+          name: action.user.name,
+          email: action.user.email,
+          password: action.user.password
+        }
       };
     }
     case LOGIN_FAILED: {
@@ -57,6 +84,51 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         loginFailed: true,
         loginRequest: false
+      };
+    }
+    case FORGOT_PASSWORD_REQUEST: {
+      return {
+        ...state,
+        forgotPasswordRequest: true
+      };
+    }
+    case FORGOT_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        forgotPasswordRequest: false,
+        forgotPasswordFailed: false,
+        isResetPasswordEmailSent: true
+      };
+    }
+    case FORGOT_PASSWORD_FAILED: {
+      return {
+        ...state,
+        forgotPasswordFailed: true,
+        forgotPasswordRequest: false
+      };
+    }
+    case RESET_PASSWORD_REQUEST: {
+      return {
+        ...state,
+        resetPasswordRequest: true
+      };
+    }
+    case RESET_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        resetPasswordRequest: false,
+        resetPasswordFailed: false,
+        user: {
+          ...state.user,
+          password: action.user.password,
+        }
+      };
+    }
+    case RESET_PASSWORD_FAILED: {
+      return {
+        ...state,
+        resetPasswordFailed: true,
+        resetPasswordRequest: false
       };
     }
     default: {

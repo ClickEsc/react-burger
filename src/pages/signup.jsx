@@ -6,7 +6,8 @@ import styles from './page.module.css';
 
 export function SignupPage() {
   const dispatch = useDispatch();
-  let handleSignup = useCallback(
+  
+  const handleSignup = useCallback(
     (e, form) => {
       e.preventDefault();
       dispatch(signup(form));

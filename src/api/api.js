@@ -2,7 +2,7 @@ import { ERROR_RES_STATUS } from "../utils/constants";
 
 export const API_BASE_URL = 'https://norma.nomoreparties.space/api';
 
-const checkRes = (res) => {
+export const checkRes = (res) => {
   if (res.ok) {
     return res.json();
   }

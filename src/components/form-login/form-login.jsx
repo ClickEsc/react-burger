@@ -7,8 +7,13 @@ import Form from '../form/form';
 import styles from './form-login.module.css';
 import FormHint from '../form-hint/form-hint';
 
-export default function FormLogin() {
+export default function FormLogin({ onBtnClick }) {
+  const [form, setValue] = useState({ email: '', password: '' });
   const [isValueVisible, setIsValueVisible] = useState(false);
+
+  const onChange = e => {
+    setValue({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleIconCLick = () => {
     setIsValueVisible(!isValueVisible);
@@ -19,24 +24,39 @@ export default function FormLogin() {
       formName="form-login"
       title="Вход"
       btnTitle="Войти"
+      onBtnClick={(e) => onBtnClick(e, form)}
       inputs={
         <>
-          <Input type="email" placeholder="E-mail" />
           <Input
-            required
+            name="email"
+            type="email"
+            placeholder="E-mail"
+            onChange={onChange}
+          />
+          <Input
+            name="password"
             style={{ width: "480px"}}
             className={styles.input}
             type={isValueVisible ? "text" : "password"}
             placeholder="Пароль"
             icon="ShowIcon"
             onIconClick={handleIconCLick}
+            onChange={onChange}
           />
         </>
       }
       extra={
         <>
-          <FormHint text="Вы — новый пользователь?" btnText="Зарегистрироваться" />
-          <FormHint text="Забыли пароль?" btnText="Восстановить пароль" />
+          <FormHint
+            text="Вы — новый пользователь?"
+            linkTo="/register"
+            btnText="Зарегистрироваться"
+          />
+          <FormHint
+            text="Забыли пароль?"
+            linkTo="/forgot-password"
+            btnText="Восстановить пароль"
+          />
         </>
       }
     />

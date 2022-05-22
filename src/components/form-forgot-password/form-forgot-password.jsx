@@ -16,7 +16,11 @@ export default function FormForgotPassword() {
         <Input type="email" placeholder="Укажите e-mail" />
       }
       extra={
-        <FormHint text="Вспомнили пароль?" btnText="Войти" />
+        <FormHint
+          text="Вспомнили пароль?"
+          linkTo="/login"
+          btnText="Войти"
+        />
       }
     />
   )

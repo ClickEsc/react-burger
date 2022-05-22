@@ -33,7 +33,11 @@ export default function FormResetPassword() {
         </>
       }
       extra={
-        <FormHint text="Вспомнили пароль?" btnText="Войти" />
+        <FormHint
+          text="Вспомнили пароль?"
+          linkTo="/login"
+          btnText="Войти"
+        />
       }
     />
   )

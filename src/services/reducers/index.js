@@ -16,6 +16,7 @@ import {
   GET_ORDER_NUMBER_FAILED,
   GET_ORDER_NUMBER_REQUEST,
 } from '../actions/index';
+import { authReducer } from './auth';
 
 const initialState = {
   ingredientsList: [],
@@ -213,5 +214,6 @@ export const ingredientsReducer = (state = initialState, action) => {
 };
 
 export const rootReducer = combineReducers({
-  app: ingredientsReducer
+  app: ingredientsReducer,
+  auth: authReducer
 }) 

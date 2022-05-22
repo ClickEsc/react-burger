@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './form.module.css';
 
-export default function Form({ formName, title, inputs, btnTitle, extra }) {
+export default function Form({ formName, title, inputs, btnTitle, onBtnClick, extra }) {
   return (
     <form className={styles.form} name={formName}>
       <div className={styles.wrapper}>
@@ -14,7 +14,7 @@ export default function Form({ formName, title, inputs, btnTitle, extra }) {
           // disabled={}
           type="primary"
           size="large"
-          // onClick={}
+          onClick={onBtnClick}
         >
           {btnTitle}
         </Button>}

@@ -17,7 +17,7 @@ export function SignupPage() {
   
   return (
     <div className={styles.container}>
-      <FormSignup onBtnClick={handleSignup} />
+      <FormSignup onSubmit={handleSignup} />
     </div>
   );
 }

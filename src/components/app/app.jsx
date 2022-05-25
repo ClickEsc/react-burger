@@ -10,7 +10,8 @@ import {
   ForgotPasswordPage,
   ResetPasswordPage,
   IngredientDetailedPage,
-  ProfilePage
+  ProfilePage,
+  NotFoundPage
 } from '../../pages';
 import {
   IS_LOADING_TEXT,
@@ -18,6 +19,7 @@ import {
 } from '../../utils/constants';
 import { getBurgerIngredients } from '../../services/actions';
 import styles from './app.module.css';
+import ProtectedRoute from '../protected-route.jsx/protected-route';
 
 
 function App() {
@@ -59,17 +61,8 @@ function App() {
       <Router>
         <AppHeader />
         <Switch>
-          <Route exact path="/">
-            {content}
-          </Route>
-          <Route path="/ingredients/:ingredientId">
-            <IngredientDetailedPage />
-          </Route>
           <Route exact path="/register">
             <SignupPage />
-          </Route>
-          <Route exact path="/profile">
-            <ProfilePage />
           </Route>
           <Route exact path="/login">
             <LoginPage />
@@ -79,6 +72,21 @@ function App() {
           </Route>
           <Route exact path="/reset-password">
             <ResetPasswordPage />
+          </Route>
+          <ProtectedRoute exact path="/">
+            {content}
+          </ProtectedRoute>
+          <ProtectedRoute path="/ingredients/:ingredientId">
+            <IngredientDetailedPage />
+          </ProtectedRoute>
+          <ProtectedRoute exact path="/profile">
+            <ProfilePage />
+          </ProtectedRoute>
+          <ProtectedRoute exact path="/profile/orders">
+            {/* <ProfileOrders /> */}
+          </ProtectedRoute>
+          <Route path="/">
+            <NotFoundPage />
           </Route>
         </Switch>
       </Router>

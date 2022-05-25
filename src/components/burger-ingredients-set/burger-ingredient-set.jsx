@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useRouteMatch, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { shallowEqual, useSelector } from 'react-redux';
 import BurgerIngredientCard from '../burger-ingredient-card/burger-ingredient-card';
@@ -12,14 +12,14 @@ function BurgerIngredientsSet({ title, type }) {
 
   const renderedList = ingredientsList.filter(el => el.type === type).map(item => {
     const { _id } = item;
-    const link = `ingredients/${_id}`
+    const link = `ingredients/${_id}`;
     return (
       <DraggableIngredient key={_id} dragRefType="ingredient" ingredientData={item}>
-        <Link to={link} className={styles.link}>
+        {/* <Link to={link} className={styles.link}> */}
           <BurgerIngredientCard
             item={item}
           />
-        </Link>
+        {/* </Link> */}
       </DraggableIngredient>
     )
   })

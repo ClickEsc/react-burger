@@ -29,7 +29,7 @@ export function LoginPage() {
 
   return (
     <div className={styles.container}>
-      <FormLogin onBtnClick={handleLogin} />
+      <FormLogin onSubmit={handleLogin} />
     </div>
   );
 }

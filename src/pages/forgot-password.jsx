@@ -29,7 +29,7 @@ export function ForgotPasswordPage() {
   
   return (
     <div className={styles.container}>
-      <FormForgotPassword onBtnClick={handleForgotPassword} />
+      <FormForgotPassword onSubmit={handleForgotPassword} />
     </div>
   );
 }

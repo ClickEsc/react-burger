@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   Button
@@ -7,15 +8,11 @@ import styles from './form-hint.module.css';
 
 export default function FormHint({ text, linkTo, btnText }) {
   return (
-    <p className={`${styles.hint} text_color_inactive`}>
+    <p className={`${styles.hint} text text_type_main-default text_color_inactive`}>
       {text}
       <span className={styles.btnSecondaryWrapper}>
         <Link to={linkTo}>
-          <Button
-            // disabled={!orderItemsIds.length}
-            type="secondary"
-          // onClick={handlePlaceOrder}
-          >
+          <Button type="secondary">
             {btnText}
           </Button>
         </Link>
@@ -23,3 +20,9 @@ export default function FormHint({ text, linkTo, btnText }) {
     </p>
   )
 }
+
+FormHint.propTypes = {
+  text: PropTypes.string.isRequired,
+  linkTo: PropTypes.string.isRequired,
+  btnText: PropTypes.string.isRequired
+};

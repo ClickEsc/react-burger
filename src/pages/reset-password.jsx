@@ -17,7 +17,7 @@ export function ResetPasswordPage() {
 
   return (
     <div className={styles.container}>
-      <FormResetPassword onBtnClick={handleResetPassword} />
+      <FormResetPassword onSubmit={handleResetPassword} />
     </div>
   );
 }

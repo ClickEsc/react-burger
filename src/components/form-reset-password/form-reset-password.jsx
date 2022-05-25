@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Input
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,7 +7,7 @@ import Form from '../form/form';
 import styles from './form-reset-password.module.css';
 import FormHint from '../form-hint/form-hint';
 
-export default function FormResetPassword({ onBtnClick }) {
+export default function FormResetPassword({ onSubmit }) {
   const [form, setValue] = useState({ password: '', token: '' });
   const [isValueVisible, setIsValueVisible] = useState(false);
 
@@ -22,8 +23,8 @@ export default function FormResetPassword({ onBtnClick }) {
     <Form
       formName="form-reset-password"
       title="Восстановление пароля"
-      btnTitle="Сохранить"
-      onBtnClick={(e) => onBtnClick(e, form)}
+      submitBtnTitle="Сохранить"
+      onSubmit={(e) => onSubmit(e, form)}
       inputs={
         <>
           <Input
@@ -32,7 +33,7 @@ export default function FormResetPassword({ onBtnClick }) {
             className={styles.input}
             type={isValueVisible ? "text" : "password"}
             placeholder="Введите новый пароль"
-            icon="ShowIcon"
+            icon={isValueVisible ? "HideIcon" : "ShowIcon"}
             onIconClick={handleIconClick}
             value={form.password}
             onChange={onChange}
@@ -56,3 +57,7 @@ export default function FormResetPassword({ onBtnClick }) {
     />
   )
 }
+
+FormResetPassword.propTypes = {
+  onSubmit: PropTypes.func.isRequired
+};

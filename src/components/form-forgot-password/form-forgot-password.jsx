@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Input
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,7 +7,7 @@ import Form from '../form/form';
 import styles from './form-forgot-password.module.css';
 import FormHint from '../form-hint/form-hint';
 
-export default function FormForgotPassword({ onBtnClick }) {
+export default function FormForgotPassword({ onSubmit }) {
   const [form, setValue] = useState({ email: '' });
 
   const onChange = e => {
@@ -17,8 +18,8 @@ export default function FormForgotPassword({ onBtnClick }) {
     <Form
       formName="form-forgot-password"
       title="Восстановление пароля"
-      btnTitle="Восстановить"
-      onBtnClick={(e) => onBtnClick(e, form)}
+      submitBtnTitle="Восстановить"
+      onSubmit={(e) => onSubmit(e, form)}
       inputs={
         <Input
           name="email"
@@ -38,3 +39,7 @@ export default function FormForgotPassword({ onBtnClick }) {
     />
   )
 }
+
+FormForgotPassword.propTypes = {
+  onSubmit: PropTypes.func.isRequired
+};

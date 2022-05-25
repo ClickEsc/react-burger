@@ -1,12 +1,13 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
-import { editProfile } from '../../services/actions/auth';
+import { Link, useLocation, useHistory } from 'react-router-dom';
+import { editProfile, logout } from '../../services/actions/auth';
 import FormEditProfile from '../form-edit-profile/form-edit-profile';
 import styles from './profile.module.css';
 
 export default function Profile() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { pathname } = useLocation();
 
   const handleEditProfile = useCallback(
@@ -16,6 +17,15 @@ export default function Profile() {
     },
     [editProfile, dispatch]
   );
+
+  const handleLogout = useCallback(
+    () => {
+      dispatch(logout())
+      setTimeout(history.push("/login"), 300)
+    },
+    [logout, dispatch]
+  )
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -30,7 +40,10 @@ export default function Profile() {
             className={`text text_type_main-medium ${styles.link} ${pathname === "/profile/orders" ? styles.isActive : ""}`}>
               История заказов
             </Link>
-          <button className={`text text_type_main-medium ${styles.btn}`}>
+          <button
+            className={`text text_type_main-medium ${styles.btn}`}
+            onClick={handleLogout}
+          >
             <p className={`text text_type_main-medium ${styles.btnText}`}>Выйти</p>
           </button>
         </nav>
@@ -39,7 +52,7 @@ export default function Profile() {
           изменить свои персональные данные
         </p>
       </div>
-      <FormEditProfile onBtnClick={handleEditProfile} />
+      <FormEditProfile onSubmit={handleEditProfile} />
     </div>
   )
 }

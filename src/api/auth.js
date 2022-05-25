@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from "../services/utils";
+import { deleteCookie, getCookie, setCookie } from "../services/utils";
 import { API_BASE_URL, checkRes } from "./api"
 
 const AUTH_URL = `${API_BASE_URL}/auth`;
@@ -20,7 +20,7 @@ export const signupRequest = async (form) => {
 }
 
 export const loginRequest = async (form) => {
-  return await fetch(`${AUTH_URL}/login`, {
+  return fetch(`${AUTH_URL}/login`, {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
@@ -36,13 +36,63 @@ export const loginRequest = async (form) => {
     .then(res => {
       if (res.accessToken) {
         const accessToken = res.accessToken.split('Bearer ')[1];
-        console.log(accessToken)
         if (accessToken) {
-          setCookie('token', accessToken);
+          setCookie('accessToken', accessToken, { expires: 1200 });
         }
+      } if (res.refreshToken) {
+        setCookie('refreshToken', res.refreshToken);
       }
       return res
     })
+}
+
+export const logoutRequest = async () => {
+  const token = getCookie('refreshToken');
+  return fetch(`${AUTH_URL}/logout`, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify({ token })
+  })
+    .then(checkRes)
+    .then(res => {
+      deleteCookie('accessToken');
+      deleteCookie('refreshToken');
+      return res
+    })
+}
+
+export const refreshTokenRequest = async (token) => {
+  return await fetch(`${AUTH_URL}/token`, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify({ token })
+  })
+    .then(res => {
+      if (res.accessToken) {
+        const accessToken = res.accessToken.split('Bearer ')[1];
+        if (accessToken) {
+          setCookie('accessToken', accessToken, { expires: 1200 });
+        }
+      } if (res.refreshToken) {
+        setCookie('refreshToken', res.refreshToken);
+      }
+      return res
+    })
+    .then(checkRes)
 }
 
 export const forgotPasswordRequest = async (form) => {
@@ -77,6 +127,35 @@ export const resetPasswordRequest = async (form) => {
     .then(checkRes)
 }
 
+export const getProfileRequest = async () => {
+  return await fetch(`${AUTH_URL}/user`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + getCookie('accessToken')
+    }
+  })
+  .then(checkRes)
+  // .then((res) => {
+  //   try {
+  //     if (res.success) {
+  //       return res
+  //     }
+  //     if (res.status === 403) {
+  //       return res.json();
+  //     }
+  //   } catch (err) {
+  //     return (err)
+  //   }
+  // })
+  // .then((res) => {
+  //   if (res.message === "jwt malformed") {
+  //     const refreshToken = getCookie('refreshToken');
+  //     refreshTokenRequest(refreshToken);
+  //   }
+  // })
+}
+
 export const editProfileRequest = async (form) => {
   return await fetch(`${AUTH_URL}/user`, {
     method: 'PATCH',
@@ -85,7 +164,7 @@ export const editProfileRequest = async (form) => {
     credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + getCookie('token')
+      Authorization: 'Bearer ' + getCookie('accessToken')
     },
     redirect: 'follow',
     referrerPolicy: 'no-referrer',

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Input,
-  Button
+  Button,
+  HideIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Form from '../form/form';
 import styles from './form-login.module.css';
 import FormHint from '../form-hint/form-hint';
 
-export default function FormLogin({ onBtnClick }) {
+export default function FormLogin({ onSubmit }) {
   const [form, setValue] = useState({ email: '', password: '' });
   const [isValueVisible, setIsValueVisible] = useState(false);
 
@@ -23,14 +25,15 @@ export default function FormLogin({ onBtnClick }) {
     <Form
       formName="form-login"
       title="Вход"
-      btnTitle="Войти"
-      onBtnClick={(e) => onBtnClick(e, form)}
+      submitBtnTitle="Войти"
+      onSubmit={(e) => onSubmit(e, form)}
       inputs={
         <>
           <Input
             name="email"
             type="email"
             placeholder="E-mail"
+            value={form.email}
             onChange={onChange}
           />
           <Input
@@ -39,8 +42,9 @@ export default function FormLogin({ onBtnClick }) {
             className={styles.input}
             type={isValueVisible ? "text" : "password"}
             placeholder="Пароль"
-            icon="ShowIcon"
+            icon={isValueVisible ? "HideIcon" : "ShowIcon"}
             onIconClick={handleIconClick}
+            value={form.password}
             onChange={onChange}
           />
         </>
@@ -62,3 +66,7 @@ export default function FormLogin({ onBtnClick }) {
     />
   )
 }
+
+FormLogin.propTypes = {
+  onSubmit: PropTypes.func.isRequired
+};

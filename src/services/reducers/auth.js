@@ -5,26 +5,42 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILED,
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAILED,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_FAILED
+  RESET_PASSWORD_FAILED,
+  GET_PROFILE_REQUEST,
+  GET_PROFILE_SUCCESS,
+  GET_PROFILE_FAILED,
+  EDIT_PROFILE_REQUEST,
+  EDIT_PROFILE_SUCCESS,
+  EDIT_PROFILE_FAILED
 } from '../actions/auth';
+import { getCookie } from '../utils';
 
 const initialState = {
   signupRequest: false,
   signupFailed: false,
   loginRequest: false,
   loginFailed: false,
+  logoutRequest: false,
+  logoutFailed: false,
   forgotPasswordRequest: false,
   forgotPasswordFailed: false,
   isResetPasswordEmailSent: false,
   resetPasswordRequest: false,
   resetPasswordFailed: false,
+  getProfileRequest: false,
+  getProfileFailed: false,
+  editProfileRequest: false,
+  editProfileFailed: false,
   user: {
-    isAuthorized: false,
+    isAuthorized: !!getCookie('accessToken'),
     name: '',
     email: '',
     password: ''
@@ -46,7 +62,6 @@ export const authReducer = (state = initialState, action) => {
         signupFailed: false,
         user: {
           ...state.user,
-          isAuthorized: false,
           name: action.user.name,
           email: action.user.email
         }
@@ -73,8 +88,6 @@ export const authReducer = (state = initialState, action) => {
         user: {
           ...state.user,
           isAuthorized: true,
-          name: action.user.name,
-          email: action.user.email,
           password: action.user.password
         }
       };
@@ -84,6 +97,30 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         loginFailed: true,
         loginRequest: false
+      };
+    }
+    case LOGOUT_REQUEST: {
+      return {
+        ...state,
+        logoutRequest: true
+      };
+    }
+    case LOGOUT_SUCCESS: {
+      return {
+        ...state,
+        logoutRequest: false,
+        logoutFailed: false,
+        user: {
+          ...state.user,
+          isAuthorized: false,
+        }
+      };
+    }
+    case LOGOUT_FAILED: {
+      return {
+        ...state,
+        logoutFailed: true,
+        logoutRequest: false
       };
     }
     case FORGOT_PASSWORD_REQUEST: {
@@ -129,6 +166,57 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         resetPasswordFailed: true,
         resetPasswordRequest: false
+      };
+    }
+    case GET_PROFILE_REQUEST: {
+      return {
+        ...state,
+        getProfileRequest: true
+      };
+    }
+    case GET_PROFILE_SUCCESS: {
+      return {
+        ...state,
+        getProfileRequest: false,
+        getProfileFailed: false,
+        user: {
+          ...state.user,
+          name: action.user.name,
+          email: action.user.email
+        }
+      };
+    }
+    case GET_PROFILE_FAILED: {
+      return {
+        ...state,
+        getProfileFailed: true,
+        getProfileRequest: false
+      };
+    }
+    case EDIT_PROFILE_REQUEST: {
+      return {
+        ...state,
+        editProfileRequest: true
+      };
+    }
+    case EDIT_PROFILE_SUCCESS: {
+      return {
+        ...state,
+        editProfileRequest: false,
+        editProfileFailed: false,
+        user: {
+          ...state.user,
+          name: action.user.name,
+          email: action.user.email,
+          password: action.user.password
+        }
+      };
+    }
+    case EDIT_PROFILE_FAILED: {
+      return {
+        ...state,
+        editProfileFailed: true,
+        editProfileRequest: false
       };
     }
     default: {

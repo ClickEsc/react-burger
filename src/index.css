@@ -35,10 +35,6 @@ code {
   width: 480px !important;
 }
 
-.button_button_type_secondary {
-  padding: 0;
-}
-
 button:hover {
   cursor: pointer;
 }

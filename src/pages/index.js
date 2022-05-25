@@ -4,6 +4,7 @@ import { ForgotPasswordPage } from './forgot-password';
 import { ResetPasswordPage } from './reset-password';
 import { ProfilePage } from './profile';
 import { IngredientDetailedPage } from './ingredient-detailed';
+import { NotFoundPage } from './not-found';
 
 export {
   LoginPage,
@@ -11,5 +12,6 @@ export {
   ForgotPasswordPage,
   ResetPasswordPage,
   ProfilePage,
-  IngredientDetailedPage
+  IngredientDetailedPage,
+  NotFoundPage
 };

@@ -7,7 +7,7 @@ import styles from './page.module.css';
 
 export function IngredientDetailedPage() {
   const dispatch = useDispatch();
-  const { ingredientsList, currentIngredient } = useSelector(store => store.app, shallowEqual);
+  const { ingredientsList, currentIngredient, isIngredientModalVisible } = useSelector(store => store.app, shallowEqual);
   const { ingredientId } = useParams();
 
   const loadIngredientInfo = useCallback(
@@ -29,7 +29,7 @@ export function IngredientDetailedPage() {
 
   return (
     <div className={`${styles.container} ${styles.containerDiff}`}>
-      {currentIngredient
+      {!isIngredientModalVisible && currentIngredient
         ? <>
           <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>
           <IngredientDetails />

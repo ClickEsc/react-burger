@@ -50,8 +50,8 @@ export default function Form({
 }
 
 Form.propTypes = {
-  formName: PropTypes.string,
-  title: PropTypes.string.isRequired,
+  formName: PropTypes.string.isRequired,
+  title: PropTypes.string,
   inputs: PropTypes.element.isRequired,
   submitBtnTitle: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
@@ -61,7 +61,7 @@ Form.propTypes = {
 };
 
 Form.defaultProps = {
-  formName: '',
+  title: '',
   hasCancel: false,
   onCancel: () => {},
   extra: <></>,

@@ -1,10 +1,14 @@
 import React from 'react';
+import { useRouteMatch } from 'react-router-dom';
 import { shallowEqual, useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
 
 function IngredientDetails() {
-  const { currentIngredient } = useSelector(state => state.app, shallowEqual);
+  const match = useRouteMatch('/ingredients/:ingredientId');
+  const { ingredientsList } = useSelector(state => state.app, shallowEqual);
+  const currentIngredient = ingredientsList.find(({ _id }) => _id === match.params.ingredientId);
   const { image, title, calories, proteins, fat, carbohydrates } = currentIngredient;
+  
   return (
     <div className={styles.details}>
       <div className={styles.main}>

@@ -26,7 +26,7 @@ function AppNav() {
         </div>
 
         <div className={styles.wrapperLogo}>
-          <Logo />
+          <Link to="/" className={styles.link}><Logo /></Link>
         </div>
 
         <div className={styles.wrapperEnd}>

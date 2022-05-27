@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { debounce } from "debounce";
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -20,8 +21,9 @@ import {
 import styles from './burger-constructor.module.css';
 
 function BurgerConstructor() {
+  const location = useLocation();
   const dispatch = useDispatch();
-  const { ingredientsList }= useSelector(store => store.app, shallowEqual);
+  const { user } = useSelector(store => store.auth, shallowEqual);
   const { burger, orderId, orderNumberRequest, orderNumberFailed } = useSelector(store => store.app.currentOrder, shallowEqual);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const totalPrice = useSelector(store =>
@@ -29,6 +31,7 @@ function BurgerConstructor() {
       return acc + (item.type === 'bun' ? item.price * 2 : item.price) * item.__v
     }, 0)
   );
+  const history = useHistory();
 
   const [, dropTargetRef] = useDrop({
     accept: "ingredient",
@@ -179,6 +182,16 @@ function BurgerConstructor() {
 
   const handlePlaceOrder = useCallback(
     () => {
+      if (!user.isAuthorized) {
+        history.push({
+          pathname: '/login',
+          state: {
+            from: location,
+          },
+        });
+  
+        return;
+      }
       dispatch(getCurrentOrderNumber(orderItemsIds))
       toggleModal();
     }, [orderItemsIds, getCurrentOrderNumber, dispatch]);

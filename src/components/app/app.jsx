@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
@@ -20,15 +20,18 @@ import {
 import { getBurgerIngredients } from '../../services/actions';
 import styles from './app.module.css';
 import ProtectedRoute from '../protected-route.jsx/protected-route';
+import IngredientDetailedModal from '../ingredient-detailed-modal/ingredient-detailed-modal';
 
 
 function App() {
+  const location = useLocation();
   const dispatch = useDispatch();
   const {
     ingredientsList,
     ingredientsRequest,
     ingredientsFailed
   } = useSelector(store => store.app, shallowEqual);
+  const background = location?.state?.background;
 
   const content = useMemo(
     () => {
@@ -58,38 +61,39 @@ function App() {
 
   return (
     <div className={styles.app}>
-      <Router>
-        <AppHeader />
-        <Switch>
-          <Route exact path="/register">
-            <SignupPage />
-          </Route>
-          <Route exact path="/login">
-            <LoginPage />
-          </Route>
-          <Route exact path="/forgot-password">
-            <ForgotPasswordPage />
-          </Route>
-          <Route exact path="/reset-password">
-            <ResetPasswordPage />
-          </Route>
-          <ProtectedRoute exact path="/">
-            {content}
-          </ProtectedRoute>
-          <ProtectedRoute path="/ingredients/:ingredientId">
-            <IngredientDetailedPage />
-          </ProtectedRoute>
-          <ProtectedRoute exact path="/profile">
-            <ProfilePage />
-          </ProtectedRoute>
-          <ProtectedRoute exact path="/profile/orders">
-            {/* <ProfileOrders /> */}
-          </ProtectedRoute>
-          <Route path="/">
-            <NotFoundPage />
-          </Route>
-        </Switch>
-      </Router>
+      <AppHeader />
+      <Switch location={background || location}>
+        <Route exact path="/register">
+          <SignupPage />
+        </Route>
+        <Route exact path="/login">
+          <LoginPage />
+        </Route>
+        <Route exact path="/forgot-password">
+          <ForgotPasswordPage />
+        </Route>
+        <Route exact path="/reset-password">
+          <ResetPasswordPage />
+        </Route>
+        <Route exact path="/">
+          {content}
+        </Route>
+        <ProtectedRoute exact path="/ingredients/:ingredientId">
+          <IngredientDetailedPage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/profile">
+          <ProfilePage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/profile/orders">
+          {/* <ProfileOrders /> */}
+        </ProtectedRoute>
+        <Route path="/">
+          <NotFoundPage />
+        </Route>
+      </Switch>
+      {background && <ProtectedRoute exact path="/ingredients/:ingredientId">
+        <IngredientDetailedModal />
+      </ProtectedRoute>}
     </div>
   );
 }

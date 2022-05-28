@@ -78,9 +78,9 @@ function App() {
         <Route exact path="/">
           {content}
         </Route>
-        <ProtectedRoute exact path="/ingredients/:ingredientId">
+        <Route path="/ingredients/:ingredientId">
           <IngredientDetailedPage />
-        </ProtectedRoute>
+        </Route>
         <ProtectedRoute exact path="/profile">
           <ProfilePage />
         </ProtectedRoute>
@@ -91,9 +91,9 @@ function App() {
           <NotFoundPage />
         </Route>
       </Switch>
-      {background && <ProtectedRoute exact path="/ingredients/:ingredientId">
+      {background && <Route path="/ingredients/:ingredientId">
         <IngredientDetailedModal />
-      </ProtectedRoute>}
+      </Route>}
     </div>
   );
 }

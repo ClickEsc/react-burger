@@ -22,6 +22,8 @@ export const DEFINE_CURRENT_INGREDIENT = 'DEFINE_CURRENT_INGREDIENT';
 
 export const TAB_SWITCH = 'TAB_SWITCH';
 
+export const INGREDIENT_MODAL_VISIBLE = 'INGREDIENT_MODAL_VISIBLE';
+
 export function getBurgerIngredients() {
   return function (dispatch) {
     dispatch({
@@ -116,5 +118,12 @@ export function defineCurrentIngredient(ingredient) {
   return {
     type: DEFINE_CURRENT_INGREDIENT,
     ingredient
+  }
+}
+
+export function showIngredientModal(value) {
+  return {
+    type: INGREDIENT_MODAL_VISIBLE,
+    value
   }
 }

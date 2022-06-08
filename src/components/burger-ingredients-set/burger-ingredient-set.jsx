@@ -9,11 +9,12 @@ function BurgerIngredientsSet({ title, type }) {
   const { ingredientsList } = useSelector(store => store.app, shallowEqual);
 
   const renderedList = ingredientsList.filter(el => el.type === type).map(item => {
+    const { _id } = item;
     return (
-      <DraggableIngredient key={item._id} dragRefType="ingredient" ingredientData={item} >
-        <BurgerIngredientCard
-          item={item}
-        />
+      <DraggableIngredient key={_id} dragRefType="ingredient" ingredientData={item}>
+          <BurgerIngredientCard
+            item={item}
+          />
       </DraggableIngredient>
     )
   })

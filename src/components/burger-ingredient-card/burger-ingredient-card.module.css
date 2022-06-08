@@ -1,3 +1,8 @@
+.link {
+  color: unset;
+  text-decoration: none;
+}
+
 .card {
   padding-bottom: 30px;
   width: 280px;

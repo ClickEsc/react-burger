@@ -30,6 +30,11 @@ code {
     monospace;
 }
 
+.input {
+  margin-bottom: 24px !important;
+  width: 480px !important;
+}
+
 button:hover {
   cursor: pointer;
 }

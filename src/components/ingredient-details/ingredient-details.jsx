@@ -1,11 +1,16 @@
 import React from 'react';
+import { useRouteMatch } from 'react-router-dom';
 import { shallowEqual, useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
 
 function IngredientDetails() {
-  const { currentIngredient } = useSelector(state => state.app, shallowEqual);
+  const match = useRouteMatch('/ingredients/:ingredientId');
+  const { ingredientsList } = useSelector(state => state.app, shallowEqual);
+  const currentIngredient = ingredientsList.length && ingredientsList.find(({ _id }) => _id === match.params.ingredientId);
   const { image, title, calories, proteins, fat, carbohydrates } = currentIngredient;
+  
   return (
+    currentIngredient ?
     <div className={styles.details}>
       <div className={styles.main}>
         <img className={styles.img} src={image} alt={`${title}`} />
@@ -29,7 +34,7 @@ function IngredientDetails() {
           <p className="text text_type_digits-default">{carbohydrates}</p>
         </div>
       </div>
-    </div>
+    </div> : null
   )
 }
 

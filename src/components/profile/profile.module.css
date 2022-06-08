@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  gap: 60px;
+}
+
+.wrapper {
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.link,
+.btn {
+  height: 64px;
+  color: var(--color-secondary);
+  text-decoration: none;
+  display: flex;
+}
+
+.isActive {
+  color: var(--color-primary);
+}
+
+.btn {
+  background-color: transparent;
+  border: none;
+}
+
+.btnText {
+  margin: 0;
+  text-align: left;
+}
+
+.info {
+  margin: 0;
+  color: var(--color-secondary);
+  white-space: break-spaces;
+}

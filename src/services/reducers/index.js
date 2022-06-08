@@ -15,7 +15,9 @@ import {
   TAB_SWITCH,
   GET_ORDER_NUMBER_FAILED,
   GET_ORDER_NUMBER_REQUEST,
+  INGREDIENT_MODAL_VISIBLE
 } from '../actions/index';
+import { authReducer } from './auth';
 
 const initialState = {
   ingredientsList: [],
@@ -24,6 +26,7 @@ const initialState = {
   constructorIngredientsRequest: false,
   constructorIngredientsFailed: false,
   currentIngredient: null,
+  isIngredientModalVisible: false,
   currentOrder: {
     burger: [],
     totalPrice: 0,
@@ -206,6 +209,12 @@ export const ingredientsReducer = (state = initialState, action) => {
         currentTab: action.tabType
       };
     }
+    case INGREDIENT_MODAL_VISIBLE: {
+      return {
+        ...state,
+        isIngredientModalVisible: action.value
+      };
+    }
     default: {
       return state;
     }
@@ -213,5 +222,6 @@ export const ingredientsReducer = (state = initialState, action) => {
 };
 
 export const rootReducer = combineReducers({
-  app: ingredientsReducer
+  app: ingredientsReducer,
+  auth: authReducer
 }) 

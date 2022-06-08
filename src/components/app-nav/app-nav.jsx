@@ -20,7 +20,7 @@ function AppNav() {
             <p className={`text text_type_main-default ${pathname === "/" ? styles.primary : styles.secondary}`}>Конструктор</p>
           </Link>
           <Link to="/profile/orders" className={styles.link}>
-            <ListIcon className="icon" type={pathname === "/profile/orders" ? "primary" : "secondary"} />
+            <ListIcon type={pathname === "/profile/orders" ? "primary" : "secondary"} />
             <p className={`text text_type_main-default ${pathname === "/profile/orders" ? styles.primary : styles.secondary}`}>Лента заказов</p>
           </Link>
         </div>

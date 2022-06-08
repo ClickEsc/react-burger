@@ -27,7 +27,6 @@ function DraggableConstructorIngredient({ index, dragRefType, children, ingredie
       if (dragIndex === hoverIndex) return
 
       moveIngredient(dragIndex, hoverIndex)
-      // item.index = hoverIndex
     }
   })
 

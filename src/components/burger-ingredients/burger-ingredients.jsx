@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { TAB_SWITCH } from '../../services/actions';
+import { switchTab } from '../../services/actions';
 import BurgerIngredientsSet from '../burger-ingredients-set/burger-ingredient-set';
 import Tabs from '../tabs/tabs';
 import styles from './burger-ingredients.module.css';
@@ -8,6 +8,9 @@ import styles from './burger-ingredients.module.css';
 function BurgerIngredients() {
   const dispatch = useDispatch();
   const { ingredientsList } = useSelector(store => store.app, shallowEqual);
+  const bunTabRef = useRef();
+  const sauceTabRef = useRef();
+  const mainTabRef = useRef();
 
   const handleScroll = (e) => {
     const currentTabItems = [...e.target.querySelectorAll('h3')].filter(item => item.getBoundingClientRect().top <= e.target.getBoundingClientRect().top);
@@ -19,7 +22,7 @@ function BurgerIngredients() {
       "Начинки": "main"
     }
 
-    dispatch({ type: TAB_SWITCH, tabType: tabValuesObj[currentTabType] })
+    dispatch(switchTab(tabValuesObj[currentTabType]))
   }
 
   const content = useMemo(
@@ -27,9 +30,9 @@ function BurgerIngredients() {
       if (ingredientsList.length) {
         return ( 
           <div className={styles.sets} onScroll={handleScroll}>
-            <BurgerIngredientsSet title="Булки" type="bun" />
-            <BurgerIngredientsSet title="Соусы" type="sauce" />
-            <BurgerIngredientsSet title="Начинки" type="main" />
+            <BurgerIngredientsSet ref={bunTabRef} title="Булки" type="bun" />
+            <BurgerIngredientsSet ref={sauceTabRef} title="Соусы" type="sauce" />
+            <BurgerIngredientsSet ref={mainTabRef} title="Начинки" type="main" />
           </div>
         );
       }
@@ -41,7 +44,7 @@ function BurgerIngredients() {
     <section className={styles.section}>
       <div>
         <h3 className={`text text_type_main-large ${styles.title}`}>Соберите бургер</h3>
-        <Tabs />
+        <Tabs bunTabRef={bunTabRef} sauceTabRef={sauceTabRef} mainTabRef={mainTabRef} />
         {content}
       </div>
     </section>

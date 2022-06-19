@@ -20,7 +20,7 @@ const BurgerIngredients: FC = () => {
     () => {
       if (ingredientsList.length) {
         const handleScroll = (e: React.BaseSyntheticEvent<UIEvent, EventTarget & HTMLElement>): void => {
-          const currentTabItems = [...e.target.querySelectorAll('h3')].filter(item => item.getBoundingClientRect().top <= e.target.getBoundingClientRect().top);
+          const currentTabItems = [...e.target.querySelectorAll('h3')].filter(item => item.getBoundingClientRect().top - 50 <= e.target.getBoundingClientRect().top);
           const currentTabType: string = currentTabItems[currentTabItems.length - 1].innerText;
       
           const tabValuesObj: ItabValuesObj = {
@@ -28,6 +28,8 @@ const BurgerIngredients: FC = () => {
             "Соусы": "sauce",
             "Начинки": "main"
           }
+
+          console.log('onScroll', tabValuesObj[currentTabType])
       
           dispatch(switchTab(tabValuesObj[currentTabType]))
         }

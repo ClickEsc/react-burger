@@ -1,9 +1,9 @@
 import { deleteCookie, getCookie, setCookie } from "../services/utils";
 import { API_BASE_URL, checkRes } from "./api"
 
-const AUTH_URL = `${API_BASE_URL}/auth`;
+const AUTH_URL: string = `${API_BASE_URL}/auth`;
 
-export const signupRequest = async (form) => {
+export const signupRequest = async (form: HTMLFormElement) => {
   return await fetch(`${AUTH_URL}/register`, {
     method: 'POST',
     mode: 'cors',
@@ -19,7 +19,7 @@ export const signupRequest = async (form) => {
     .then(checkRes)
 }
 
-export const loginRequest = async (form) => {
+export const loginRequest = async (form: HTMLFormElement) => {
   return fetch(`${AUTH_URL}/login`, {
     method: 'POST',
     mode: 'cors',
@@ -68,7 +68,7 @@ export const logoutRequest = async () => {
     })
 }
 
-export const refreshTokenRequest = async (token) => {
+export const refreshTokenRequest = async (token: string) => {
   return await fetch(`${AUTH_URL}/token`, {
     method: 'POST',
     mode: 'cors',
@@ -81,7 +81,7 @@ export const refreshTokenRequest = async (token) => {
     referrerPolicy: 'no-referrer',
     body: JSON.stringify({ token })
   })
-    .then(res => {
+    .then((res: any) => {
       if (res.accessToken) {
         const accessToken = res.accessToken.split('Bearer ')[1];
         if (accessToken) {
@@ -95,7 +95,7 @@ export const refreshTokenRequest = async (token) => {
     .then(checkRes)
 }
 
-export const forgotPasswordRequest = async (form) => {
+export const forgotPasswordRequest = async (form: HTMLFormElement) => {
   return await fetch(`${API_BASE_URL}/password-reset`, {
     method: 'POST',
     mode: 'cors',
@@ -111,7 +111,7 @@ export const forgotPasswordRequest = async (form) => {
     .then(checkRes)
 }
 
-export const resetPasswordRequest = async (form) => {
+export const resetPasswordRequest = async (form: HTMLFormElement) => {
   return await fetch(`${API_BASE_URL}/password-reset/reset`, {
     method: 'POST',
     mode: 'cors',
@@ -156,7 +156,7 @@ export const getProfileRequest = async () => {
   // })
 }
 
-export const editProfileRequest = async (form) => {
+export const editProfileRequest = async (form: HTMLFormElement) => {
   return await fetch(`${AUTH_URL}/user`, {
     method: 'PATCH',
     mode: 'cors',

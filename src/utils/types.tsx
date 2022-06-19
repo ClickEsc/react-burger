@@ -1,3 +1,9 @@
+export interface ILocation {
+  from?: {
+    pathname: string;
+  }
+}
+
 export interface IIngredient {
   _id: string;
   name: string;

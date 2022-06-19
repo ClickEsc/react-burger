@@ -11,7 +11,7 @@ const IngredientDetailedModal: FC = () => {
 
   const onClose = useCallback(() => {
       history.goBack();
-      dispatch(defineCurrentIngredient({}));
+      dispatch(defineCurrentIngredient(null));
       dispatch(showIngredientModal(false));
   }, [history, dispatch]);
 

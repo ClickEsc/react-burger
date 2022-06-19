@@ -36,8 +36,8 @@ export const EDIT_PROFILE_REQUEST = 'EDIT_PROFILE_REQUEST';
 export const EDIT_PROFILE_SUCCESS = 'EDIT_PROFILE_SUCCESS';
 export const EDIT_PROFILE_FAILED = 'EDIT_PROFILE_FAILED';
 
-export function signup(form) {
-  return function (dispatch) {
+export function signup(form: HTMLFormElement) {
+  return function (dispatch: any) {
     dispatch({
       type: SIGNUP_REQUEST
     });
@@ -66,8 +66,8 @@ export function signup(form) {
   };
 }
 
-export function login(form) {
-  return function (dispatch) {
+export function login(form: HTMLFormElement) {
+  return function (dispatch: any) {
     dispatch({
       type: LOGIN_REQUEST
     });
@@ -95,7 +95,7 @@ export function login(form) {
 }
 
 export function logout() {
-  return function (dispatch) {
+  return function (dispatch: any) {
     dispatch({
       type: LOGOUT_REQUEST
     });
@@ -119,8 +119,8 @@ export function logout() {
   };
 }
 
-export function forgotPassword(form) {
-  return function (dispatch) {
+export function forgotPassword(form: HTMLFormElement) {
+  return function (dispatch: any) {
     dispatch({
       type: FORGOT_PASSWORD_REQUEST
     });
@@ -144,8 +144,8 @@ export function forgotPassword(form) {
   };
 }
 
-export function resetPassword(form) {
-  return function (dispatch) {
+export function resetPassword(form: HTMLFormElement) {
+  return function (dispatch: any) {
     dispatch({
       type: RESET_PASSWORD_REQUEST
     });
@@ -171,7 +171,7 @@ export function resetPassword(form) {
 }
 
 export function getProfile() {
-  return function (dispatch) {
+  return function (dispatch: any) {
     dispatch({
       type: GET_PROFILE_REQUEST
     });
@@ -199,8 +199,8 @@ export function getProfile() {
   };
 }
 
-export function editProfile(form) {
-  return function (dispatch) {
+export function editProfile(form: HTMLFormElement) {
+  return function (dispatch: any) {
     dispatch({
       type: EDIT_PROFILE_REQUEST
     });

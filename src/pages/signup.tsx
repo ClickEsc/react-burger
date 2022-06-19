@@ -5,7 +5,7 @@ import { signup } from '../services/actions/auth';
 import styles from './page.module.css';
 
 export function SignupPage() {
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   
   const handleSignup = useCallback(
     (e, form) => {

@@ -47,7 +47,7 @@ const initialState = {
   }
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state: any = initialState, action: any) => {
   switch (action.type) {
     case SIGNUP_REQUEST: {
       return {

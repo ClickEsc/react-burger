@@ -1,8 +1,9 @@
 import { ERROR_RES_STATUS } from "../utils/constants";
+import { IIngredient } from "../utils/types";
 
-export const API_BASE_URL = 'https://norma.nomoreparties.space/api';
+export const API_BASE_URL: string = 'https://norma.nomoreparties.space/api';
 
-export const checkRes = (res) => {
+export const checkRes = (res: Response) => {
   if (res.ok) {
     return res.json();
   }
@@ -14,7 +15,7 @@ export const getIngredients = async () => {
     .then(checkRes)
 }
 
-export const getOrderNumber = async (ingredientsIdsArr) => {
+export const getOrderNumber = async (ingredientsIdsArr: Array<IIngredient>) => {
   return fetch(`${API_BASE_URL}/orders`, {
     headers: {
       'Accept': 'application/json',

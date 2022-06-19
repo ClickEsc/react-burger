@@ -7,8 +7,8 @@ import styles from './page.module.css';
 
 export function ForgotPasswordPage() {
   const location = useLocation();
-  const dispatch = useDispatch();
-  const { isResetPasswordEmailSent } = useSelector(store => store.auth, shallowEqual);
+  const dispatch: any = useDispatch();
+  const { isResetPasswordEmailSent } = useSelector((store: { auth: any }) => store.auth, shallowEqual);
   const history = useHistory();
 
   const handleForgotPassword = useCallback(

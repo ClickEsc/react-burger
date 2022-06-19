@@ -18,6 +18,7 @@ import {
   INGREDIENT_MODAL_VISIBLE
 } from '../actions/index';
 import { authReducer } from './auth';
+import { IIngredient } from '../../utils/types';
 
 const initialState = {
   ingredientsList: [],
@@ -37,7 +38,7 @@ const initialState = {
   currentTab: 'bun',
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {
@@ -53,7 +54,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ingredientsList: action.ingredientsList,
         currentOrder: {
           ...state.currentOrder,
-          burger: action.burger.map(item => {
+          burger: action.burger.map((item: IIngredient) => {
             return item
           })
         }
@@ -77,7 +78,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         constructorIngredientsRequest: false,
         constructorIngredientsFailed: false,
-        ingredientsList: [...state.ingredientsList].map(item => item.__v = 0),
+        ingredientsList: [...state.ingredientsList].map((item: IIngredient) => item.__v = 0),
         currentOrder: {
           ...state.currentOrder,
           burger: action.burger
@@ -94,29 +95,29 @@ export const ingredientsReducer = (state = initialState, action) => {
     case INCREASE_ITEM: {
       let tempArr = [...state.currentOrder.burger];
 
-      const newItem = [...state.ingredientsList].find(item => {
+      const newItem: IIngredient | undefined = [...state.ingredientsList].find((item: IIngredient) => {
         if (item._id === action.item._id) {
           if (action.item.type === 'bun') {
-            const oldBun = [...state.currentOrder.burger].find(item => item.type === 'bun');
+            const oldBun = [...state.currentOrder.burger].find((item: IIngredient) => item.type === 'bun');
             if (oldBun) {
-              tempArr = [...state.currentOrder.burger].filter(item => item.type !== 'bun')
+              tempArr = [...state.currentOrder.burger].filter((item: IIngredient) => item.type !== 'bun')
             }
           }
           return item
         }
       });
 
-      const objClone = { ...newItem };
-      const objNew = Object.assign(objClone, { __v: 1, uuid: action.uuid });
+      const objClone = newItem && { ...newItem as IIngredient};
+      const objNew = !!objClone && Object.assign(objClone, { __v: 1, uuid: action.uuid });
 
-      tempArr.push(objNew)
+      !!objNew && tempArr.push(objNew)
 
       return {
         ...state,
-        ingredientsList: [...state.ingredientsList].map(item => {
+        ingredientsList: [...state.ingredientsList].map((item: IIngredient) => {
           if (item._id === action.item._id) {
             if (item.type === 'bun') {
-              state.ingredientsList.filter(item => item.type === 'bun').map(item => item.__v = 0);
+              state.ingredientsList.filter((item: IIngredient) => item.type === 'bun').map((item: IIngredient) => item.__v = 0);
             }
             return { ...item, __v: ++item.__v }
           } else {
@@ -132,12 +133,12 @@ export const ingredientsReducer = (state = initialState, action) => {
     case DECREASE_ITEM: {
       return {
         ...state,
-        ingredientsList: [...state.ingredientsList].map(item =>
+        ingredientsList: [...state.ingredientsList].map((item: IIngredient) =>
           item._id === action.id ? { ...item, __v: --item.__v } : item
         ),
         currentOrder: {
           ...state.currentOrder,
-          burger: [...state.currentOrder.burger].filter(item => {
+          burger: [...state.currentOrder.burger].filter((item: IIngredient) => {
             if (item.uuid !== action.uuid) {
               return item
             }
@@ -176,7 +177,7 @@ export const ingredientsReducer = (state = initialState, action) => {
       }
     }
     case REORGANIZE_ITEMS: { 
-      const bun = [...state.currentOrder.burger].filter(item => item.type === 'bun');
+      const bun = [...state.currentOrder.burger].filter((item: IIngredient) => item.type === 'bun');
       return {
         ...state,
         currentOrder: {
@@ -194,7 +195,7 @@ export const ingredientsReducer = (state = initialState, action) => {
     case RESET_ORDER: {
       return {
         ...state,
-        ingredientsList: [...state.ingredientsList].map(item => {
+        ingredientsList: [...state.ingredientsList].map((item: IIngredient) => {
           return { ...item, __v: 0 }
         }),
         currentOrder: {

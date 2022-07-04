@@ -1,6 +1,7 @@
 import React, { FC, useMemo, useEffect } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { shallowEqual } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import PanelText from '../panel-text/panel-text';
@@ -25,12 +26,12 @@ import IngredientDetailedModal from '../ingredient-detailed-modal/ingredient-det
 
 const App: FC = () => {
   const location = useLocation<{ background?: undefined }>();
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
   const {
     ingredientsList,
     ingredientsRequest,
     ingredientsFailed
-  } = useSelector((store: any) => store.app, shallowEqual);
+  } = useSelector((store) => store.app, shallowEqual);
   const background = location?.state?.background;
 
   const content = useMemo<JSX.Element>(

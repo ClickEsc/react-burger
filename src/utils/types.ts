@@ -4,6 +4,13 @@ export interface ILocation {
   }
 }
 
+export interface IUser {
+  isAuthorized?: boolean;
+  name?: string;
+  email?: string;
+  password?: string;
+}
+
 export interface IIngredient {
   _id: string;
   name: string;

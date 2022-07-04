@@ -1,3 +1,4 @@
+import { IUser } from '../../utils/types';
 import {
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
@@ -19,11 +20,31 @@ import {
   GET_PROFILE_FAILED,
   EDIT_PROFILE_REQUEST,
   EDIT_PROFILE_SUCCESS,
-  EDIT_PROFILE_FAILED
+  EDIT_PROFILE_FAILED,
+  TAuthActions
 } from '../actions/auth';
 import { getCookie } from '../utils';
 
-const initialState = {
+export type TAuthState = {
+  signupRequest: boolean;
+  signupFailed: boolean;
+  loginRequest: boolean;
+  loginFailed: boolean;
+  logoutRequest: boolean;
+  logoutFailed: boolean;
+  forgotPasswordRequest: boolean;
+  forgotPasswordFailed: boolean;
+  isResetPasswordEmailSent: boolean;
+  resetPasswordRequest: boolean;
+  resetPasswordFailed: boolean;
+  getProfileRequest: boolean;
+  getProfileFailed: boolean;
+  editProfileRequest: boolean;
+  editProfileFailed: boolean;
+  user: IUser
+};
+
+const initialState: TAuthState  = {
   signupRequest: false,
   signupFailed: false,
   loginRequest: false,
@@ -47,7 +68,7 @@ const initialState = {
   }
 };
 
-export const authReducer = (state: any = initialState, action: any) => {
+export const authReducer = (state: any = initialState, action: TAuthActions): TAuthState => {
   switch (action.type) {
     case SIGNUP_REQUEST: {
       return {

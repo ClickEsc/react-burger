@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
-import { shallowEqual, useSelector } from 'react-redux';
+import { shallowEqual } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import {
   CheckMarkIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './order-details.module.css';
 
 const OrderDetails: FC = () => {
-  const { orderId } = useSelector((store: { app: any }) => store.app.currentOrder, shallowEqual);
+  const { orderId } = useSelector((store) => store.app.currentOrder, shallowEqual);
   return (
     <div className={styles.details}>
       <div>

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import {
   DragIcon,
   CurrencyIcon,
@@ -12,7 +12,7 @@ import styles from './burger-constructor-item.module.css';
 
 const BurgerConstructorItem: FC<{ item: IIngredient, name: string, contentStyle: string, locked: boolean }> = ({ item, name, contentStyle, locked }) => {
   const { _id, uuid, image, price } = item;
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
 
   const onDeleteBtnClick = () => {
     dispatch(decreaseItem(_id, uuid))

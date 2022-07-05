@@ -15,7 +15,7 @@ export const getIngredients = async () => {
     .then(checkRes)
 }
 
-export const getOrderNumber = async (ingredientsIdsArr: Array<IIngredient>) => {
+export const getOrderNumber = async (ingredientsIdsArr: string[]) => {
   return fetch(`${API_BASE_URL}/orders`, {
     headers: {
       'Accept': 'application/json',

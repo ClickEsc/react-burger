@@ -151,7 +151,7 @@ export type TAuthActions =
   | IEditProfileSuccessAction
   | IEditProfileFailedAction;
 
-export const signup: TAppThunk = (form: HTMLFormElement) => {
+export const signup = (form: HTMLFormElement): TAppThunk => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: SIGNUP_REQUEST
@@ -181,7 +181,7 @@ export const signup: TAppThunk = (form: HTMLFormElement) => {
   };
 }
 
-export const login: TAppThunk = (form: HTMLFormElement) => {
+export const login = (form: HTMLFormElement): TAppThunk => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: LOGIN_REQUEST
@@ -209,7 +209,7 @@ export const login: TAppThunk = (form: HTMLFormElement) => {
   };
 }
 
-export const logout: TAppThunk = () => {
+export const logout = (): TAppThunk => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: LOGOUT_REQUEST
@@ -234,7 +234,7 @@ export const logout: TAppThunk = () => {
   };
 }
 
-export const forgotPassword: TAppThunk = (form: HTMLFormElement) => {
+export const forgotPassword = (form: HTMLFormElement): TAppThunk => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: FORGOT_PASSWORD_REQUEST
@@ -259,7 +259,7 @@ export const forgotPassword: TAppThunk = (form: HTMLFormElement) => {
   };
 }
 
-export const resetPassword: TAppThunk = (form: HTMLFormElement) => {
+export const resetPassword = (form: HTMLFormElement): TAppThunk => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: RESET_PASSWORD_REQUEST
@@ -287,7 +287,7 @@ export const resetPassword: TAppThunk = (form: HTMLFormElement) => {
   };
 }
 
-export const getProfile: TAppThunk = (form: HTMLFormElement) => {
+export const getProfile = (): TAppThunk => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: GET_PROFILE_REQUEST
@@ -316,7 +316,7 @@ export const getProfile: TAppThunk = (form: HTMLFormElement) => {
   };
 }
 
-export const editProfile: TAppThunk = (form: HTMLFormElement) => {
+export const editProfile = (form: HTMLFormElement): TAppThunk => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: EDIT_PROFILE_REQUEST

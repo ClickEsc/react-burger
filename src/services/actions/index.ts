@@ -124,7 +124,7 @@ export type TAppActions =
   | IDefineCurrentIngredientAction
   | IShowIngredientModalAction;
 
-export const getBurgerIngredients: TAppThunk = () =>  {
+export const getBurgerIngredients = (): TAppThunk =>  {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST
@@ -151,7 +151,7 @@ export const getBurgerIngredients: TAppThunk = () =>  {
   };
 }
 
-export const getCurrentOrderNumber: TAppThunk = (orderItemsIds: IIngredient[]) => {
+export const getCurrentOrderNumber = (orderItemsIds: string[]): TAppThunk => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: GET_ORDER_NUMBER_REQUEST

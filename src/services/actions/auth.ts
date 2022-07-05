@@ -151,7 +151,7 @@ export type TAuthActions =
   | IEditProfileSuccessAction
   | IEditProfileFailedAction;
 
-export const signup: TAppThunk = (form: HTMLFormElement) => (dispatch: TAppDispatch) => {
+export const signup: TAppThunk = (form: HTMLFormElement) => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: SIGNUP_REQUEST
@@ -181,7 +181,7 @@ export const signup: TAppThunk = (form: HTMLFormElement) => (dispatch: TAppDispa
   };
 }
 
-export const login: TAppThunk = (form: HTMLFormElement) => (dispatch: TAppDispatch) => {
+export const login: TAppThunk = (form: HTMLFormElement) => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: LOGIN_REQUEST
@@ -209,7 +209,7 @@ export const login: TAppThunk = (form: HTMLFormElement) => (dispatch: TAppDispat
   };
 }
 
-export const logout: TAppThunk = () => (dispatch: TAppDispatch) => {
+export const logout: TAppThunk = () => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: LOGOUT_REQUEST
@@ -234,7 +234,7 @@ export const logout: TAppThunk = () => (dispatch: TAppDispatch) => {
   };
 }
 
-export const forgotPassword: TAppThunk = (form: HTMLFormElement) => (dispatch: TAppDispatch) => {
+export const forgotPassword: TAppThunk = (form: HTMLFormElement) => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: FORGOT_PASSWORD_REQUEST
@@ -259,7 +259,7 @@ export const forgotPassword: TAppThunk = (form: HTMLFormElement) => (dispatch: T
   };
 }
 
-export const resetPassword: TAppThunk = (form: HTMLFormElement) => (dispatch: TAppDispatch) => {
+export const resetPassword: TAppThunk = (form: HTMLFormElement) => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: RESET_PASSWORD_REQUEST
@@ -287,7 +287,7 @@ export const resetPassword: TAppThunk = (form: HTMLFormElement) => (dispatch: TA
   };
 }
 
-export const getProfile: TAppThunk = (form: HTMLFormElement) => (dispatch: TAppDispatch) => {
+export const getProfile: TAppThunk = (form: HTMLFormElement) => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: GET_PROFILE_REQUEST
@@ -316,7 +316,7 @@ export const getProfile: TAppThunk = (form: HTMLFormElement) => (dispatch: TAppD
   };
 }
 
-export const editProfile: TAppThunk = (form: HTMLFormElement) => (dispatch: TAppDispatch) => {
+export const editProfile: TAppThunk = (form: HTMLFormElement) => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: EDIT_PROFILE_REQUEST

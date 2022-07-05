@@ -193,7 +193,7 @@ const BurgerConstructor: FC = () => {
   
         return;
       }
-      dispatch(getCurrentOrderNumber(orderItemsIds) as unknown as AnyAction)
+      dispatch(getCurrentOrderNumber(orderItemsIds))
       toggleModal();
     }, [orderItemsIds, getCurrentOrderNumber, dispatch]);
 

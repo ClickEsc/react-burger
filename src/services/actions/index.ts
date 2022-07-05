@@ -98,7 +98,7 @@ export interface IReorganizeItemsAction {
 
 export interface IDefineCurrentIngredientAction {
   readonly type: typeof DEFINE_CURRENT_INGREDIENT;
-  readonly ingredient: IIngredient;
+  readonly ingredient: IIngredient | null;
 }
 
 export interface IShowIngredientModalAction {
@@ -124,7 +124,7 @@ export type TAppActions =
   | IDefineCurrentIngredientAction
   | IShowIngredientModalAction;
 
-export const getBurgerIngredients: TAppThunk = () => (dispatch: TAppDispatch) => {
+export const getBurgerIngredients: TAppThunk = () =>  {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST
@@ -151,7 +151,7 @@ export const getBurgerIngredients: TAppThunk = () => (dispatch: TAppDispatch) =>
   };
 }
 
-export const getCurrentOrderNumber: TAppThunk = (orderItemsIds: IIngredient[]) => (dispatch: TAppDispatch) => {
+export const getCurrentOrderNumber: TAppThunk = (orderItemsIds: IIngredient[]) => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: GET_ORDER_NUMBER_REQUEST

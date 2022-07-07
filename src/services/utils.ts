@@ -1,3 +1,8 @@
+import moment from 'moment';
+import 'moment/locale/ru';
+moment.locale('ru');
+
+
 export function getCookie(name: string) {
   const matches = document.cookie.match(
     new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
@@ -30,4 +35,14 @@ export function setCookie(name: string, value?: string | number | boolean | null
 
 export function deleteCookie(name: string) {
   setCookie(name, null, { expires: -1 });
+}
+
+export function convertDate(value: string) {
+  const date = moment(value).calendar();
+  const GMT = new Date(value).toString().split(' ').find(item => item.startsWith('GMT'));
+  const timeZone  = GMT?.split('GMT')[1];
+  const sign = timeZone?.split('')[0];
+  const time = GMT?.split(`${sign}`)[1];
+  const resultTime = time?.startsWith('0') && time?.endsWith('00') ? time.split('')[1] : time;
+  return `${date} i-GMT${sign}${resultTime}`
 }

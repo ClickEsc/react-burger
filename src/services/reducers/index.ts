@@ -19,6 +19,7 @@ import {
   TAppActions
 } from '../actions/index';
 import { authReducer } from './auth';
+import { wsReducer } from './wsReducer';
 import { IIngredient } from '../../utils/types';
 
 type TCurrentOrder = {
@@ -245,5 +246,6 @@ export const ingredientsReducer = (state = initialState, action: TAppActions): T
 
 export const rootReducer = combineReducers({
   app: ingredientsReducer,
-  auth: authReducer
+  auth: authReducer,
+  ws: wsReducer
 }) 

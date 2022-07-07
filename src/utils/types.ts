@@ -1,3 +1,11 @@
+import {
+  WS_CONNECTION_START,
+  WS_CONNECTION_SUCCESS,
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_ERROR,
+  WS_GET_MESSAGE
+} from "../services/actions/wsActions";
+
 export interface ILocation {
   from?: {
     pathname: string;
@@ -26,4 +34,21 @@ export interface IIngredient {
   __v: number;
   uuid?: string;
   index: number;
+}
+
+export interface IOrder {
+  _id: string;
+  status: string;
+  number: number;
+  ingredients: string[];
+  createdAt: string;
+  updatedAt: string;
+  name: string;
+}
+
+export interface IOrders {
+  success: boolean,
+  orders: Array<IOrder>,
+  total: number,
+  totalToday: number,
 }

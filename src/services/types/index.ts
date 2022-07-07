@@ -1,10 +1,10 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { Action, ActionCreator, AnyAction } from 'redux';
 import { store } from '../store';
 import { TAppActions } from '../actions';
 import { TAuthActions } from '../actions/auth'
+import { TWsActions } from '../actions/wsActions';
 
-type TApplicationActions = TAppActions | TAuthActions;
+type TApplicationActions = TAppActions | TAuthActions | TWsActions;
 type TRootState = ReturnType<typeof store.getState>;
 type TAppDispatch = ThunkDispatch<TRootState, never, TApplicationActions>;
 type TAppThunk<ReturnType = void> = ThunkAction<

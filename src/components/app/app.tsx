@@ -12,7 +12,8 @@ import {
   ResetPasswordPage,
   IngredientDetailedPage,
   ProfilePage,
-  NotFoundPage
+  NotFoundPage,
+  FeedPage
 } from '../../pages';
 import {
   IS_LOADING_TEXT,
@@ -85,8 +86,11 @@ const App: FC = () => {
         <ProtectedRoute exact path="/profile">
           <ProfilePage />
         </ProtectedRoute>
-        <ProtectedRoute exact path="/profile/orders">
+        {/* <ProtectedRoute exact path="/profile/orders"> */}
           {/* <ProfileOrders /> */}
+        {/* </ProtectedRoute> */}
+        <ProtectedRoute exact path="/feed">
+          <FeedPage />
         </ProtectedRoute>
         <Route path="/">
           <NotFoundPage />

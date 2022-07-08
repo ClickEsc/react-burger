@@ -13,7 +13,8 @@ import {
   IngredientDetailedPage,
   ProfilePage,
   NotFoundPage,
-  FeedPage
+  FeedPage,
+  FeedItemDetailedPage
 } from '../../pages';
 import {
   IS_LOADING_TEXT,
@@ -23,6 +24,7 @@ import { getBurgerIngredients } from '../../services/actions';
 import styles from './app.module.css';
 import ProtectedRoute from '../protected-route/protected-route';
 import IngredientDetailedModal from '../ingredient-detailed-modal/ingredient-detailed-modal';
+import FeedItemDetailedModal from '../feed-item-detailed-modal/feed-item-detailed-modal';
 
 
 const App: FC = () => {
@@ -83,21 +85,27 @@ const App: FC = () => {
         <Route path="/ingredients/:ingredientId">
           <IngredientDetailedPage />
         </Route>
+        <Route exact path="/feed">
+          <FeedPage />
+        </Route>
+        <Route path="/feed/:id">
+          <FeedItemDetailedPage />
+        </Route>
         <ProtectedRoute exact path="/profile">
           <ProfilePage />
         </ProtectedRoute>
         {/* <ProtectedRoute exact path="/profile/orders"> */}
           {/* <ProfileOrders /> */}
         {/* </ProtectedRoute> */}
-        <ProtectedRoute exact path="/feed">
-          <FeedPage />
-        </ProtectedRoute>
         <Route path="/">
           <NotFoundPage />
         </Route>
       </Switch>
       {background && <Route path="/ingredients/:ingredientId">
         <IngredientDetailedModal />
+      </Route>}
+      {background && <Route path="/feed/:id">
+        <FeedItemDetailedModal />
       </Route>}
     </div>
   );

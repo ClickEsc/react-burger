@@ -22,14 +22,6 @@ const FeedItemCard: FC<{ item: IOrder }> = ({ item }) => {
     return acc + (item.type === 'bun' ? item.price * 2 : item.price)
   }, 0)
 
-  const images = useMemo(
-    () => {
-      console.log(orderIngredientsData)
-      orderIngredientsData.map(el => el.image_mobile)
-    },
-    [orderIngredientsData]
-  );
-
   useEffect(() => {
     if (ingredients.length) {
       const data = ingredientsList.filter(item => ingredients.indexOf(item._id) !== -1);
@@ -60,16 +52,10 @@ const FeedItemCard: FC<{ item: IOrder }> = ({ item }) => {
             <div className={styles.btnsWrapper}>
               {orderIngredientsData.length > 0 && orderIngredientsData.length < 7 && orderIngredientsData.map((item, index) => {
                 return (
-                  <Link
-                    className={styles.button}
-                    to={{
-                      pathname: `/ingredients/${item._id}`,
-                      state: { background: location }
-                    }}
-                  >
+                  <div className={styles.imageWrapper} key={index}>
                     <img className={`${styles.image} ${index === 5 ? styles.imageLast : ''}`} src={item.image_mobile} alt={`${item.name}`} />
                     {orderIngredientsData.length > 6 && <p className={`text text_type_digits-default ${styles.more}`}>+{orderIngredientsData.length - 5}</p>}
-                  </Link>
+                  </div>
                 )
               })}
             </div>

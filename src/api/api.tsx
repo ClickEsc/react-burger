@@ -1,3 +1,4 @@
+import { getCookie } from "../services/utils";
 import { ERROR_RES_STATUS } from "../utils/constants";
 import { IIngredient } from "../utils/types";
 
@@ -19,7 +20,8 @@ export const getOrderNumber = async (ingredientsIdsArr: string[]) => {
   return fetch(`${API_BASE_URL}/orders`, {
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + getCookie('accessToken')
     },
     method: "POST",
     body: JSON.stringify({

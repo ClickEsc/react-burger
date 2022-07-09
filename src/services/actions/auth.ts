@@ -151,7 +151,7 @@ export type TAuthActions =
   | IEditProfileSuccessAction
   | IEditProfileFailedAction;
 
-export const signup = (form: HTMLFormElement): TAppThunk => {
+export const signup = (form: { name: string; email: string; password: string; }): TAppThunk => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: SIGNUP_REQUEST
@@ -181,7 +181,7 @@ export const signup = (form: HTMLFormElement): TAppThunk => {
   };
 }
 
-export const login = (form: HTMLFormElement): TAppThunk => {
+export const login = (form: { email: string; password: string; }): TAppThunk => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: LOGIN_REQUEST
@@ -234,7 +234,7 @@ export const logout = (): TAppThunk => {
   };
 }
 
-export const forgotPassword = (form: HTMLFormElement): TAppThunk => {
+export const forgotPassword = (form: { password: string; }): TAppThunk => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: FORGOT_PASSWORD_REQUEST
@@ -259,7 +259,7 @@ export const forgotPassword = (form: HTMLFormElement): TAppThunk => {
   };
 }
 
-export const resetPassword = (form: HTMLFormElement): TAppThunk => {
+export const resetPassword = (form: { password: string; }): TAppThunk => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: RESET_PASSWORD_REQUEST
@@ -316,7 +316,7 @@ export const getProfile = (): TAppThunk => {
   };
 }
 
-export const editProfile = (form: HTMLFormElement): TAppThunk => {
+export const editProfile = (form: { name: string; email: string; password: string; }): TAppThunk => {
   return function (dispatch: TAppDispatch) {
     dispatch({
       type: EDIT_PROFILE_REQUEST

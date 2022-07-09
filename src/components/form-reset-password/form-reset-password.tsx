@@ -5,7 +5,7 @@ import {
 import Form from '../form/form';
 import FormHint from '../form-hint/form-hint';
 
-const FormResetPassword: FC<{ onSubmit: (event: FormEvent<HTMLFormElement>, form: ReactNode) => void }> = ({ onSubmit }) => {
+const FormResetPassword: FC<{ onSubmit: (event: FormEvent<HTMLFormElement>, form: { password: string; }) => void }> = ({ onSubmit }) => {
   const [form, setValue] = useState<{ password: string, token: string }>({ password: '', token: '' });
   const [isValueVisible, setIsValueVisible] = useState<boolean>(false);
 
@@ -22,7 +22,7 @@ const FormResetPassword: FC<{ onSubmit: (event: FormEvent<HTMLFormElement>, form
       formName="form-reset-password"
       title="Восстановление пароля"
       submitBtnTitle="Сохранить"
-      onSubmit={(e: FormEvent<HTMLFormElement>, form: HTMLFormElement) => onSubmit(e, form)}
+      onSubmit={(e: FormEvent<HTMLFormElement>) => onSubmit(e, form)}
       inputs={
         <>
           <Input

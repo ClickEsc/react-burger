@@ -12,7 +12,7 @@ const Profile: FC = () => {
   const { pathname } = useLocation<Location>();
 
   const handleEditProfile = useCallback(
-    (e: FormEvent<HTMLFormElement>, form: HTMLFormElement) => {
+    (e: FormEvent<HTMLFormElement>, form: { name: string; email: string; password: string; }) => {
       e.preventDefault();
       dispatch(editProfile(form));
     },

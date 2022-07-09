@@ -68,7 +68,7 @@ const initialState: TAuthState  = {
   }
 };
 
-export const authReducer = (state: any = initialState, action: TAuthActions): TAuthState => {
+export const authReducer = (state: TAuthState = initialState, action: TAuthActions): TAuthState => {
   switch (action.type) {
     case SIGNUP_REQUEST: {
       return {

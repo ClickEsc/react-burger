@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
-import { useSelector, shallowEqual } from 'react-redux';
-import { useDispatch } from '../services/hooks';
+import { shallowEqual } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 import { ILocation } from '../utils/types';
 import FormLogin from '../components/form-login/form-login';
 import { login } from '../services/actions/auth';
@@ -10,7 +10,7 @@ import styles from './page.module.css';
 export function LoginPage() {
   const location = useLocation<ILocation>();
   const dispatch = useDispatch();
-  const { user } = useSelector((store: { auth: any }) => store.auth, shallowEqual);
+  const { user } = useSelector(store => store.auth, shallowEqual);
   const pathname = location?.state?.from?.pathname;
 
   const handleLogin = useCallback(

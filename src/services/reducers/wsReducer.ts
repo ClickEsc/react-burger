@@ -1,5 +1,6 @@
 import {
   WS_CONNECTION_SUCCESS,
+  WS_CONNECTION_CLOSE,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE
@@ -29,6 +30,11 @@ export const wsReducer = (state = initialState, action: TWsActions): TWsState =>
         ...state,
         wsConnected: true
       };
+      case WS_CONNECTION_CLOSE:
+        return {
+          ...state,
+          wsConnected: false
+        };
     case WS_CONNECTION_ERROR:
       return {
         ...state,

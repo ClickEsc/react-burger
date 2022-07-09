@@ -29,6 +29,7 @@ export function setCookie(name: string, value: string | number | boolean | null,
       updatedCookie += '=' + propValue;
     }
   }
+
   document.cookie = updatedCookie;
 }
 

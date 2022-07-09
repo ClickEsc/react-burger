@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from '../services/hooks';
-import { wsConnectionStart } from '../services/actions/wsActions';
+import { wsConnectionStart, wsConnectionClose } from '../services/actions/wsActions';
 import Feed from '../components/feed/feed';
 
 export function FeedPage() {
@@ -8,6 +8,9 @@ export function FeedPage() {
 
   useEffect(() => {
     dispatch(wsConnectionStart('/all'));
+    return () => {
+      dispatch(wsConnectionClose());
+    }
   }, [dispatch]);
 
   return (

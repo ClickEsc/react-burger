@@ -1,9 +1,10 @@
-import React, { FC, ReactNode } from 'react';
-import { Route, Redirect } from "react-router-dom";
-import { useSelector, shallowEqual } from 'react-redux';
+import React, { FC } from 'react';
+import { RouteProps, Route, Redirect } from "react-router-dom";
+import { shallowEqual } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 
-const ProtectedRoute: FC<{ path: string, exact?: boolean, children: ReactNode, rest?: any }> = ({ children, ...rest }) => {
-  const { isAuthorized } = useSelector((store: { auth: { user: any }}) => store.auth.user, shallowEqual);
+const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
+  const { isAuthorized } = useSelector(store => store.auth.user, shallowEqual);
   return (
     <Route
       {...rest}

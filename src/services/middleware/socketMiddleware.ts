@@ -9,17 +9,22 @@ export const socketMiddleware = (wsUrl: string, wsActions: IWsActions): Middlewa
     return next => action => {
       const { dispatch } = store;
       const { type, payload } = action;
-      const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
+      const { wsInit, wsClose, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
 
       if (type === wsInit) {
-        // socket = new WebSocket(`${wsUrl}${payload}`);
-        socket = new WebSocket(`wss://norma.nomoreparties.space/orders/all`);
+        socket = new WebSocket(`${wsUrl}${payload}`);
       }
+
       if (socket) {
         socket.onopen = event => {
           console.log('Соединение установлено');
           dispatch({ type: onOpen, payload: event });
         };
+
+        if (type === wsClose) {
+          console.log('Соединение разорвано');
+          socket.close();
+        }
 
         socket.onerror = event => {
           dispatch({ type: onError, payload: event });

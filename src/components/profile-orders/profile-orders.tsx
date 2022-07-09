@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { shallowEqual } from 'react-redux';
-import { wsConnectionStart } from '../../services/actions/wsActions';
+import { wsConnectionClose, wsConnectionStart } from '../../services/actions/wsActions';
 import { useDispatch, useSelector } from '../../services/hooks';
 import { getCookie } from '../../services/utils';
 import { IOrder } from '../../utils/types';
@@ -17,6 +17,10 @@ const ProfileOrders: FC = () => {
       const accessToken = getCookie('accessToken');
       const wsToken = accessToken && accessToken.replace('Bearer ', '');
       dispatch(wsConnectionStart(`?token=${wsToken}`));
+
+      return () => {
+        setTimeout(() => dispatch(wsConnectionClose()), 600);
+      }
     }
   }, [dispatch, user.isAuthorized]);
 

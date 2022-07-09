@@ -1,6 +1,7 @@
 import { IOrders } from "../../utils/types";
 
 export const WS_CONNECTION_START: 'WS_CONNECTION_START' = 'WS_CONNECTION_START';
+export const WS_CONNECTION_CLOSE: 'WS_CONNECTION_CLOSE' = 'WS_CONNECTION_CLOSE';
 export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' = 'WS_CONNECTION_SUCCESS';
 export const WS_CONNECTION_ERROR: 'WS_CONNECTION_ERROR' = 'WS_CONNECTION_ERROR';
 export const WS_CONNECTION_CLOSED: 'WS_CONNECTION_CLOSED' = 'WS_CONNECTION_CLOSED';
@@ -9,6 +10,7 @@ export const WS_SEND_MESSAGE: 'WS_SEND_MESSAGE' = 'WS_SEND_MESSAGE';
 
 export const wsActions = {
   wsInit: WS_CONNECTION_START,
+  wsClose: WS_CONNECTION_CLOSE,
   wsSendMessage: WS_SEND_MESSAGE,
   onOpen: WS_CONNECTION_SUCCESS,
   onClose: WS_CONNECTION_CLOSED,
@@ -18,6 +20,7 @@ export const wsActions = {
 
 export interface IWsActions {
   wsInit: typeof WS_CONNECTION_START;
+  wsClose: typeof WS_CONNECTION_CLOSE;
   wsSendMessage: typeof WS_SEND_MESSAGE;
   onOpen: typeof WS_CONNECTION_SUCCESS;
   onClose: typeof WS_CONNECTION_CLOSED;
@@ -28,6 +31,10 @@ export interface IWsActions {
 export interface IWsConnectionStartAction {
   readonly type: typeof WS_CONNECTION_START;
   readonly payload: string;
+}
+
+export interface IWsConnectionCloseAction {
+  readonly type: typeof WS_CONNECTION_CLOSE;
 }
 
 export interface IWsSendMessageAction {
@@ -54,6 +61,7 @@ export interface IWsGetMessageAction {
 
 export type TWsActions =
   | IWsConnectionStartAction
+  | IWsConnectionCloseAction
   | IWsSendMessageAction
   | IWsConnectionSuccessAction
   | IWsConnectionClosedAction
@@ -66,6 +74,12 @@ export const wsConnectionStart = (payload: string): IWsConnectionStartAction => 
   return {
     type: WS_CONNECTION_START,
     payload
+  };
+};
+
+export const wsConnectionClose = (): IWsConnectionCloseAction => {
+  return {
+    type: WS_CONNECTION_CLOSE
   };
 };
 

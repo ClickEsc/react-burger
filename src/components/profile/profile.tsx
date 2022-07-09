@@ -4,6 +4,7 @@ import { Link, useLocation, useHistory } from 'react-router-dom';
 import { editProfile, logout } from '../../services/actions/auth';
 import FormEditProfile from '../form-edit-profile/form-edit-profile';
 import styles from './profile.module.css';
+import ProfileOrders from '../profile-orders/profile-orders';
 
 const Profile: FC = () => {
   const dispatch = useDispatch();
@@ -52,7 +53,8 @@ const Profile: FC = () => {
           изменить свои персональные данные
         </p>
       </div>
-      <FormEditProfile onSubmit={handleEditProfile} />
+      {pathname === "/profile" && <FormEditProfile onSubmit={handleEditProfile} />}
+      {pathname === "/profile/orders" && <ProfileOrders />}
     </div>
   )
 }

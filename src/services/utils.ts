@@ -10,8 +10,7 @@ export function getCookie(name: string) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name: string, value?: string | number | boolean | null, props?: any) {
-  props = props || {};
+export function setCookie(name: string, value: string | number | boolean | null, props?: any) {
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
     const d = new Date();
@@ -21,7 +20,7 @@ export function setCookie(name: string, value?: string | number | boolean | null
   if (exp && exp.toUTCString) {
     props.expires = exp.toUTCString();
   }
-  value = encodeURIComponent(!!value);
+  value = (value === null) ? null : encodeURIComponent(value);
   let updatedCookie = name + '=' + value;
   for (const propName in props) {
     updatedCookie += '; ' + propName;
@@ -45,4 +44,17 @@ export function convertDate(value: string) {
   const time = GMT?.split(`${sign}`)[1];
   const resultTime = time?.startsWith('0') && time?.endsWith('00') ? time.split('')[1] : time;
   return `${date} i-GMT${sign}${resultTime}`
+}
+
+export const getStatus = (status: string) => {
+  switch (status) {
+    case "done":
+      return "Выполнен";
+    case "pending":
+      return "Готовится";
+      case "cancelled": 
+      return "Отменен"
+    default:
+      return "Создан"
+  }
 }

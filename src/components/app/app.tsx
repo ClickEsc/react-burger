@@ -91,12 +91,9 @@ const App: FC = () => {
         <Route path="/feed/:id">
           <FeedItemDetailedPage />
         </Route>
-        <ProtectedRoute exact path="/profile">
+        <ProtectedRoute path="/profile">
           <ProfilePage />
         </ProtectedRoute>
-        {/* <ProtectedRoute exact path="/profile/orders"> */}
-          {/* <ProfileOrders /> */}
-        {/* </ProtectedRoute> */}
         <Route path="/">
           <NotFoundPage />
         </Route>

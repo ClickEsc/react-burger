@@ -1,14 +1,11 @@
 .container {
-  width: 600px;
-}
-
-.title {
-  margin-bottom: 32px;
+  /* width: 600px; */
+  width: 100%
 }
 
 .list {
   box-sizing: border-box;
-  margin-top: 0;
+  margin-top: 0 !important;
   padding-left: 0;
   width: 100%;
   height: calc(100vh - 219px);

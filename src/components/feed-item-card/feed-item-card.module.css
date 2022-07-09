@@ -6,7 +6,7 @@
 .card {
   padding: 24px;
   width: 100%;
-  max-width: 584px;
+  /* max-width: 584px; */
   background-color: var(--color-bg);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
   border-radius: 40px;
@@ -29,6 +29,18 @@
   justify-content: space-between;
   align-items: center;
   gap: 40px;
+}
+
+.status {
+  margin-top: 10px;
+}
+
+.cancelled {
+  color: var(--color-error);
+}
+
+.pending {
+  color: var(--color-success);
 }
 
 .btnsWrapper {

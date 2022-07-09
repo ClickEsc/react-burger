@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react';
 import { useLocation, useRouteMatch } from 'react-router-dom';
 import { shallowEqual } from 'react-redux';
 import { useDispatch, useSelector } from '../../services/hooks';
-import { convertDate } from '../../services/utils';
+import { convertDate, getStatus } from '../../services/utils';
 import { IIngredient } from '../../utils/types';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './feed-item-details.module.css';
@@ -21,17 +21,6 @@ const FeedItemDetails: FC = () => {
   const currentFeedItem = orders.length && orders.find(({ _id }: { _id: string }) => _id === match.params.id);
   const [orderIngredientsData, setOrderIngredientsData] = useState<Array<IIngredient>>([])
   const isModal = typeof location.state !== "undefined";
-
-  const getStatus = (status: string) => {
-    switch (status) {
-      case "done":
-        return "Выполнен";
-      case "pending":
-        return "Готовится";
-      default:
-        return "Создан"
-    }
-  }
 
   const totalPrice = orderIngredientsData.reduce((acc: number, item) => acc + item.price, 0);
 

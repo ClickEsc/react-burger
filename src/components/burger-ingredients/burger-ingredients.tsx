@@ -29,8 +29,6 @@ const BurgerIngredients: FC = () => {
             "Соусы": "sauce",
             "Начинки": "main"
           }
-
-          console.log('onScroll', tabValuesObj[currentTabType])
       
           dispatch(switchTab(tabValuesObj[currentTabType]))
         }

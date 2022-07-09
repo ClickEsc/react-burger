@@ -9,12 +9,12 @@ import {
 
 import { IIngredient, IOrder } from '../../utils/types';
 import styles from './feed-item-card.module.css';
-import { convertDate } from '../../services/utils';
+import { convertDate, getStatus } from '../../services/utils';
 
-const FeedItemCard: FC<{ item: IOrder }> = ({ item }) => {
+const FeedItemCard: FC<{ item: IOrder, hasStatus?: boolean }> = ({ item, hasStatus }) => {
   const location = useLocation<Location>();
   const { ingredientsList } = useSelector((store) => store.app, shallowEqual);
-  const { _id, number, createdAt, name, ingredients } = item;
+  const { _id, number, createdAt, name, status, ingredients } = item;
   const date = convertDate(createdAt);
   const [orderIngredientsData, setOrderIngredientsData] = useState<Array<IIngredient>>([])
 
@@ -46,6 +46,7 @@ const FeedItemCard: FC<{ item: IOrder }> = ({ item }) => {
 
           <div>
             <h3 className={`text text_type_main-medium ${styles.title}`}>{name}</h3>
+            <p className={`text text_type_main-default  ${styles.status} ${styles[`${status}`]}`}>{getStatus(status)}</p>
           </div>
 
           <div className={styles.wrapper}>

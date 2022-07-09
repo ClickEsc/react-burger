@@ -49,12 +49,14 @@ const FormEditProfile: FC<{ onSubmit: (e: FormEvent<HTMLFormElement>, form: HTML
   }
 
   useEffect(() => {
-    setValue({
-      name: user.name,
-      email: user.email,
-      password: user.password
-    })
-  }, [user])
+    if (user.isAuthorized) {
+      setValue({
+        name: user.name,
+        email: user.email,
+        password: user.password
+      })
+    }
+  }, [user.isAuthorized])
 
   return (
     <Form

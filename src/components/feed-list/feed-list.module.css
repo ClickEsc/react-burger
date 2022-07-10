@@ -1,0 +1,39 @@
+.container {
+  width: 600px;
+}
+
+.title {
+  margin-bottom: 32px;
+}
+
+.list {
+  box-sizing: border-box;
+  margin-top: 0;
+  padding-left: 0;
+  width: 100%;
+  height: calc(100vh - 219px);
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: scroll;
+}
+
+.list::-webkit-scrollbar {
+  margin-block-end: 80px;
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+  margin-block-end: 80px;
+  background-color: var(--color-complementary);
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: var(--color-secondary);
+}
+
+.listItem {
+  width: 100%;
+  max-width: calc(100% - 8px);
+}

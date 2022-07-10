@@ -19,9 +19,9 @@ const AppNav: FC = () => {
             <BurgerIcon type={pathname === "/" ? "primary" : "secondary"} />
             <p className={`text text_type_main-default ${pathname === "/" ? styles.primary : styles.secondary}`}>Конструктор</p>
           </Link>
-          <Link to="/profile/orders" className={styles.link}>
-            <ListIcon type={pathname === "/profile/orders" ? "primary" : "secondary"} />
-            <p className={`text text_type_main-default ${pathname === "/profile/orders" ? styles.primary : styles.secondary}`}>Лента заказов</p>
+          <Link to="/feed" className={styles.link}>
+            <ListIcon type={pathname === "/feed" ? "primary" : "secondary"} />
+            <p className={`text text_type_main-default ${pathname === "/feed" ? styles.primary : styles.secondary}`}>Лента заказов</p>
           </Link>
         </div>
 

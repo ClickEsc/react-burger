@@ -1,6 +1,7 @@
 import React, { FC, useMemo, useEffect } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { shallowEqual } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 import PanelText from '../panel-text/panel-text';
@@ -11,7 +12,9 @@ import {
   ResetPasswordPage,
   IngredientDetailedPage,
   ProfilePage,
-  NotFoundPage
+  NotFoundPage,
+  FeedPage,
+  FeedItemDetailedPage
 } from '../../pages';
 import {
   IS_LOADING_TEXT,
@@ -21,16 +24,17 @@ import { getBurgerIngredients } from '../../services/actions';
 import styles from './app.module.css';
 import ProtectedRoute from '../protected-route/protected-route';
 import IngredientDetailedModal from '../ingredient-detailed-modal/ingredient-detailed-modal';
+import FeedItemDetailedModal from '../feed-item-detailed-modal/feed-item-detailed-modal';
 
 
 const App: FC = () => {
   const location = useLocation<{ background?: undefined }>();
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
   const {
     ingredientsList,
     ingredientsRequest,
     ingredientsFailed
-  } = useSelector((store: any) => store.app, shallowEqual);
+  } = useSelector((store) => store.app, shallowEqual);
   const background = location?.state?.background;
 
   const content = useMemo<JSX.Element>(
@@ -81,11 +85,14 @@ const App: FC = () => {
         <Route path="/ingredients/:ingredientId">
           <IngredientDetailedPage />
         </Route>
-        <ProtectedRoute exact path="/profile">
+        <Route exact path="/feed">
+          <FeedPage />
+        </Route>
+        <Route path="/feed/:id">
+          <FeedItemDetailedPage />
+        </Route>
+        <ProtectedRoute path="/profile">
           <ProfilePage />
-        </ProtectedRoute>
-        <ProtectedRoute exact path="/profile/orders">
-          {/* <ProfileOrders /> */}
         </ProtectedRoute>
         <Route path="/">
           <NotFoundPage />
@@ -93,6 +100,9 @@ const App: FC = () => {
       </Switch>
       {background && <Route path="/ingredients/:ingredientId">
         <IngredientDetailedModal />
+      </Route>}
+      {background && <Route path="/feed/:id">
+        <FeedItemDetailedModal />
       </Route>}
     </div>
   );

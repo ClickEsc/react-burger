@@ -2,7 +2,8 @@ import React, { FC, ReactNode, useState, useMemo, useCallback } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { debounce } from "debounce";
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { useDrop } from 'react-dnd';
 import {
   Button,
@@ -20,14 +21,15 @@ import {
 } from '../../utils/constants';
 import styles from './burger-constructor.module.css';
 import { IIngredient } from '../../utils/types';
+import { AnyAction } from 'redux';
 
 const BurgerConstructor: FC = () => {
   const location = useLocation<{ pathname: string, state: { from: Location }}>();
-  const dispatch: any = useDispatch();
-  const { user } = useSelector((store: any) => store.auth, shallowEqual);
-  const { burger, orderId, orderNumberRequest, orderNumberFailed } = useSelector((store: any) => store.app.currentOrder, shallowEqual);
+  const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.auth, shallowEqual);
+  const { burger, orderId, orderNumberRequest, orderNumberFailed } = useSelector((store) => store.app.currentOrder, shallowEqual);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const totalPrice = useSelector((store: any) =>
+  const totalPrice = useSelector((store) =>
     store.app.currentOrder.burger.reduce((acc: number, item: IIngredient) => {
       return acc + (item.type === 'bun' ? item.price * 2 : item.price) * item.__v
     }, 0)
@@ -41,25 +43,25 @@ const BurgerConstructor: FC = () => {
     }),
     drop(item) {
       const uuid = uuidv4();
-      dispatch(increaseItem(item, uuid))
+      dispatch(increaseItem(item as IIngredient, uuid))
     },
   });
 
-  const bunOrder = useMemo<Array<IIngredient>>(
+  const bunOrder = useMemo<Array<IIngredient | undefined>>(
     () =>
-      burger.length && [burger.find((item: IIngredient) => item.__v > 0 && item.type === 'bun')],
+      burger.length ? [burger.find((item: IIngredient) => item.__v > 0 && item.type === 'bun')] : [],
     [burger]
   );
 
   const innerOrder = useMemo<Array<IIngredient>>(
     () =>
-      burger.length && burger.filter((item: IIngredient) => item.__v > 0 && item.type !== 'bun'),
+      burger.length ? burger.filter((item: IIngredient) => item.__v > 0 && item.type !== 'bun') : [],
     [burger]
   );
 
-  const orderItemsIds = useMemo<Array<IIngredient>>(
+  const orderItemsIds = useMemo<string[]>(
     () =>
-      burger.length && burger.filter((item: IIngredient)=> item.__v).map((item: IIngredient) => item._id),
+      burger.length ? burger.filter((item: IIngredient)=> item.__v).map((item: IIngredient) => item._id) : [],
     [burger]
   );
 
@@ -79,8 +81,8 @@ const BurgerConstructor: FC = () => {
     setIsModalOpen(!isModalOpen);
   }
 
-  const renderItem: (arr: Array<IIngredient>, contentStyle: string, locked: boolean) => ReactNode = (arr, contentStyle, locked) => {
-    return arr.map((item: IIngredient, index: number) => {
+  const renderItem: (arr: Array<IIngredient | undefined>, contentStyle: string, locked: boolean) => ReactNode = (arr, contentStyle, locked) => {
+    return arr.map((item: IIngredient | undefined, index: number) => {
       if (item) {
         const { uuid, name } = item;
 

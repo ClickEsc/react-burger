@@ -1,17 +1,18 @@
 import React, { FC, FormEvent, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { editProfile, logout } from '../../services/actions/auth';
 import FormEditProfile from '../form-edit-profile/form-edit-profile';
 import styles from './profile.module.css';
+import ProfileOrders from '../profile-orders/profile-orders';
 
 const Profile: FC = () => {
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
   const history = useHistory<History>();
   const { pathname } = useLocation<Location>();
 
   const handleEditProfile = useCallback(
-    (e: FormEvent<HTMLFormElement>, form: HTMLFormElement) => {
+    (e: FormEvent<HTMLFormElement>, form: { name: string; email: string; password: string; }) => {
       e.preventDefault();
       dispatch(editProfile(form));
     },
@@ -52,7 +53,8 @@ const Profile: FC = () => {
           изменить свои персональные данные
         </p>
       </div>
-      <FormEditProfile onSubmit={handleEditProfile} />
+      {pathname === "/profile" && <FormEditProfile onSubmit={handleEditProfile} />}
+      {pathname === "/profile/orders" && <ProfileOrders />}
     </div>
   )
 }

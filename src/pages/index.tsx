@@ -5,6 +5,8 @@ import { ResetPasswordPage } from './reset-password';
 import { ProfilePage } from './profile';
 import { IngredientDetailedPage } from './ingredient-detailed';
 import { NotFoundPage } from './not-found';
+import { FeedPage } from './feed';
+import { FeedItemDetailedPage } from './feed-item-detailed';
 
 export {
   LoginPage,
@@ -13,5 +15,7 @@ export {
   ResetPasswordPage,
   ProfilePage,
   IngredientDetailedPage,
-  NotFoundPage
+  NotFoundPage,
+  FeedPage,
+  FeedItemDetailedPage
 };

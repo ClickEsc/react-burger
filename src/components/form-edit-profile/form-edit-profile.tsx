@@ -1,12 +1,13 @@
 import React, { FC, FormEvent, useEffect, useState } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
+import { shallowEqual } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import {
   Input
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Form from '../form/form';
 
-const FormEditProfile: FC<{ onSubmit: (e: FormEvent<HTMLFormElement>, form: HTMLFormElement) => void }> = ({ onSubmit }) => {
-  const { user } = useSelector((store: { auth: any }) => store.auth, shallowEqual);
+const FormEditProfile: FC<{ onSubmit: (e: FormEvent<HTMLFormElement>, form: { name: string; email: string; password: string; }) => void }> = ({ onSubmit }) => {
+  const { user } = useSelector((store) => store.auth, shallowEqual);
   const [form, setValue] = useState<{ name: string, email: string, password: string }>({ name: '', email: '', password: '' });
   const [isNameValueVisible, setIsNameValueVisible] = useState<boolean>(false);
   const [isEmailValueVisible, setIsEmailValueVisible] = useState<boolean>(false);
@@ -18,12 +19,12 @@ const FormEditProfile: FC<{ onSubmit: (e: FormEvent<HTMLFormElement>, form: HTML
 
   const onCancel = (e: KeyboardEvent) => {
     e.preventDefault();
-    setValue({ ...form, name: user.name, email: user.email, password: user.password });
+    setValue({ ...form, name: user.name as string, email: user.email as string, password: user.password as string});
   };
 
   const handleNameIconClick = () => {
     if (!isNameValueVisible) {
-      setValue({ ...form, name: user.name })
+      setValue({ ...form, name: user.name as string})
     } else {
       setValue({ ...form, name: '' })
     }
@@ -32,7 +33,7 @@ const FormEditProfile: FC<{ onSubmit: (e: FormEvent<HTMLFormElement>, form: HTML
 
   const handleEmailIconClick = () => {
     if (!isEmailValueVisible) {
-      setValue({ ...form, email: user.email})
+      setValue({ ...form, email: user.email as string})
     } else {
       setValue({ ...form, email: '' })
     }
@@ -41,7 +42,7 @@ const FormEditProfile: FC<{ onSubmit: (e: FormEvent<HTMLFormElement>, form: HTML
 
   const handlePasswordIconClick = () => {
     if (!isPasswordValueVisible) {
-      setValue({ ...form, password: user.password})
+      setValue({ ...form, password: user.password as string})
     } else {
       setValue({ ...form, password: '' })
     }
@@ -49,18 +50,20 @@ const FormEditProfile: FC<{ onSubmit: (e: FormEvent<HTMLFormElement>, form: HTML
   }
 
   useEffect(() => {
-    setValue({
-      name: user.name,
-      email: user.email,
-      password: user.password
-    })
-  }, [user])
+    if (user.isAuthorized) {
+      setValue({
+        name: user.name as string,
+        email: user.email as string,
+        password: user.password as string
+      })
+    }
+  }, [user.isAuthorized])
 
   return (
     <Form
       formName="form-edit-profile"
       submitBtnTitle="Сохранить"
-      onSubmit={(e: FormEvent<HTMLFormElement>, form: HTMLFormElement) => onSubmit(e, form)}
+      onSubmit={(e: FormEvent<HTMLFormElement>) => onSubmit(e, form)}
       hasCancel
       onCancel={(e: KeyboardEvent) => onCancel(e)}
       inputs={

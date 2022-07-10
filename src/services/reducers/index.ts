@@ -15,12 +15,34 @@ import {
   TAB_SWITCH,
   GET_ORDER_NUMBER_FAILED,
   GET_ORDER_NUMBER_REQUEST,
-  INGREDIENT_MODAL_VISIBLE
+  INGREDIENT_MODAL_VISIBLE,
+  TAppActions
 } from '../actions/index';
 import { authReducer } from './auth';
+import { wsReducer } from './wsReducer';
 import { IIngredient } from '../../utils/types';
 
-const initialState = {
+type TCurrentOrder = {
+  burger: ReadonlyArray<IIngredient>;
+  totalPrice: number;
+  orderId: number;
+  orderNumberFailed: boolean;
+  orderNumberRequest: boolean;
+}
+
+export type TAppState = {
+  ingredientsList: Array<IIngredient>,
+  ingredientsRequest: boolean;
+  ingredientsFailed: boolean;
+  constructorIngredientsRequest: boolean;
+  constructorIngredientsFailed: boolean;
+  currentIngredient: IIngredient | null;
+  isIngredientModalVisible: boolean;
+  currentOrder: TCurrentOrder;
+  currentTab: string;
+};
+
+const initialState: TAppState = {
   ingredientsList: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
@@ -38,7 +60,7 @@ const initialState = {
   currentTab: 'bun',
 };
 
-export const ingredientsReducer = (state = initialState, action: any) => {
+export const ingredientsReducer = (state = initialState, action: TAppActions): TAppState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {
@@ -78,7 +100,7 @@ export const ingredientsReducer = (state = initialState, action: any) => {
         ...state,
         constructorIngredientsRequest: false,
         constructorIngredientsFailed: false,
-        ingredientsList: [...state.ingredientsList].map((item: IIngredient) => item.__v = 0),
+        // ingredientsList: [...state.ingredientsList].map((item: IIngredient) => item.__v = 0),
         currentOrder: {
           ...state.currentOrder,
           burger: action.burger
@@ -107,7 +129,7 @@ export const ingredientsReducer = (state = initialState, action: any) => {
         }
       });
 
-      const objClone = newItem && { ...newItem as IIngredient};
+      const objClone = newItem && { ...newItem };
       const objNew = !!objClone && Object.assign(objClone, { __v: 1, uuid: action.uuid });
 
       !!objNew && tempArr.push(objNew)
@@ -224,5 +246,6 @@ export const ingredientsReducer = (state = initialState, action: any) => {
 
 export const rootReducer = combineReducers({
   app: ingredientsReducer,
-  auth: authReducer
+  auth: authReducer,
+  ws: wsReducer
 }) 

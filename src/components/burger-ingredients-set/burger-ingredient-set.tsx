@@ -1,12 +1,13 @@
 import React, { forwardRef } from 'react';
 import { IIngredient } from '../../utils/types';
-import { shallowEqual, useSelector } from 'react-redux';
+import { shallowEqual } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import BurgerIngredientCard from '../burger-ingredient-card/burger-ingredient-card';
 import styles from './burger-ingredients-set.module.css';
 import DraggableIngredient from '../draggable-ingredient/draggable-ingredient';
 
 const BurgerIngredientsSet = forwardRef<HTMLHeadingElement, { title: string, type: string }>(({ title, type }, ref) => {
-  const { ingredientsList } = useSelector((store: { app: any }) => store.app, shallowEqual);
+  const { ingredientsList } = useSelector((store) => store.app, shallowEqual);
 
   const renderedList = ingredientsList.filter((el: IIngredient) => el.type === type).map((item: IIngredient) => {
     const { _id } = item;

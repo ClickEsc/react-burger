@@ -5,7 +5,7 @@ import {
 import Form from '../form/form';
 import FormHint from '../form-hint/form-hint';
 
-const FormSignup: FC<{ onSubmit: (e: FormEvent<HTMLFormElement>, form: HTMLFormElement) => void }> = ({ onSubmit }) => {
+const FormSignup: FC<{ onSubmit: (e: FormEvent<HTMLFormElement>, form: { name: string; email: string; password: string; }) => void }> = ({ onSubmit }) => {
   const [form, setValue] = useState<{ name: string, email: string, password: string }>({ name: '', email: '', password: '' });
   const [isValueVisible, setIsValueVisible] = useState<boolean>(false);
 
@@ -22,7 +22,7 @@ const FormSignup: FC<{ onSubmit: (e: FormEvent<HTMLFormElement>, form: HTMLFormE
       formName="form-signup"
       title="Регистрация"
       submitBtnTitle="Зарегистрироваться"
-      onSubmit={(e: FormEvent<HTMLFormElement>, form: HTMLFormElement) => onSubmit(e, form)}
+      onSubmit={(e: FormEvent<HTMLFormElement>) => onSubmit(e, form)}
       inputs={
         <>
           <Input

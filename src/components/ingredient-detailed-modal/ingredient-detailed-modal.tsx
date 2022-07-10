@@ -1,12 +1,12 @@
 import React, { FC, useCallback, useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { useHistory } from 'react-router-dom';
 import { defineCurrentIngredient, showIngredientModal } from "../../services/actions";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 
 const IngredientDetailedModal: FC = () => {
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
   const history = useHistory<History>();
 
   const onClose = useCallback(() => {

@@ -13,7 +13,8 @@ const Form: FC<{
   hasCancel?: boolean,
   onCancel?: ((e: KeyboardEvent) => void) | (() => void),
   extra?: ReactNode
-}> = ({formName,
+}> = ({
+  formName,
   title,
   inputs,
   submitBtnTitle,
@@ -22,6 +23,7 @@ const Form: FC<{
   onCancel,
   extra
 }) => {
+
   return (
     <form
       className={styles.form}

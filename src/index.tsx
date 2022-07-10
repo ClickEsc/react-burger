@@ -1,27 +1,13 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { store } from './services/store';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { compose, createStore, applyMiddleware } from 'redux';
-import { rootReducer } from './services/reducers';
-import thunk from 'redux-thunk';
-import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
-
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-}
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const enhancer = composeEnhancers(applyMiddleware(thunk));
-
-const store = createStore(rootReducer, enhancer);
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,5 +1,6 @@
 import React, { FC, Ref, useRef, useMemo } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { switchTab } from '../../services/actions';
 import BurgerIngredientsSet from '../burger-ingredients-set/burger-ingredient-set';
 import Tabs from '../tabs/tabs';
@@ -10,8 +11,8 @@ interface ItabValuesObj {
 }
 
 const BurgerIngredients: FC = () => {
-  const dispatch = useDispatch<any>();
-  const { ingredientsList } = useSelector((store: { app: any }) => store.app, shallowEqual);
+  const dispatch = useDispatch();
+  const { ingredientsList } = useSelector((store) => store.app, shallowEqual);
   const bunTabRef = useRef<HTMLHeadingElement>();
   const sauceTabRef = useRef<HTMLHeadingElement>();
   const mainTabRef = useRef<HTMLHeadingElement>();
@@ -28,8 +29,6 @@ const BurgerIngredients: FC = () => {
             "Соусы": "sauce",
             "Начинки": "main"
           }
-
-          console.log('onScroll', tabValuesObj[currentTabType])
       
           dispatch(switchTab(tabValuesObj[currentTabType]))
         }

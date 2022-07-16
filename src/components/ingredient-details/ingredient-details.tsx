@@ -18,7 +18,7 @@ const IngredientDetails: FC = () => {
     <div className={styles.details}>
       <div className={styles.main}>
         <img className={styles.img} src={currentIngredient?.image} alt={`${currentIngredient?.name}`} />
-        <h3 className="text text_type_main-medium">{currentIngredient?.name}</h3>
+        <h3 className={`text text_type_main-medium ${styles.title}`}>{currentIngredient?.name}</h3>
       </div>
       <div className={styles.nutrients}>
         <div className={styles.block}>

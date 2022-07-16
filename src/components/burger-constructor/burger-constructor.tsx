@@ -140,7 +140,7 @@ const BurgerConstructor: FC = () => {
     () => {
       // if (burger.length) {
       return (
-        <ul ref={dropTargetRef} className={styles.list}>
+        <ul data-at="constructor" ref={dropTargetRef} className={styles.list}>
           {bunOrder.length ? renderItem(bunOrder, 'topContent', true) : <></>}
           <li key={uuidv4()} className={styles.listItem}>
             <ul className={`${styles.innerList} ${!innerOrder.length ? styles.innerListEmpty : ''}`}>

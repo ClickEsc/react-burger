@@ -34,7 +34,7 @@ const BurgerIngredients: FC = () => {
         }
       
         return ( 
-          <div className={styles.sets} onScroll={handleScroll}>
+          <div data-at="ingredients" className={styles.sets} onScroll={handleScroll}>
             <BurgerIngredientsSet ref={bunTabRef as Ref<HTMLHeadingElement> | undefined} title="Булки" type="bun" />
             <BurgerIngredientsSet ref={sauceTabRef as Ref<HTMLHeadingElement> | undefined} title="Соусы" type="sauce" />
             <BurgerIngredientsSet ref={mainTabRef as Ref<HTMLHeadingElement> | undefined} title="Начинки" type="main" />

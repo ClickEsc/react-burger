@@ -42,7 +42,7 @@ export type TAppState = {
   currentTab: string;
 };
 
-const initialState: TAppState = {
+export const initialState: TAppState = {
   ingredientsList: [],
   ingredientsRequest: false,
   ingredientsFailed: false,

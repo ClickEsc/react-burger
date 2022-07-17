@@ -28,7 +28,7 @@ const Modal: FC<({ title?: string, onClose: () => void, children: ReactNode })> 
       <div className={styles.modalContent}>
         <div className={styles.header}>
           {title ? <h3 className={`text text_type_main-large ${styles.title}`}>{title}</h3> : null}
-          <button className={styles.btnClose} onClick={onClose}>
+          <button data-at="btn-close" className={styles.btnClose} onClick={onClose}>
             <CloseIcon type="primary" />
           </button>
         </div>

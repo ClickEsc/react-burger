@@ -1,14 +1,16 @@
 {
   "name": "react-burger",
+  "homepage": "https://clickesc.github.io/react-burger",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.2",
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.13.1",
     "debounce": "^1.2.1",
+    "gh-pages": "^4.0.0",
     "moment": "^2.29.4",
     "react": "17.0.1",
     "react-dnd": "15.1.2",
@@ -22,8 +24,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "cypress": "cypress open cache clear",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -47,7 +52,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
+    "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.1.10",
     "@types/debounce": "^1.2.1",
     "@types/jest": "^28.1.2",
@@ -56,6 +61,12 @@
     "@types/react-dom": "^17.0.1",
     "@types/react-router-dom": "^5.3.3",
     "@types/uuid": "^8.3.4",
+    "cypress": "^9.5.3",
+    "enzyme": "^3.11.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "fetch-mock": "^9.11.0",
+    "react-test-renderer": "^17.0.1",
+    "redux-mock-store": "^1.5.4",
     "typescript": "^4.1.3"
   }
 }

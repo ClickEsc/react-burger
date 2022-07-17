@@ -19,7 +19,7 @@ const BurgerConstructorItem: FC<{ item: IIngredient, name: string, contentStyle:
   }
 
   return (
-    <div className={styles.item}>
+    <div data-at="constructor-item" className={styles.item}>
       <div className={styles.wrapper}>
 
         <button className={styles.buttonDrag}>

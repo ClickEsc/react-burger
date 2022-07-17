@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# React Burger App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ссылка: https://clickesc.github.io/react-burger
 
 ## Available Scripts
 

@@ -1,3 +1,9 @@
+const userMock = {
+  name: "test",
+  email: "test1234@test1234.ru",
+  password: "test1234"
+}
+
 const orderMock = {
   createdAt: "2022-07-17T09:30:29.707Z",
   ingredients: [
@@ -25,5 +31,6 @@ const wsMessagesMock = {
 };
 
 export {
+  userMock,
   wsMessagesMock
 }

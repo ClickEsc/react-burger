@@ -1,5 +1,6 @@
 {
   "name": "react-burger",
+  "homepage": "https://clickesc.github.io/react-burger",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,6 +10,7 @@
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.13.1",
     "debounce": "^1.2.1",
+    "gh-pages": "^4.0.0",
     "moment": "^2.29.4",
     "react": "17.0.1",
     "react-dnd": "15.1.2",
@@ -25,6 +27,8 @@
     "cypress": "cypress open cache clear",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

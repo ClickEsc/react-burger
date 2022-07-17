@@ -13,7 +13,7 @@ type TWsState = {
   messages: IOrders;
 }
 
-const initialState: TWsState = {
+export const initialState: TWsState = {
   wsConnected: false,
   messages: {
     success: false,
